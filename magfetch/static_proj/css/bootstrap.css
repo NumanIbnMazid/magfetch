@@ -1,10 +1,5 @@
-/*!
- * Bootstrap v3.1.1 (http://getbootstrap.com)
- * Copyright 2011-2014 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- */
+{% load static %}
 
-/*! normalize.css v3.0.0 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
@@ -2376,8 +2371,8 @@ input[type="button"].btn-block {
 @font-face {
   font-family: 'Glyphicons Halflings';
 
-  src: url('../fonts/glyphicons-halflings-regular.eot');
-  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  src: url("{% static 'fonts/glyphicons-halflings-regular.eot' %}");
+  src: url("{% static 'fonts/glyphicons-halflings-regular.eot?#iefix' %}") format('embedded-opentype'), url("{% static 'fonts/glyphicons-halflings-regular.woff' %}") format('woff'), url("{% static 'fonts/glyphicons-halflings-regular.ttf' %}") format('truetype'), url("{% static 'fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular' %}") format('svg');
 }
 .glyphicon {
   position: relative;
@@ -5782,4 +5777,3 @@ button.close {
     display: none !important;
   }
 }
-/*# sourceMappingURL=bootstrap.css.map */
