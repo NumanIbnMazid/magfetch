@@ -1,0 +1,64 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}{% block page_title %}{% block breadcrumb %}
+{% trans "Login" %}
+{% endblock %}{% endblock %}Page{% endblock %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+    <div class="card">
+      <div class="card-body">
+
+        {% get_providers as socialaccount_providers %}
+
+        {% if socialaccount_providers %}
+
+        <div class="socialaccount_ballot text-center">
+          <i>Login with</i>
+          <div class="socialaccount_providers">
+            {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+          </div>
+
+          <div class="login-or">{% trans 'or,' %}</div>
+
+        </div>
+
+        {% include "socialaccount/snippets/login_extra.html" %}
+
+        {% else %}
+        <p>{% blocktrans %}If you have not created an account yet, then please
+          <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+        {% endif %}
+
+        <form class="login form-horizontal" method="POST" action="{% url 'account_login' %}">
+          {% csrf_token %}
+          {% include 'snippets/form.html' %}
+
+          <div class="col-sm-12 text-right">
+            <button class="btn btn-success btn-sm" type="submit">
+              <i class="fa fa-location-arrow"></i> {% trans "Login" %}
+            </button>
+            <hr>
+            <a class="button secondaryAction" href="{% url 'account_reset_password' %}">
+              {% trans "Forgot Password?" %}
+            </a>
+            <br>
+            <p class="button secondaryAction text-primary">
+                <a href="{{ signup_url }}">
+                  {% blocktrans with site.name as site_name %}
+                  Don't have an account in {{site_name}}?
+                  {% endblocktrans %}
+                </a>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
