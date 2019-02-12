@@ -5,8 +5,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 class Faculty(models.Model):
-    code        = models.CharField(max_length=10, verbose_name=('code'))
-    title       = models.CharField(max_length=50, verbose_name=('title'))
+    code        = models.TextField(max_length=10, unique=True, verbose_name=('code'))
+    title       = models.TextField(max_length=50, verbose_name=('title'))
     created_at  = models.DateTimeField(auto_now_add=True, verbose_name=('created at'))
     updated_at  = models.DateTimeField(auto_now=True, verbose_name=('updated at'))
 
