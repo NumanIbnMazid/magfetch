@@ -1,42 +1,8 @@
 from django.views.generic import TemplateView
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
 
 class HomeView(TemplateView):
     template_name = 'pages/home.html'
 
-# HTTP Error 400
-def bad_request(request):
-    response = render_to_response(
-        '404.html',
-        context_instance=RequestContext(request)
-    )
-    response.status_code = 400
-    return response
-
-# HTTP Error 403
-def permission_denied(request):
-    response = render_to_response(
-        '404.html',
-        context_instance=RequestContext(request)
-    )
-    response.status_code = 400
-    return response
-
-# HTTP Error 404
-def page_not_found(request):
-    response = render_to_response(
-        '404.html',
-        context_instance=RequestContext(request)
-    )
-    response.status_code = 400
-    return response
-
-# HTTP Error 500
-def server_error(request):
-    response = render_to_response(
-        '404.html',
-        context_instance=RequestContext(request)
-    )
-    response.status_code = 400
-    return response
+def handler404(request):
+    return render(request, '404.html', status=404)
