@@ -9,8 +9,6 @@ urlpatterns = [
     path('', HomeView.as_view(), name='home'),
 ]
 
-handler404 = megfetch.views.handler404
-
 if settings.DEBUG:
     urlpatterns = urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
