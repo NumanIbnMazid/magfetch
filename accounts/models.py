@@ -37,7 +37,7 @@ class UserProfile(models.Model):
     user        = models.OneToOneField(
         settings.AUTH_USER_MODEL, unique=True, on_delete=models.CASCADE, related_name='profile', verbose_name=('user')
     )
-    slug        = models.SlugField(unique=True, max_length=400, verbose_name=('slug'))
+    slug        = models.SlugField(unique=True, max_length=255, verbose_name=('slug'))
     role   = models.PositiveSmallIntegerField(
         choices = USER_ROLE_CHOICES, null=True, blank=True, verbose_name=('role')
     )
