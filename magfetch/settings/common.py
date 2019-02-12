@@ -15,7 +15,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'allauth',
     'allauth.account',
-    # Local Party Apps
+    # Local Apps
+    'accounts',
 ]
 
 SITE_ID = 1

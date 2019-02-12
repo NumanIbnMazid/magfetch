@@ -1,13 +1,11 @@
 {% extends "account/base.html" %}
 
-{% load i18n %}
-
-{% block head_title %}{% block page_title %}{% block breadcrumb %}
-{% trans "Account Inactive" %}
-{% endblock %}{% endblock %}Page{% endblock %}
+{% block head_title %}{% block page_title %}
+Account Inactive
+{% endblock %}{% endblock %}
 
 {% block content %}
-<h3 class="text-center">{% trans "Account Inactive" %}</h3>
+<h3 class="text-center">Account Inactive</h3>
 
-<p>{% trans "This account is inactive." %}</p>
+<p>This account is inactive.</p>
 {% endblock %}

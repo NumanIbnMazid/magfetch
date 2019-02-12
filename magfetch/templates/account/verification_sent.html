@@ -2,22 +2,16 @@
 
 {% load i18n %}
 
-{% block head_title %}{% block page_title %}{% block breadcrumb %}
+{% block head_title %}{% block page_title %}
 {% trans "Verify Your E-mail Address" %}
-{% endblock %}{% endblock %}Page{% endblock %}
+{% endblock %}{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="text-center">{% trans "Verify Your E-mail Address" %}</h5>
 
-                <p>{% blocktrans %}We have sent an e-mail to you for verification. Follow the link provided to finalize
-                    the signup process. Please contact us if you do not receive it within a few minutes.{%
-                    endblocktrans %}</p>
-            </div>
-        </div>
-    </div>
-</div>
+<h5 class="text-center">{% trans "Verify Your E-mail Address" %}</h5>
+
+<p>{% blocktrans %}We have sent an e-mail to you for verification. Follow the link provided to finalize
+    the signup process. Please contact us if you do not receive it within a few minutes.{%
+    endblocktrans %}</p>
+
 {% endblock %}

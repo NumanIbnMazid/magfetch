@@ -2,20 +2,14 @@
 
 {% load i18n %}
 
-{% block head_title %}{% block page_title %}{% block breadcrumb %}
+{% block head_title %}{% block page_title %}
 {% trans "Sign Up Closed" %}
-{% endblock %}{% endblock %}Page{% endblock %}
+{% endblock %}{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="text-center">{% trans "Sign Up Closed" %}</h5>
 
-                <p>{% trans "We are sorry, but the sign up is currently closed." %}</p>
-            </div>
-        </div>
-    </div>
-</div>
+<h5 class="text-center">{% trans "Sign Up Closed" %}</h5>
+
+<p>{% trans "We are sorry, but the sign up is currently closed." %}</p>
+
 {% endblock %}
