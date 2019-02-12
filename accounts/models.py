@@ -5,8 +5,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 class Faculty(models.Model):
-    code        = models.TextField(max_length=10, unique=True, verbose_name=('code'))
-    title       = models.TextField(max_length=50, verbose_name=('title'))
+    code        = models.CharField(max_length=10, unique=True, verbose_name=('code'))
+    title       = models.CharField(max_length=50, verbose_name=('title'))
     created_at  = models.DateTimeField(auto_now_add=True, verbose_name=('created at'))
     updated_at  = models.DateTimeField(auto_now=True, verbose_name=('updated at'))
 
@@ -37,7 +37,7 @@ class UserProfile(models.Model):
     user        = models.OneToOneField(
         settings.AUTH_USER_MODEL, unique=True, on_delete=models.CASCADE, related_name='profile', verbose_name=('user')
     )
-    slug        = models.SlugField(unique=True, verbose_name=('slug'))
+    slug        = models.SlugField(unique=True, max_length=400, verbose_name=('slug'))
     role   = models.PositiveSmallIntegerField(
         choices = USER_ROLE_CHOICES, null=True, blank=True, verbose_name=('role')
     )
