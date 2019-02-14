@@ -45,11 +45,8 @@
     <div class="form">
         <!-- Main Input Item -->
         <!-- {{ field.field.widget.input_type }} -->
-        {% if field.field.widget.input_type == "date" %}
-        {{ field|add_class:'input-sm input-s datepicker-input form-control' }}
-        {% else %}
-        {{ field|add_class:'form-control form-control-sm' }}
-        {% endif %}
+        
+        {{ field|add_class:'form-control input-sm' }}
 
         {% if field.help_text %}
         <div class="help">
