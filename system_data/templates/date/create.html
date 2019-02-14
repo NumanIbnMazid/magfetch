@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block head_title %}{% block page_title %}{% block breadcrumb %}
+Create Schedule for Student's Contributions
+{% endblock %}{% endblock %}{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+        <section class="panel panel-default">
+            <header class="panel-heading font-bold text-center">Create Schedule</header>
+            <div class="panel-body">
+                <form class="form" method="POST">
+                    {% csrf_token %}
+                    {% include 'snippets/form.html' %}
+                    <script type="text/javascript">
+                        $(document).ready(function() {
+                            function now()
+                            {
+                                var d = new Date();
+                                var month = d.getMonth()+1;
+                                var day = d.getDate();
+                                var output = d.getFullYear() + "/"
+                                            + (month<10 ? '0' : '') + month + "/"
+                                            + (day<10 ? '0' : '') + day;
+                                return output;
+                            };
+                            function next()
+                            {
+                                var d = new Date();
+                                var month = 12;
+                                var day = 31;
+                                var output = d.getFullYear() + "/"
+                                            + (month<10 ? '0' : '') + month + "/"
+                                            + (day<10 ? '0' : '') + day;
+                                return output;
+                            };
+                            $('#datetimepicker1').datetimepicker({
+                                format:'Y-m-d H:i',
+                                // timepicker:true,
+                                minDate:now(),
+                                maxDate:next(),
+                                // datepicker:false,
+                                // allowTimes:[
+                                // '11:00', '13:00', '15:00', 
+                                // '16:00', '18:00', '19:00', '20:00'
+                                // ]
+                            });
+                            $('#datetimepicker2').datetimepicker({
+                                format:'Y-m-d H:i',
+                                // timepicker:true,
+                                minDate:now(),
+                                maxDate:next(),
+                                // datepicker:false,
+                                // allowTimes:[
+                                // '11:00', '13:00', '15:00', 
+                                // '16:00', '18:00', '19:00', '20:00'
+                                // ]
+                            });
+                            $('#datetimepicker3').datetimepicker({
+                                format:'Y-m-d H:i',
+                                // timepicker:true,
+                                minDate:now(),
+                                maxDate:next(),
+                                // datepicker:false,
+                                // allowTimes:[
+                                // '11:00', '13:00', '15:00', 
+                                // '16:00', '18:00', '19:00', '20:00'
+                                // ]
+                            });
+                        });
+                    </script>
+                    <button type="submit" class="btn btn-md btn-primary pull-right">Create</button>
+                </form>
+            </div>
+        </section>
+    </div>
+</div>
+
+{% endblock %}

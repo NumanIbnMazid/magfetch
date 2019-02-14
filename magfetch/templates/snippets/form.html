@@ -1,8 +1,8 @@
 {% load widget_tweaks %}
 {% if form.visible_fields %}
-<div class="bg-light text-white text-center">
-    <small class="mb-2 form-text text-muted">
-        Please fill the <span class="text-primary">required</span> fields properly
+<div class="text-center m-b-sm">
+    <small class="text-muted">
+        Please fill the <span class="text-info"><i>required</i></span> fields properly
     </small>
 </div>
 {% endif %}
@@ -33,41 +33,35 @@
 {% for field in form.visible_fields %}
 <div class="form-group">
 
-    <label for="{{ field.id_for_label }}" class="col-form-label">
+    <label for="{{ field.id_for_label }}" class="control-label">
         <strong>{{ field.label |title }}</strong>
         {% if field.field.required %}
-        <small class="text-primary">(required)</small>
+        <small class="text-info"><i>(required)</i></small>
         {% else %}
-        <small class="text-muted">(optional)</small>
+        <small class="text-muted"><i>(optional)</i></small>
         {% endif %}
     </label>
 
     <div class="form">
-
-        {% if field.label == "Quantity" or field.label == "Quantity Unit" %}
-            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
-        {% endif %}
-
-        <!-- {{ field.field.widget.input_type }} -->
-
         <!-- Main Input Item -->
+        <!-- {{ field.field.widget.input_type }} -->
+        {% if field.field.widget.input_type == "date" %}
+        {{ field|add_class:'input-sm input-s datepicker-input form-control' }}
+        {% else %}
         {{ field|add_class:'form-control form-control-sm' }}
-
-        {% if field.label == "Quantity" or field.label == "Quantity Unit" %}
-            </div>
         {% endif %}
 
         {% if field.help_text %}
         <div class="help">
-            <p id="help_block" class="form-text help-text">
+            <small id="help_block" class="help-block m-b-none">
                 {{ field.help_text|safe }}
-            </p>
+            </small>
         </div>
         {% endif %}
 
         {% if field.errors %}
         {% for error in field.errors %}
-        <div class="error mt-1">
+        <div class="error m-t-sm">
             <b class="text-danger">
                 <p>{{ error|safe }}</p>
             </b>
@@ -80,4 +74,5 @@
         {% endif %}
     </div>
 </div>
+<div class="line line-dashed line-lg pull-in"></div>
 {% endfor %}

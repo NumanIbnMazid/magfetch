@@ -19,3 +19,7 @@
     color: rgb(16, 22, 71) !important;
     margin-top: 2px !important;
 }
+
+input[type="date"] {
+    line-height: 100% !important;
+}

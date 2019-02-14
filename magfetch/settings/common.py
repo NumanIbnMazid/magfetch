@@ -17,6 +17,8 @@ INSTALLED_APPS = [
     'allauth.account',
     # Local Apps
     'accounts',
+    'system_data',
+    'suspicious',
 ]
 
 SITE_ID = 1
@@ -88,6 +90,12 @@ TIME_ZONE       = 'Asia/Dhaka'
 USE_I18N        = True
 USE_L10N        = True
 USE_TZ          = False
+
+# LANGUAGE_CODE = 'en-us'
+# TIME_ZONE = 'UTC'
+# USE_I18N = True
+# USE_L10N = True
+# USE_TZ = True
 
 # Allauth
 LOGIN_URL = '/account/login/'
