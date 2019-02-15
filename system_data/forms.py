@@ -49,10 +49,8 @@ class DateCreateForm(forms.ModelForm):
             today       = datetime.datetime.now()
             if not start_date.year == today.year:
                 raise forms.ValidationError('Start Date must be within this year!')
-            if start_date.day < today.day:
-                raise forms.ValidationError('You cannot select previous day as Start Date!')
-            if start_date.month < today.month:
-                raise forms.ValidationError('You cannot select previous month as Start Date!')
+            if start_date < today:
+                raise forms.ValidationError('You cannot select previous date as Start Date!')
             return start_date
         return None
 
