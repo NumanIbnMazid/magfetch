@@ -14,7 +14,7 @@
           <strong class="h4"></strong><br>
           <small class="label bg-light">{{ announcement.updated_at|timesince }} ago</small>
         </div>
-        <a href="#" class="h5">
+        <a href="{% url 'utils:announcement_detail' slug=announcement.slug %}" class="h5">
           <strong>
           {{ announcement.subject }}
           </strong>

@@ -63,7 +63,7 @@ class DateCreateView(CreateView):
         slug        = category + '-' + time_str_mix_slug()
         identifier  = 'created_schedule_%s' % today.year
         subject     = "New Schedule has been created for academic year %s" %(academic_year)
-        message     = "Schedule for submitting contributions for academic year %s :<br> Start Date: %s <br> Closure Date: %s <br> Final Closure Date: %s <br> <hr>Submitting new contributions will start from Start Date and will continue until Closure Date. After Closure Date no new contributions will not be allowed to submit but those can be updated until Final Closure Date.<hr>" %(academic_year,start_date,closure_date, final_closure_date)
+        message     = "Schedule for submitting contributions for academic year %s :<br> Start Date: %s <br> Closure Date: %s <br> Final Closure Date: %s <br> <hr>Submitting new contributions will start from Start Date and will continue until Closure Date. After Closure Date no new contributions will not be allowed to submit but those can be updated until Final Closure Date.<hr>" %(academic_year,start_date.strftime("%m/%d/%Y %I:%M %p"),closure_date.strftime("%m/%d/%Y %I:%M %p"), final_closure_date.strftime("%m/%d/%Y %I:%M %p"))
         status      = status
         announcement_filter = Announcement.objects.filter(category__iexact=category, identifier__iexact=identifier)
         if announcement_filter.exists():
@@ -190,7 +190,7 @@ class DateUpdateView(UpdateView):
                 )
             return super().form_invalid(form)
         # Checking Form Change
-        pre         = self.get_object()
+        pre             = self.get_object()
         if start_date != pre.start_date or closure_date != pre.closure_date or final_closure_date != pre.final_closure_date or status != pre.status:
             # Creating Announcement
             created_by  = UserProfile.objects.filter(user=self.request.user).first()
@@ -198,7 +198,7 @@ class DateUpdateView(UpdateView):
             slug        = category + '-' + time_str_mix_slug()
             identifier  = 'updated_schedule_%s' % today.year
             subject     = "Schedule has been updated for academic year %s" %(academic_year)
-            message     = "Schedule for submitting contributions for academic year %s :<br> Start Date: %s <br> Closure Date: %s <br> Final Closure Date: %s <br> <hr>Submitting new contributions will start from Start Date and will continue until Closure Date. After Closure Date no new contributions will not be allowed to submit but those can be updated until Final Closure Date.<hr>" %(academic_year,start_date,closure_date, final_closure_date)
+            message     = "Schedule for submitting contributions for academic year %s :<br> Start Date: %s <br> Closure Date: %s <br> Final Closure Date: %s <br> <hr>Submitting new contributions will start from Start Date and will continue until Closure Date. After Closure Date no new contributions will not be allowed to submit but those can be updated until Final Closure Date.<hr>" %(academic_year,start_date.strftime("%m/%d/%Y %I:%M %p"),closure_date.strftime("%m/%d/%Y %I:%M %p"), final_closure_date.strftime("%m/%d/%Y %I:%M %p"))
             status      = status
             announcement_filter = Announcement.objects.filter(category__iexact=category, identifier__iexact=identifier)
             if announcement_filter.exists():

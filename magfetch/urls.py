@@ -9,6 +9,7 @@ urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('account/', include('accounts.urls')),
     path('system/data/', include(('system_data.urls', 'system_data'), namespace='system_data')),
+    path('utils/', include(('utils.urls', 'utils'), namespace='utils')),
 ]
 
 if settings.DEBUG:

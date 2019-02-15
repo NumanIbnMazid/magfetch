@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block head_title %}{% block page_title %}{% block breadcrumb %}
+Announcement Details
+{% endblock %}{% endblock %}{% endblock %}
+
+{% block content %}
+
+{% if announcement.status == 0 %}
+<article id="comment-id-1" class="comment-item">
+  <span class="pull-left thumb-sm m-t-sm m-l-sm">
+    <i class="fa fa-bullhorn font-25"></i>
+  </span>
+  <span class="arrow left"></span>
+  <section class="comment-body panel panel-default">
+    <header class="panel-heading bg-white">
+      <strong class="h4">
+        {{ object.subject }}
+      </strong>
+      <label class="label bg-info m-l-xs">
+        <span class="text-dark">{{ object.created_by.user.profile.get_role }}</span>
+      </label>
+      <span class="text-muted m-l-sm pull-right">
+        <i class="fa fa-clock-o"></i>
+        {{ object.updated_at|timesince }} ago
+      </span>
+    </header>
+    <div class="panel-body">
+      <div>
+        {{ announcement.message|safe|linebreaks }}
+      </div>
+      <div class="comment-action m-t-sm">
+        <a href="{% url 'home' %}" class="btn btn-default btn-xs">
+          <i class="fa fa-mail-reply text-muted"></i> Go Back
+        </a>
+      </div>
+    </div>
+  </section>
+</article>
+{% endif %}
+
+{% endblock %}
