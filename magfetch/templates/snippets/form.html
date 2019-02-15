@@ -36,9 +36,14 @@
     <label for="{{ field.id_for_label }}" class="control-label">
         <strong>{{ field.label |title }}</strong>
         {% if field.field.required %}
-        <small class="text-info"><i>(required)</i></small>
+        <small class="text-info"><i>(required) </i></small>
         {% else %}
-        <small class="text-muted"><i>(optional)</i></small>
+        <small class="text-muted"><i>(optional) </i></small>
+        {% endif %}
+        {% if field.help_text %}
+        <span class="label bg-white" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{ field.help_text|safe }}">
+            <i class="fa fa-exclamation-circle"></i>
+        </span>
         {% endif %}
     </label>
 
@@ -48,13 +53,13 @@
         
         {{ field|add_class:'form-control input-sm' }}
 
-        {% if field.help_text %}
+        {% comment %} {% if field.help_text %}
         <div class="help">
             <small id="help_block" class="help-block m-b-none">
                 {{ field.help_text|safe }}
             </small>
         </div>
-        {% endif %}
+        {% endif %} {% endcomment %}
 
         {% if field.errors %}
         {% for error in field.errors %}

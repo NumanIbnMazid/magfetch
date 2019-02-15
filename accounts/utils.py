@@ -14,7 +14,7 @@ def upload_image_path(instance, filename):
     name, ext       = get_filename_ext(filename)
     final_filename  = '{new_filename}{ext}'.format(new_filename=new_filename, ext=ext)
     return "profile/{new_filename}/{final_filename}".format(
-        new_filename=new_filename, 
+        new_filename=new_filename,
         final_filename=final_filename
         )
 
@@ -25,15 +25,15 @@ def random_number_generator(size=3, chars='1234567890'):
     return ''.join(random.choice(chars) for _ in range(size))
 
 def time_str_mix_slug():
-    timestamp_m     = time.strftime("%Y")
-    timestamp_d     = time.strftime("%m")
-    timestamp_y     = time.strftime("%d")
+    timestamp_y     = time.strftime("%Y")
+    timestamp_m     = time.strftime("%m")
+    timestamp_d     = time.strftime("%d")
     timestamp_now   = time.strftime("%H%M%S")
     random_str      = random_string_generator()
     random_num      = random_number_generator()
     bindings        = (
-        random_str + timestamp_d + random_num + timestamp_now +
-         timestamp_y + random_num + timestamp_m
+        random_num + timestamp_d + random_str +
+        timestamp_y + timestamp_now + timestamp_m
     )
     return bindings
 

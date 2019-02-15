@@ -1,3 +1,16 @@
+{% load tags %}
+{% if request.user.is_authenticated %}
+
+{% is_MM_tag as is_MM %}
+{% is_AD_tag as is_AD %}
+{% is_MC_tag as is_MC %}
+{% is_FG_tag as is_FG %}
+{% is_ST_tag as is_ST %}
+{% get_schedule_tag as get_schedule %}
+{% get_announcement_tag as get_announcement %}
+
+{% endif %}
+
 <!DOCTYPE html>
 <html lang="en" class="app">
 <head>
@@ -17,8 +30,8 @@
         <!-- .aside -->
         {% include 'snippets/sidebar.html' %}
         <section id="content">
-          <section class="vbox">          
-            <section class="scrollable padder">
+          <section class="vbox">
+            <section class="scrollable padder m-b-lg">
               <!-- .breadcrumb -->
               <ul class="breadcrumb no-border no-radius b-b b-light pull-in">
                 <li><a href="{% url 'home' %}"><i class="fa fa-home"></i> Home</a></li>
@@ -48,7 +61,7 @@
       </section>
     </section>
   </section>
-  
+
   <!-- javascript files -->
   {% include "snippets/js.html" %}
 

@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     'accounts',
     'system_data',
     'suspicious',
+    'utils',
 ]
 
 SITE_ID = 1
@@ -135,4 +136,3 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = os.path.join('static_cdn', 'static_root')
 MEDIA_ROOT = os.path.join('static_cdn', 'media_root')
-

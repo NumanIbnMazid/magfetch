@@ -1,0 +1,45 @@
+<section class="panel panel-default">
+  <header class="panel-heading font-bold text-center">
+    Schedule Information
+  </header>
+  <div class="table-responsive">
+    <table class="table table-bordered b-t b-light">
+      <tbody>
+        <tr>
+          <td>Start Date</td>
+          <td class="text-dark">
+            {{ object.start_date }}
+          </td>
+        </tr>
+        <tr>
+          <td>Closure Date</td>
+          <td class="text-dark">
+            {{ object.closure_date }}
+          </td>
+        </tr>
+        <tr>
+          <td>Final Closure Date</td>
+          <td class="text-dark">
+            {{ object.final_closure_date }}
+          </td>
+        </tr>
+        <tr>
+          <td>Publication Status</td>
+          <td class="text-dark">
+            {% if object.status == 0 %}
+            Published
+            {% else %}
+            Unpublished
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td>Academic Year</td>
+          <td class="text-dark">
+            {{ object.academic_year }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

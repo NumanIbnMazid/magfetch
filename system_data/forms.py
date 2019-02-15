@@ -2,8 +2,8 @@ from django import forms
 from .models import Date
 import datetime
 
-class DateInput(forms.DateInput):
-    input_type = 'date'
+# class DateInput(forms.DateInput):
+#     input_type = 'date'
 
 class DateCreateForm(forms.ModelForm):
     academic_year_fake = forms.CharField()
@@ -12,12 +12,14 @@ class DateCreateForm(forms.ModelForm):
         self.fields['start_date'].help_text         = "From when students will be able to upload their contributions"
         self.fields['closure_date'].help_text       = "From when uploading new contributions will be disabled"
         self.fields['final_closure_date'].help_text = "From when modification of contributions will be disabled"
+        self.fields['status'].help_text             = "Contribution collection will be functional if Publication Status is Published"
         today       = datetime.date.today()
         next_year   = datetime.datetime(year=today.year+1, month=1, day=1)
         self.initial['academic_year_fake']          = "%s-%s" %(today.strftime("%Y"), next_year.strftime("%Y")[-2:])
         self.fields['academic_year_fake'].widget.attrs['readonly'] = True
         self.fields['academic_year_fake'].required  = False
         self.fields['academic_year_fake'].label     = "Academic Year"
+        self.fields['status'].label                 = "Publication Status"
         self.fields['start_date'].widget.attrs.update({
             'id': 'datetimepicker1',
             'autocomplete': 'off'
@@ -33,8 +35,8 @@ class DateCreateForm(forms.ModelForm):
 
     class Meta:
         model   = Date
-        fields  = ['start_date', 'closure_date', 'final_closure_date']
-        exclude = ['academic_year']
+        fields  = ['start_date', 'closure_date', 'final_closure_date', 'status']
+        exclude = ['academic_year', 'slug']
         # widgets = {
         #     'start_date': DateInput(),
         #     'closure_date': DateInput(),

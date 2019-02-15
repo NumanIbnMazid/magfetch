@@ -15,32 +15,31 @@ Create Schedule for Student's Contributions
                     {% csrf_token %}
                     {% include 'snippets/form.html' %}
                     <script type="text/javascript">
-                        $(document).ready(function() {
-                            function now()
-                            {
+                        $(document).ready(function () {
+                            function now() {
                                 var d = new Date();
-                                var month = d.getMonth()+1;
+                                var month = d.getMonth() + 1;
                                 var day = d.getDate();
-                                var output = d.getFullYear() + "/"
-                                            + (month<10 ? '0' : '') + month + "/"
-                                            + (day<10 ? '0' : '') + day;
+                                var output = d.getFullYear() + "/" +
+                                    (month < 10 ? '0' : '') + month + "/" +
+                                    (day < 10 ? '0' : '') + day;
                                 return output;
                             };
-                            function next()
-                            {
+
+                            function next() {
                                 var d = new Date();
                                 var month = 12;
                                 var day = 31;
-                                var output = d.getFullYear() + "/"
-                                            + (month<10 ? '0' : '') + month + "/"
-                                            + (day<10 ? '0' : '') + day;
+                                var output = d.getFullYear() + "/" +
+                                    (month < 10 ? '0' : '') + month + "/" +
+                                    (day < 10 ? '0' : '') + day;
                                 return output;
                             };
                             $('#datetimepicker1').datetimepicker({
-                                format:'Y-m-d H:i',
+                                format: 'Y-m-d H:i',
                                 // timepicker:true,
-                                minDate:now(),
-                                maxDate:next(),
+                                minDate: now(),
+                                maxDate: next(),
                                 // datepicker:false,
                                 // allowTimes:[
                                 // '11:00', '13:00', '15:00', 
@@ -48,10 +47,10 @@ Create Schedule for Student's Contributions
                                 // ]
                             });
                             $('#datetimepicker2').datetimepicker({
-                                format:'Y-m-d H:i',
+                                format: 'Y-m-d H:i',
                                 // timepicker:true,
-                                minDate:now(),
-                                maxDate:next(),
+                                minDate: now(),
+                                maxDate: next(),
                                 // datepicker:false,
                                 // allowTimes:[
                                 // '11:00', '13:00', '15:00', 
@@ -59,10 +58,10 @@ Create Schedule for Student's Contributions
                                 // ]
                             });
                             $('#datetimepicker3').datetimepicker({
-                                format:'Y-m-d H:i',
+                                format: 'Y-m-d H:i',
                                 // timepicker:true,
-                                minDate:now(),
-                                maxDate:next(),
+                                minDate: now(),
+                                maxDate: next(),
                                 // datepicker:false,
                                 // allowTimes:[
                                 // '11:00', '13:00', '15:00', 
@@ -73,6 +72,14 @@ Create Schedule for Student's Contributions
                     </script>
                     <button type="submit" class="btn btn-md btn-primary pull-right">Create</button>
                 </form>
+            </div>
+        </section>
+    </div>
+    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+        <section class="panel panel-default">
+            <header class="panel-heading font-bold text-center">Usage</header>
+            <div class="panel-body">
+                {% include 'date/snippets/schedule-guide.html' %}
             </div>
         </section>
     </div>

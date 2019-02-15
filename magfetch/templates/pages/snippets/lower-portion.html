@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-lg-6">
+    {% if not get_announcement == None %}
+      {% include 'pages/snippets/chunks/announcement.html' %}
+    {% endif %}
+    {% include 'pages/snippets/chunks/chat.html' %}
+  </div>
+  <div class="col-lg-6">
+    {% include 'pages/snippets/chunks/comment.html' %}
+  </div>
+</div>
