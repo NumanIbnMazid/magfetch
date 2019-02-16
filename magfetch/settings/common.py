@@ -12,6 +12,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Third Party Apps
     'widget_tweaks',
+    'django_cool_paginator',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
@@ -20,6 +21,7 @@ INSTALLED_APPS = [
     'system_data',
     'suspicious',
     'utils',
+    'contribution',
 ]
 
 SITE_ID = 1

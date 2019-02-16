@@ -45,3 +45,31 @@
 input[type="date"] {
     line-height: 100% !important;
 }
+
+.c-text-primary{
+  color: #1F6DBC;
+}
+
+.c-text-secondary{
+  color: #646B71;
+}
+
+.c-text-dark{
+  color: #000001;
+}
+
+.c-text-info{
+  color: #1DAFC6;
+}
+
+.c-text-success{
+  color: #1BBD5C;
+}
+
+.c-text-warning{
+  color: #AC780F;
+}
+
+.c-text-danger{
+  color: #BC1F1F;
+}
