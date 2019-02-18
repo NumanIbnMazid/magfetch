@@ -13,20 +13,23 @@
 
 <!DOCTYPE html>
 <html lang="en" class="app">
-<head>
-  <!-- meta tags -->
-  {% include "snippets/meta_tags.html" %}
-  <title>
+
+  <head>
+    <!-- meta tags -->
+    {% include "snippets/meta_tags.html" %}
+    <title>
       {% block head_title %}magFetch{% endblock %} | magFetch Magazine Collection Management System |
-  </title>
-  <!-- css files -->
-  {% include "snippets/css.html" %}
-</head>
-<body>
-  {% if is_ST %}
-  {% include 'base-keeper/landing-base-keeper.html' %}
-  {% else %}
-{% include 'base-keeper/landing-base-keeper.html' %}
-{% endif %}
-</body>
+    </title>
+    <!-- css files -->
+    {% include "snippets/css.html" %}
+  </head>
+
+  <body>
+    {% if is_ST %}
+    {% include 'base-keeper/landing-base-keeper.html' %}
+    {% else %}
+    {% include 'base-keeper/base-keeper.html' %}
+    {% endif %}
+  </body>
+
 </html>
