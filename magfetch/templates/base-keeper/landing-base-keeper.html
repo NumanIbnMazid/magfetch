@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+
+    <head>
+        <!-- meta tags -->
+        {% include "snippets/meta_tags.html" %}
+        <title>
+            {% block head_title %}magFetch{% endblock %} | magFetch Magazine Collection Management System |
+        </title>
+        <!-- css files -->
+        {% include "landing/css.html" %}
+    </head>
+
+    <body>
+
+        <!-- header -->
+        {% include 'landing/header.html' %}
+        <!-- / header -->
+        <section id="content">
+            <div class="bg-dark lt">
+                <div class="container">
+                    <div class="m-b-sm m-t-sm text-center">
+                        <h4 class="m-b-none">
+                            {% block page_title %}{% endblock %}
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white b-b b-light">
+                <div class="container">
+                    <ul class="breadcrumb no-border bg-empty m-b-none m-l-n-sm">
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li class="active">
+                            {% block breadcrumb %}{% endblock %}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- development-notice -->
+            {% include 'snippets/notice.html' %}
+            <!-- messages -->
+            {% include 'snippets/messages.html' %}
+            <div class="container m-t-lg m-b-lg">
+                <!-- main content -->
+                {% block content %}{% endblock %}
+            </div>
+        </section>
+
+        <!-- footer -->
+        {% include 'landing/footer.html' %}
+        <!-- / footer -->
+
+        <!-- javascript files -->
+        {% include "landing/js.html" %}
+
+    </body>
+
+</html>
