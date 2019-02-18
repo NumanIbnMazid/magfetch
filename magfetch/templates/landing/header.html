@@ -27,23 +27,7 @@
                     </a>
                     <ul class="dropdown-menu animated fadeInRight">
                         <span class="arrow top"></span>
-                        {% if not user.profile.role == None %}
-                        <li class="text-center">
-                            <i>
-                                Role:
-                                <p class="text-info">
-                                    {{ user.profile.role }}
-                                </p>
-
-                                {% if not user.profile.faculty == None %}
-                                <br> Faculty:
-                                <p class="text-primary">
-                                    {{ user.profile.faculty.title }}
-                                </p>
-                                {% endif %}
-                            </i>
-                        </li>
-                        {% endif %}
+                        
                         <li>
                             <a href="{% url 'account_change_password' %}">
                                 <i class="fa fa-edit"></i> Change Password
