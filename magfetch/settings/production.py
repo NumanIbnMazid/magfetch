@@ -1,7 +1,7 @@
 from magfetch.settings.common import *
 import django_heroku
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 SECRET_KEY = os.environ.get('SECRET_KEY')
 ALLOWED_HOSTS = ['magfetch.herokuapp.com', '.magfetch.com']
