@@ -36,6 +36,7 @@ AUTHENTICATION_BACKENDS = (
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', # WhiteNoise
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -144,11 +145,14 @@ MAX_UPLOAD_SIZE = 2621440
 
 
 # Static Files
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATIC_ROOT = os.path.join('static_cdn', 'static_root')
+# MEDIA_ROOT = os.path.join('static_cdn', 'media_root')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles', 'static_root')
 STATIC_URL = '/static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'staticfiles', 'media_root')
 MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static_proj'),
 ]
-STATIC_ROOT = os.path.join('static_cdn', 'static_root')
-MEDIA_ROOT = os.path.join('static_cdn', 'media_root')

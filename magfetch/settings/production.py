@@ -12,6 +12,11 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_USE_TLS = True
 
+ADMINS = (
+    ('admin', 'admin@magfetch.com'),
+)
+MANAGERS = ADMINS
+
 # HEROKU DEPLOYMENT
 
 CORS_REPLACE_HTTPS_REFERER      = True
