@@ -21,9 +21,11 @@
       {% block head_title %}magFetch{% endblock %} | magFetch Magazine Collection Management System |
     </title>
     <!-- css files -->
-
+    {% if is_ST %}
+    {% include "landing/css.html" %}
+    {% else %}
     {% include "snippets/css.html" %}
-
+    {% endif %}
 
   </head>
 
@@ -35,10 +37,15 @@
     {% endif %}
 
 
+    {% if is_ST %}
+    <!-- footer -->
+    {% include 'landing/footer.html' %}
+    <!-- javascript files -->
 
+    {% else %}
     <!-- javascript files -->
     {% include "snippets/js.html" %}
- 
+    {% endif %}
 
   </body>
 
