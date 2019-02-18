@@ -23,11 +23,3 @@ class HomeView(View):
             if profile.user.is_staff == True:
                 return render(request, "pages/home.html")
         return render(request, "landing/pages/home.html")
-
-
-def custom_404(request):
-    return render(request, '404.html', {}, status=404)
-
-
-def custom_500(request):
-    return render(request, '404.html', {}, status=500)

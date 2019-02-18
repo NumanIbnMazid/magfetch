@@ -1,16 +1,5 @@
 
 import os
-import dj_database_url
-from django.core.exceptions import ImproperlyConfigured
-
-
-def get_env_variable(var_name):
-    """ Get the environment variable or return exception """
-    try:
-        return os.environ[var_name]
-    except KeyError:
-        error_msg = "Set the %s environment variable" % var_name
-        raise ImproperlyConfigured(error_msg)
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -47,7 +36,6 @@ AUTHENTICATION_BACKENDS = (
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', # WhiteNoise
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -158,12 +146,9 @@ MAX_UPLOAD_SIZE = 2621440
 # Static Files
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-# STATIC_ROOT = os.path.join('static_cdn', 'static_root')
-# MEDIA_ROOT = os.path.join('static_cdn', 'media_root')
-PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles/')
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static_proj'),
 ]
+STATIC_ROOT = os.path.join('static_cdn', 'static_root')
+MEDIA_ROOT = os.path.join('static_cdn', 'media_root')
