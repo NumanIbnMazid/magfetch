@@ -17,7 +17,9 @@ Announcement Details
       <strong class="h4">
         {{ object.subject }}
       </strong>
-      
+      <label class="label bg-info m-l-xs">
+        <span class="text-dark">{{ object.created_by.user.profile.get_role }}</span>
+      </label>
       <span class="text-muted m-l-sm pull-right">
         <i class="fa fa-clock-o"></i>
         {{ object.updated_at|timesince }} ago
