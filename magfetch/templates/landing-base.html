@@ -1,7 +1,14 @@
 {% load tags %}
 {% if request.user.is_authenticated %}
+
+{% is_MM_tag as is_MM %}
+{% is_AD_tag as is_AD %}
+{% is_MC_tag as is_MC %}
+{% is_FG_tag as is_FG %}
+{% is_ST_tag as is_ST %}
 {% get_schedule_tag as get_schedule %}
 {% get_announcement_tag as get_announcement %}
+
 {% endif %}
 
 <!DOCTYPE html>
