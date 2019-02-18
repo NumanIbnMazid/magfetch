@@ -28,7 +28,9 @@
     <section>
       <section class="hbox stretch">
         <!-- .aside -->
+        {% if not is_ST %}
         {% include 'snippets/sidebar.html' %}
+        {% endif %}
         <section id="content">
           <section class="vbox">
             <section class="scrollable padder m-b-lg">
