@@ -10,13 +10,9 @@
         <i class="fa fa-bullhorn font-25"></i>
       </span>
       <div class="media-body">
-        <div class="pull-right media-xs text-center text-muted">
-          <strong class="h4"></strong><br>
-          <small class="label bg-light">{{ announcement.updated_at|timesince }} ago</small>
-        </div>
         <a href="{% url 'utils:announcement_detail' slug=announcement.slug %}" class="h5">
           <strong>
-          {{ announcement.subject }}
+            {{ announcement.subject }}
           </strong>
         </a>
         <small class="block">
@@ -28,6 +24,10 @@
         <small class="block m-t-sm">
           {{ announcement.message|safe|truncatechars_html:66 }}
         </small>
+        <div class="pull-right media-xs text-center text-muted">
+          <strong class="h4"></strong><br>
+          <small class="label bg-light">{{ announcement.updated_at|timesince }} ago</small>
+        </div>
       </div>
     </article>
     {% endif %}

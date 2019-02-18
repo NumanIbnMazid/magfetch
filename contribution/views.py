@@ -2,9 +2,13 @@ from django.shortcuts import render
 # Models Import 
 from .models import DocumentCategory
 from accounts.models import UserProfile
+from system_data.models import Date
 from suspicious.models import Suspicious
 # Form import
-from .forms import DocumentCategoryCreateForm
+from .forms import (
+    DocumentCategoryCreateForm, 
+    DocumentUploadForm
+)
 # generic view import
 from django.views.generic import CreateView, UpdateView, DeleteView
 # other import
@@ -14,6 +18,8 @@ from django.urls import reverse
 from django.core.paginator import Paginator
 from django import forms
 from django.contrib import messages
+import datetime
+
 
 # Document Category Create View
 @method_decorator(login_required, name='dispatch')
@@ -197,3 +203,61 @@ class DocumentCategoryDeleteView(DeleteView):
                                  )
             return HttpResponseRedirect(reverse('home'))
         return super(DocumentCategoryDeleteView, self).dispatch(request, *args, **kwargs)
+
+
+
+# Document Upload View
+@method_decorator(login_required, name='dispatch')
+class DocumentUploadView(CreateView):
+    template_name = 'document/upload.html'
+    form_class = DocumentUploadForm
+
+    def form_valid(self, form):
+        user = self.request.user
+        profile = UserProfile.objects.filter(user=user).first()
+        form.instance.user = profile
+        messages.add_message(self.request, messages.SUCCESS,
+                                "Your article has been uploaded successfully!!!")
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('home')
+
+    def user_passes_test(self, request):
+        user = request.user
+        if UserProfile.objects.filter(user=user).first().role == 4:
+            return True
+        return False
+
+    def dispatch(self, request, *args, **kwargs):
+        instance_user = self.request.user
+        date_filter = Date.objects.all()
+        if date_filter.exists():
+            today = datetime.datetime.today()
+            date = date_filter.first()
+            if today > date.closure_date:
+                messages.add_message(self.request, messages.ERROR,
+                                     "Contribution submitting date has been expired! You are not allowed."
+                                     )
+        else:
+            messages.add_message(self.request, messages.ERROR,
+                                 "No Schedule Added for collecting contributions for magazine! Please wait for the announcement."
+                                 )
+            return HttpResponseRedirect(reverse('home'))
+        if not self.user_passes_test(request):
+            suspicious_user = Suspicious.objects.filter(user=instance_user)
+            if suspicious_user.exists():
+                suspicious_user_instance = Suspicious.objects.get(
+                    user=instance_user)
+                current_attempt = suspicious_user_instance.attempt
+                total_attempt = current_attempt + 1
+                update_time = datetime.datetime.now()
+                suspicious_user.update(
+                    attempt=total_attempt, last_attempt=update_time)
+            else:
+                Suspicious.objects.get_or_create(user=instance_user)
+            messages.add_message(self.request, messages.ERROR,
+                                 "You are not allowed. Your account is being tracked for suspicious activity !"
+                                 )
+            return HttpResponseRedirect(reverse('home'))
+        return super(DocumentUploadView, self).dispatch(request, *args, **kwargs)

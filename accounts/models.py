@@ -25,13 +25,15 @@ class UserProfile(models.Model):
     MARKETING_COORDINATOR   = 2
     FACULTY_GUEST           = 3
     STUDENT                 = 4
+    SITE_GUEST              = 7
 
     USER_ROLE_CHOICES       = (
         (MARKETING_MANAGER, 'Marketing Manager'),
         (ADMINISTRATOR, 'Administrator'),
         (MARKETING_COORDINATOR, 'Marketing Coordinator'),
         (FACULTY_GUEST, 'Faculty Guest'),
-        (STUDENT, 'Student')
+        (STUDENT, 'Student'),
+        (SITE_GUEST, 'Site Guest')
     )
 
     user        = models.OneToOneField(
@@ -39,7 +41,7 @@ class UserProfile(models.Model):
     )
     slug        = models.SlugField(unique=True, max_length=255, verbose_name=('slug'))
     role        = models.PositiveSmallIntegerField(
-        choices = USER_ROLE_CHOICES, null=True, blank=True, default=4, verbose_name=('role')
+        choices = USER_ROLE_CHOICES, null=True, blank=True, default=7, verbose_name=('role')
     )
     faculty     = models.ForeignKey(Faculty, null=True, blank=True, on_delete=models.CASCADE, related_name='user_faculty', verbose_name=("faculty"))
     created_at  = models.DateTimeField(auto_now_add=True, verbose_name=('created at'))

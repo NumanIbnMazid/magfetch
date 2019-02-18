@@ -1,0 +1,62 @@
+{% extends 'landing-base.html' %}
+
+{% block head_title %}{% block page_title %}{% block breadcrumb %}
+Upload Document
+{% endblock %}{% endblock %}{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+        <section class="panel panel-default">
+            <header class="panel-heading font-bold text-center">Upload Document</header>
+            <div class="panel-body">
+                <script type="text/javascript">
+                    function checkForm(form) {
+                        if (!form.terms.checked) {
+                            $('#message').html('Please Read and Check Terms and Conditions').css('color', '#B93232')
+                                .css('background', '#FEF5C4').css('font-size', '15px');
+                            $('#submit').css('display', 'none');
+                            form.terms.focus();
+                            return false;
+                        }
+                        return true;
+                    }
+
+                    function clickCheck(e) {
+                        var agree = $('#agree').val();
+                        if (agree == 'check') {
+                            $('#message').html('')
+                            $('#submit').css('display', 'inline');
+                        } else {
+                            $('#message').html('Please Read and Check Terms and Conditions').css('color', '#B93232')
+                                .css('background', '#FEF5C4').css('font-size', '15px');
+                            $('#submit').css('display', 'none');
+                        }
+                    }
+                </script>
+                <form class="form" method="POST" enctype="multipart/form-data" onsubmit="return checkForm(this);">
+                    {% csrf_token %}
+                    {% include 'snippets/form.html' %}
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="terms" value="check" id="agree" onclick="clickCheck(event)">
+                            I have read and agree to the
+                            <a href="#">Terms and Conditions</a>
+                            <br>
+                            <p id="message" class="text-center m-t-sm"></p>
+                        </label>
+                    </div>
+                    <div id="submit">
+                        <button type="submit" class="btn btn-sm btn-primary pull-left">Upload</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+        <h1>Document List</h1>
+    </div>
+</div>
+
+{% endblock %}

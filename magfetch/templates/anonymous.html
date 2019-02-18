@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" class="app">
+
+    <head>
+        <!-- meta tags -->
+        {% include "snippets/meta_tags.html" %}
+        <title>
+            {% block head_title %}magFetch{% endblock %} | magFetch Magazine Collection Management System |
+        </title>
+        <!-- css files -->
+        {% include "snippets/css.html" %}
+    </head>
+
+    <body>
+        <section id="content">
+            <div class="row m-n">
+                <div class="col-sm-4 col-sm-offset-4">
+                    <div class="text-center m-b-lg">
+                        <h1 class="h text-white animated fadeInDownBig">Not Allowed</h1>
+                    </div>
+                    <div class="list-group m-b-sm bg-white m-b-lg">
+                        <h1 class="text-danger">
+                            You are not allowed to this site !
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- footer -->
+        <footer id="footer">
+            <div class="text-center padder clearfix">
+                <p>
+                    <small>
+                        Copyright © {% now "F Y" %} megFetch. All rights reserved. Developed by team
+                        <span class="text-primary">floppyFive</span>
+                    </small>
+                </p>
+            </div>
+        </footer>
+        <!-- / footer -->
+
+        <!-- javascript files -->
+        {% include "snippets/js.html" %}
+
+    </body>
+
+</html>

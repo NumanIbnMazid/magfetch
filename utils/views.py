@@ -1,6 +1,7 @@
 from django.shortcuts import render
 # Model Import
 from .models import Announcement
+from accounts.models import UserProfile
 # Generic View imports
 from django.views.generic import DetailView
 # Method Decorator imports
@@ -21,3 +22,13 @@ class AnnouncementDetailView(DetailView):
             announcement    = announcement_filter.first()
             return announcement
         return None
+
+    def get_context_data(self, **kwargs):
+        context = super(AnnouncementDetailView,self).get_context_data(**kwargs)
+        user = self.request.user
+        profile = UserProfile.objects.filter(user=user).first()
+        if profile.role == 4:
+            context['base_template'] = 'landing-base.html'
+        else:
+            context['base_template'] = 'base.html'
+        return context

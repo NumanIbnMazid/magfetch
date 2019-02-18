@@ -1,5 +1,5 @@
 {% if messages %}
-<div class="messages">
+<div class="messages text-center font-bold font-15">
     {% for message in messages %}
     <div class="alert alert-{% if message.tags %}{{ message.tags }}{% else %}info{% endif %} alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>

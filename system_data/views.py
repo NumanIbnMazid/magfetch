@@ -34,7 +34,7 @@ class DateCreateView(CreateView):
         closure_date        = form.instance.closure_date
         final_closure_date  = form.instance.final_closure_date
         validated_closure_date          = (start_date + datetime.timedelta(days=15))
-        validated_final_closure_date    = (validated_closure_date + datetime.timedelta(days=3))
+        validated_final_closure_date    = (validated_closure_date + datetime.timedelta(days=14))
         # Validate Closure Date
         if not closure_date >= validated_closure_date:
             form.add_error(
@@ -47,7 +47,7 @@ class DateCreateView(CreateView):
         if not final_closure_date >= validated_final_closure_date:
             form.add_error(
                 'final_closure_date', forms.ValidationError(
-                    "Difference between Closure Date and Final Closure Date must be at least 3 days!"
+                    "Difference between Closure Date and Final Closure Date must be at least 14 days!"
                     )
                 )
             return super().form_invalid(form)
@@ -63,7 +63,7 @@ class DateCreateView(CreateView):
         slug        = category + '-' + time_str_mix_slug()
         identifier  = 'created_schedule_%s' % today.year
         subject     = "New Schedule has been created for academic year %s" %(academic_year)
-        message     = "Schedule for submitting contributions for academic year %s :<br> Start Date: %s <br> Closure Date: %s <br> Final Closure Date: %s <br> <hr>Submitting new contributions will start from Start Date and will continue until Closure Date. After Closure Date no new contributions will not be allowed to submit but those can be updated until Final Closure Date.<hr>" %(academic_year,start_date.strftime("%m/%d/%Y %I:%M %p"),closure_date.strftime("%m/%d/%Y %I:%M %p"), final_closure_date.strftime("%m/%d/%Y %I:%M %p"))
+        message     = "Schedule for submitting contributions of academic year %s :<br> <strong>Start Date</strong>: %s <br> <strong>Closure Date</strong>: %s <br> <strong>Final Closure Date</strong>: %s <br> <hr>Submitting new contributions will start from <strong>Start Date</strong> and will continue until <strong>Closure Date</strong>. After <strong>Closure Date</strong> no new contributions will not be allowed to submit but submitted contributions can be updated until <strong>Final Closure Date</strong>.<hr>" %(academic_year,start_date.strftime("%m/%d/%Y %I:%M %p"),closure_date.strftime("%m/%d/%Y %I:%M %p"), final_closure_date.strftime("%m/%d/%Y %I:%M %p"))
         status      = status
         announcement_filter = Announcement.objects.filter(category__iexact=category, identifier__iexact=identifier)
         if announcement_filter.exists():
@@ -172,7 +172,7 @@ class DateUpdateView(UpdateView):
         closure_date        = form.instance.closure_date
         final_closure_date  = form.instance.final_closure_date
         validated_closure_date          = (start_date + datetime.timedelta(days=15))
-        validated_final_closure_date    = (validated_closure_date + datetime.timedelta(days=3))
+        validated_final_closure_date    = (validated_closure_date + datetime.timedelta(days=14))
         # Validate Closure Date
         if not closure_date >= validated_closure_date:
             form.add_error(
@@ -185,7 +185,7 @@ class DateUpdateView(UpdateView):
         if not final_closure_date >= validated_final_closure_date:
             form.add_error(
                 'final_closure_date', forms.ValidationError(
-                    "Difference between Closure Date and Final Closure Date must be at least 3 days!"
+                    "Difference between Closure Date and Final Closure Date must be at least 14 days!"
                     )
                 )
             return super().form_invalid(form)
@@ -198,7 +198,7 @@ class DateUpdateView(UpdateView):
             slug        = category + '-' + time_str_mix_slug()
             identifier  = 'updated_schedule_%s' % today.year
             subject     = "Schedule has been updated for academic year %s" %(academic_year)
-            message     = "Schedule for submitting contributions for academic year %s :<br> Start Date: %s <br> Closure Date: %s <br> Final Closure Date: %s <br> <hr>Submitting new contributions will start from Start Date and will continue until Closure Date. After Closure Date no new contributions will not be allowed to submit but those can be updated until Final Closure Date.<hr>" %(academic_year,start_date.strftime("%m/%d/%Y %I:%M %p"),closure_date.strftime("%m/%d/%Y %I:%M %p"), final_closure_date.strftime("%m/%d/%Y %I:%M %p"))
+            message     = "Schedule for submitting contributions of academic year %s :<br> <strong>Start Date</strong>: %s <br> <strong>Closure Date</strong>: %s <br> <strong>Final Closure Date</strong>: %s <br> <hr>Submitting new contributions will start from <strong>Start Date</strong> and will continue until <strong>Closure Date</strong>. After <strong>Closure Date</strong> no new contributions will not be allowed to submit but submitted contributions can be updated until <strong>Final Closure Date</strong>.<hr>" %(academic_year,start_date.strftime("%m/%d/%Y %I:%M %p"),closure_date.strftime("%m/%d/%Y %I:%M %p"), final_closure_date.strftime("%m/%d/%Y %I:%M %p"))
             status      = status
             announcement_filter = Announcement.objects.filter(category__iexact=category, identifier__iexact=identifier)
             if announcement_filter.exists():
