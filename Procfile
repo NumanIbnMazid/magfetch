@@ -1,1 +1,1 @@
-web: python manage.py collectstatic --noinput; gunicorn magfetch.wsgi
+web: gunicorn magfetch.wsgi

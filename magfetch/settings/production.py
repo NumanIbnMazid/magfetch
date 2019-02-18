@@ -19,6 +19,11 @@ ADMINS = (
 )
 MANAGERS = ADMINS
 
+if DEBUG:
+   STATIC_ROOT = os.path.join(BASE_DIR, '/static')
+else:
+   STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 # HEROKU DEPLOYMENT
 
 CORS_REPLACE_HTTPS_REFERER      = True
