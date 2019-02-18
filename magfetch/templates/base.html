@@ -13,24 +13,40 @@
 
 <!DOCTYPE html>
 <html lang="en" class="app">
-<head>
-  <!-- meta tags -->
-  {% include "snippets/meta_tags.html" %}
-  <title>
+
+  <head>
+    <!-- meta tags -->
+    {% include "snippets/meta_tags.html" %}
+    <title>
       {% block head_title %}magFetch{% endblock %} | magFetch Magazine Collection Management System |
-  </title>
-  <!-- css files -->
-  {% include "snippets/css.html" %}
-</head>
-<body>
-  {% if is_ST %}
-  {% include 'base-keeper/landing-base-keeper.html' %}
-  {% else %}
-  {% include 'base-keeper/base-keeper.html' %}
-  {% endif %}
+    </title>
+    <!-- css files -->
+    {% if is_ST %}
+    {% include "landing/css.html" %}
+    {% else %}
+    {% include "snippets/css.html" %}
+    {% endif %}
 
-  <!-- javascript files -->
-  {% include "snippets/js.html" %}
+  </head>
 
-</body>
+  <body>
+    {% if is_ST %}
+    {% include 'base-keeper/landing-base-keeper.html' %}
+    {% else %}
+    {% include 'base-keeper/base-keeper.html' %}
+    {% endif %}
+
+
+    {% if is_ST %}
+    <!-- footer -->
+    {% include 'landing/footer.html' %}
+    <!-- javascript files -->
+    {% include "landing/js.html" %}
+    {% else %}
+    <!-- javascript files -->
+    {% include "snippets/js.html" %}
+    {% endif %}
+
+  </body>
+
 </html>
