@@ -30,10 +30,12 @@
                         {% if not user.profile.role == None %}
                         <li class="text-center">
                             <i>
+                                {% if not user.profile.get_role == None %}
                                 Role:
                                 <p class="text-info">
                                     {{ user.profile.get_role }}
                                 </p>
+                                {% endif %}
 
                                 {% if not user.profile.faculty == None %}
                                 <br> Faculty:

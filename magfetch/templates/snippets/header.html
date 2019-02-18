@@ -17,7 +17,7 @@
             <i class="fa fa-cog"></i>
         </a>
     </div>
-    
+
     {% include 'snippets/chunks/header-left.html' %}
 
     <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user">
@@ -51,11 +51,13 @@
                 {% if not user.profile.role == None %}
                 <li class="text-center">
                     <i>
-                        Role: 
+                        {% if not user.profile.get_role == None %}
+                        Role:
                         <p class="text-info">
                             {{ user.profile.get_role }}
                         </p>
-                        
+                        {% endif %}
+
                         {% if not user.profile.faculty == None %}
                         <br> Faculty:
                         <p class="text-primary">
