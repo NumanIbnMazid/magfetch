@@ -15,12 +15,12 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 DEBUG_COLLECTSTATIC = os.environ.get('DEBUG_COLLECTSTATIC')  # SET to 1
 DISABLE_COLLECTSTATIC = os.environ.get('DISABLE_COLLECTSTATIC')  # SET to 1
 
-ADMINS = (
-    ('admin', 'admin@magfetch.com'),
-)
-MANAGERS = ADMINS
+DATABASES['default'] = dj_database_url.config()
+# ADMINS = (
+#     ('admin', 'admin@magfetch.com'),
+# )
+# MANAGERS = ADMINS
 
-COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
 # HEROKU DEPLOYMENT
 
 CORS_REPLACE_HTTPS_REFERER      = True
