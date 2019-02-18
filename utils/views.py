@@ -23,12 +23,12 @@ class AnnouncementDetailView(DetailView):
             return announcement
         return None
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(AnnouncementDetailView,self).get_context_data(**kwargs)
-    #     user = self.request.user
-    #     profile = UserProfile.objects.filter(user=user).first()
-    #     if profile.role == 4:
-    #         context['base_template'] = 'landing-base.html'
-    #     else:
-    #         context['base_template'] = 'base.html'
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super(AnnouncementDetailView,self).get_context_data(**kwargs)
+        user = self.request.user
+        profile = UserProfile.objects.filter(user=user).first()
+        if profile.role == 4:
+            context['base_template'] = 'landing-base.html'
+        else:
+            context['base_template'] = 'base.html'
+        return context
