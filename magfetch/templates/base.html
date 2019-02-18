@@ -32,41 +32,7 @@
 
     {% if is_ST %}
 
-
-    <!-- header -->
-    {% include 'landing/header.html' %}
-    <!-- / header -->
-    <section id="content">
-      <div class="bg-dark lt">
-        <div class="container">
-          <div class="m-b-sm m-t-sm text-center">
-            <h4 class="m-b-none">
-              {% block page_title %}{% endblock %}
-            </h4>
-          </div>
-        </div>
-      </div>
-      <div class="bg-white b-b b-light">
-        <div class="container">
-          <ul class="breadcrumb no-border bg-empty m-b-none m-l-n-sm">
-            <li><a href="{% url 'home' %}">Home</a></li>
-            <li class="active">
-              {% block breadcrumb %}{% endblock %}
-            </li>
-          </ul>
-        </div>
-      </div>
-      <!-- development-notice -->
-      {% include 'snippets/notice.html' %}
-      <!-- messages -->
-      {% include 'snippets/messages.html' %}
-      <div class="container m-t-lg m-b-lg">
-        <!-- main content -->
-        {% block content %}{% endblock %}
-      </div>
-    </section>
-
-
+    {% include 'base-keeper/landing-base-keeper.html' %}
 
     {% else %}
 
