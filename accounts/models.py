@@ -60,6 +60,7 @@ class UserProfile(models.Model):
         return name
 
     def get_role(self):
+        role = None
         if self.role == 0:
             role = "Marketing Manager"
         if self.role == 1:
