@@ -1,7 +1,7 @@
 from magfetch.settings.common import *
 import django_heroku
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECRET_KEY = 'qrd526_f3-yqr6)lf+zp6onky2oj$@6el!ua4fa2f3a(+ij$$@'
