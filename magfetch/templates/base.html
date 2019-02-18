@@ -24,7 +24,9 @@
 </head>
 <body>
   <section class="vbox">
+    {% if not is_ST %}
     {% include 'snippets/header.html' %}
+    {% endif %}
     <section>
       <section class="hbox stretch">
         <!-- .aside -->
