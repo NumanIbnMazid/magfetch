@@ -2,7 +2,7 @@ from magfetch.settings.common import *
 import django_heroku
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 ALLOWED_HOSTS = ['magfetch.herokuapp.com', '.magfetch.com']
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
