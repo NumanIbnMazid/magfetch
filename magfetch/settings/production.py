@@ -4,7 +4,8 @@ import django_heroku
 SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
-ALLOWED_HOSTS = ['magfetch.herokuapp.com', '.magfetch.com']
+ALLOWED_HOSTS = ['*',]
+# ALLOWED_HOSTS = ['magfetch.herokuapp.com', '.magfetch.com']
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True

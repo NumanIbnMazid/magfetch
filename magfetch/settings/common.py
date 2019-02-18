@@ -145,7 +145,7 @@ MAX_UPLOAD_SIZE = 2621440
 
 
 # Static Files
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # STATIC_ROOT = os.path.join('static_cdn', 'static_root')
 # MEDIA_ROOT = os.path.join('static_cdn', 'media_root')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles', 'static_root')
