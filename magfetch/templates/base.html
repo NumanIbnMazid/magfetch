@@ -12,7 +12,7 @@
 {% endif %}
 
 <!DOCTYPE html>
-<html lang="en" class="app">
+<html lang="en" {% if not is_ST %} class="app" {% endif %}>
 
   <head>
     <!-- meta tags -->
@@ -21,52 +21,147 @@
       {% block head_title %}magFetch{% endblock %} | magFetch Magazine Collection Management System |
     </title>
     <!-- css files -->
+    {% if is_ST %}
+    {% include "landing/css.html" %}
+    {% else %}
     {% include "snippets/css.html" %}
+    {% endif %}
   </head>
 
   <body>
-
+    {% if not is_ST %}
     <section class="vbox">
       {% include 'snippets/header.html' %}
       <section>
         <section class="hbox stretch">
           <!-- .aside -->
           {% include 'snippets/sidebar.html' %}
+          {% endif %}
+
+          {% if is_ST %}
+          <!-- header -->
+          {% include 'landing/header.html' %}
+          {% endif %}
+
+
+
           <section id="content">
+
+            {% if not is_ST %}
             <section class="vbox">
               <section class="scrollable padder m-b-lg">
+                {% endif %}
+
+
                 <!-- .breadcrumb -->
-                <ul class="breadcrumb no-border no-radius b-b b-light pull-in">
-                  <li><a href="{% url 'home' %}"><i class="fa fa-home"></i> Home</a></li>
-                  <li class="active">
-                    {% block breadcrumb %}{% endblock %}
-                  </li>
-                </ul>
-                <!-- .page-title -->
-                <div class="m-b-md">
-                  <h3 class="m-b-none">
-                    {% block page_title %}{% endblock %}
-                  </h3>
+                {% if is_ST %}
+                <div class="bg-white b-b b-light">
+                  <div class="container">
+                    <ul class="breadcrumb no-border bg-empty m-b-none m-l-n-sm">
+                      <li><a href="{% url 'home' %}">Home</a></li>
+                      <li class="active">
+                        {% endif %}
+
+                        {% if not is_ST %}
+                        <ul class="breadcrumb no-border no-radius b-b b-light pull-in">
+                          <li><a href="{% url 'home' %}"><i class="fa fa-home"></i> Home</a></li>
+                          <li class="active">
+                            {% endif %}
+
+
+                            {% block breadcrumb %}{% endblock %}
+
+
+                            {% if not is_ST %}
+                          </li>
+                        </ul>
+                        {% endif %}
+
+                        {% if is_ST %}
+                      </li>
+                    </ul>
+                  </div>
                 </div>
+                {% endif %}
+
+
+                <!-- .page-title -->
+                {% if is_ST %}
+                <div class="bg-dark lt">
+                  <div class="container">
+                    <div class="m-b-sm m-t-sm text-center">
+                      <h4 class="m-b-none">
+                        {% endif %}
+
+                        {% if not is_ST %}
+                        <div class="m-b-md">
+                          <h3 class="m-b-none">
+                            {% endif %}
+
+
+                            {% block page_title %}{% endblock %}
+
+
+                            {% if not is_ST %}
+                          </h3>
+                        </div>
+                        {% endif %}
+
+                        {% if is_ST %}
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+
                 <!-- development-notice -->
                 {% include 'snippets/notice.html' %}
                 <!-- messages -->
                 {% include 'snippets/messages.html' %}
+
+
                 <!-- main content -->
-                {% block content %}{% endblock %}
+                {% if is_ST %}
+                <div class="container m-t-lg m-b-lg">
+                  {% endif %}
+
+                  {% block content %}{% endblock %}
+
+                  {% if is_ST %}
+                </div>
+                {% endif %}
+
+                {% if not is_ST %}
               </section>
             </section>
             <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
+            {% endif %}
+
+
           </section>
+
+
+          {% if not is_ST %}
           <aside class="bg-light lter b-l aside-md hide" id="notes">
             <div class="wrapper">Notification</div>
           </aside>
         </section>
       </section>
     </section>
+    {% endif %}
+
 
     <!-- javascript files -->
+    {% if is_ST %}
+    <!-- footer -->
+    {% include 'landing/footer.html' %}
+    <!-- javascript files -->
+    {% include "landing/js.html" %}
+    {% else %}
     {% include "snippets/js.html" %}
+    {% endif %}
+
+
 
   </body>
 

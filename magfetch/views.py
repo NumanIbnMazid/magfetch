@@ -22,4 +22,6 @@ class HomeView(View):
                 return render(request, "pages/home.html")
             if profile.user.is_staff == True:
                 return render(request, "pages/home.html")
+            if profile.role == 7:
+                return render(request, "anonymous.html")
         return render(request, "landing/pages/home.html")
