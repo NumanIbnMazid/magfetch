@@ -13,4 +13,4 @@ from accounts.models import UserProfile
 class HomeView(View):
     def get(self, request, *args, **kwargs):
         
-        return render(request, "pages/home.html")
+        return render(request, "landing/pages/home.html")
