@@ -1,7 +1,7 @@
 {% extends 'landing-base.html' %}
 
 {% block head_title %}{% block page_title %}{% block breadcrumb %}
-Upload Document
+Upload Image
 {% endblock %}{% endblock %}{% endblock %}
 
 {% block content %}
@@ -9,7 +9,7 @@ Upload Document
 <div class="row">
     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
         <section class="panel panel-default">
-            <header class="panel-heading font-bold text-center">Upload Document</header>
+            <header class="panel-heading font-bold text-center">Upload Image</header>
             <div class="panel-body">
                 <script type="text/javascript">
                     function checkForm(form) {
@@ -52,13 +52,13 @@ Upload Document
                     </div>
                 </form>
             </div>
-            <a href="{% url 'contribution:image_upload' %}" class="btn btn-sm btn-info pull-right">
-                Upload Image <i class="fa fa-hand-o-left"></i>
+            <a href="{% url 'contribution:document_upload' %}" class="btn btn-sm btn-info pull-right">
+                Upload Document <i class="fa fa-hand-o-left"></i>
             </a>
         </section>
     </div>
     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-        <h1>Document List</h1>
+        <h1>Image List</h1>
     </div>
 </div>
 

@@ -52,7 +52,7 @@ class DateCreateView(CreateView):
                 )
             return super().form_invalid(form)
         # Binding Academic Year
-        form.instance.academic_year = academic_year
+        form.instance.academic_year = today.year
         # Sending Message if SUCCESS
         messages.add_message(self.request, messages.SUCCESS,
             "New Schedule has been created successfully !"
@@ -108,9 +108,7 @@ class DateCreateView(CreateView):
     def dispatch(self, request, *args, **kwargs):
         instance_user   = self.request.user
         today           = datetime.date.today()
-        next_year       = datetime.datetime(year=today.year+1, month=1, day=1)
-        academic_year   = "%s-%s" %(today.strftime("%Y"), next_year.strftime("%Y")[-2:])
-        schedule_filter = Date.objects.filter(academic_year__iexact=academic_year)
+        schedule_filter = Date.objects.filter(academic_year=today.year)
         if schedule_filter.exists():
             messages.add_message(self.request, messages.WARNING,
                 "Already have a Schedule for this academic year! You cannot add more."
@@ -147,12 +145,10 @@ class DateUpdateView(UpdateView):
 
     def get_object(self):
         today               = datetime.date.today()
-        next_year           = datetime.datetime(year=today.year+1, month=1, day=1)
-        academic_year       = "%s-%s" %(today.strftime("%Y"), next_year.strftime("%Y")[-2:])
-        schedule_filter     = Date.objects.filter(academic_year__iexact=academic_year)
+        schedule_filter     = Date.objects.filter(academic_year=today.year)
         if schedule_filter.exists():
             try:
-                schedule    = Date.objects.get(academic_year__iexact=academic_year)
+                schedule = Date.objects.get(academic_year=today.year)
             except Date.DoesNotExist:
                 raise Http404("Not Found !!!")
             except Date.MultipleObjectsReturned:

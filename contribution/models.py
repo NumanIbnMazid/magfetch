@@ -31,6 +31,7 @@ class Document(models.Model):
     )
     document = models.FileField(upload_to=upload_document_path, max_length=100)
     slug = models.SlugField(unique=True, verbose_name='slug')
+    is_selected = models.BooleanField(default=False, verbose_name='is selected')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='created at')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='updated at')
 
@@ -51,6 +52,7 @@ class Image(models.Model):
     title = models.CharField(max_length=30, verbose_name='title')
     image = models.ImageField(upload_to=upload_image_path, max_length=100)
     slug = models.SlugField(unique=True, verbose_name='slug')
+    is_selected = models.BooleanField(default=False, verbose_name='is selected')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='created at')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='updated at')
 

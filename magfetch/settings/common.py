@@ -130,7 +130,8 @@ COOL_PAGINATOR_SIZE             = "SMALL"
 COOL_PAGINATOR_ELASTIC          = "300px"
 
 # File Validation Staffs
-IMAGE_TYPES = ['image']
+IMAGE_TYPES = ['.jpg', '.jpeg', '.png', '.svg']
+DOCUMENT_TYPES = ['.doc', '.docx']
 # 1.5MB - 1621440
 # 2.5MB - 2621440
 # 5MB - 5242880

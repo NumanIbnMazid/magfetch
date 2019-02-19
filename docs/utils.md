@@ -17,3 +17,15 @@
   - Subject     : Text to Display
   - Message     : Description about the Announcement
   - Status      : 0/1
+
+
+++++++++++++++++++++++++ Notification +++++++++++++++++++++++
+# Upload Contribution
+    - sender    : Student
+    - receiver  : Marketing Coordinator(Faculty)
+    - category  : 'uploaded_contribution'
+    - identifier: username_uploaded_contribution
+    - slug      : contribution file slug
+    - subject   : Text To Display
+    - Message   : Description of Notification
+    - has_read  : False

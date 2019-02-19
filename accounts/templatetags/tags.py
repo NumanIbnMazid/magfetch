@@ -59,9 +59,7 @@ def is_ST_tag(context):
 @register.simple_tag(takes_context=True)
 def get_schedule_tag(context):
     today           = datetime.datetime.now()
-    next_year       = datetime.datetime(year=today.year+1, month=1, day=1)
-    academic_year   = "%s-%s" %(today.strftime("%Y"), next_year.strftime("%Y")[-2:])
-    schedule_filter = Date.objects.filter(academic_year__iexact=academic_year)
+    schedule_filter = Date.objects.filter(academic_year=today.year)
     if schedule_filter.exists():
         schedule    = schedule_filter.first()
         return schedule
