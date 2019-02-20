@@ -58,8 +58,8 @@ class DocumentUploadForm(forms.ModelForm):
             file_extension = os.path.splitext(document.name)[1]
             allowed_types = settings.DOCUMENT_TYPES
             content_type = document.content_type.split('/')[0]
-            name_length = len(document)
-            if name_length > 100:
+            file_name_length = len(os.path.splitext(document.name)[0])
+            if file_name_length > 100:
                 raise forms.ValidationError("File name is too long!!! Please rename the file and then try to upload again.")
             if not file_extension in allowed_types:
                 if file_extension in settings.IMAGE_TYPES:
@@ -107,9 +107,10 @@ class ImageUploadForm(forms.ModelForm):
             file_extension = os.path.splitext(image.name)[1]
             allowed_types = settings.IMAGE_TYPES
             content_type = image.content_type.split('/')[0]
-            name_length = len(image)
-            if name_length > 100:
-                raise forms.ValidationError("File name is too long!!! Please rename the file and then try to upload again.")
+            file_name_length = len(os.path.splitext(document.name)[0])
+            if file_name_length > 100:
+                raise forms.ValidationError(
+                    "File name is too long!!! Please rename the file and then try to upload again.")
             if not file_extension in allowed_types:
                 if file_extension in settings.DOCUMENT_TYPES:
                     url = "<a href='/contribution/document/upload/'>here</a>"
