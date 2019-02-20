@@ -45,8 +45,8 @@ class Notification(models.Model):
     identifier = models.CharField(
         max_length=200, null=True, blank=True, verbose_name=('identifier'))
     slug = models.SlugField(unique=True, verbose_name=('slug'))
-    subject = models.TextField(
-        max_length=300, null=True, blank=True, verbose_name=('subject'))
+    subject = models.CharField(
+        max_length=200, null=True, blank=True, verbose_name=('subject'))
     message = models.TextField(
         max_length=500, null=True, blank=True, verbose_name=('message'))
     has_read = models.BooleanField(default=False, verbose_name=('has read'))

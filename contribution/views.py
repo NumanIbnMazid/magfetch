@@ -231,7 +231,7 @@ class DocumentUploadView(CreateView):
         uploaded_at = new_object.created_at
         message = "%s has uploaded a new Document File.<br>Uploaded at: %s<br>Document Category: %s" %(
             profile.get_smallname(), uploaded_at, category)
-        create_notification_to_mc_upload(profile, slug, message)
+        # create_notification_to_mc_upload(profile, slug, message)
         
         return super().form_valid(form)
 
