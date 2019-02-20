@@ -8,8 +8,7 @@ def create_notification_to_mc_upload(sender, slug, message):
     category = 'uploaded_contribution'
     identifier = sender.user.username + "_" + "uploaded_contribution"
     subject = "%s has submitted a new contribution" % sender.get_smallname()
-    link = "Contibution Link"
-    message_bind = "<h4>%s<h4><br><p>%s</p><br>Click %s to view contribution." % (subject, message, link)
+    message_bind = "<h4>%s<h4><br><p>%s</p>" % (subject, message)
     if receivers.count() > 1:
         for receiver in receivers:
             Notification.objects.create(
