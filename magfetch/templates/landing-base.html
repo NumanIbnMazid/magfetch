@@ -2,6 +2,7 @@
 {% if request.user.is_authenticated %}
 {% get_schedule_tag as get_schedule %}
 {% get_announcement_tag as get_announcement %}
+{% get_datetime_tag as get_datetime %}
 {% endif %}
 
 <!DOCTYPE html>
@@ -43,7 +44,7 @@
                 </div>
             </div>
             <!-- development-notice -->
-            {% include 'snippets/notice.html' %}
+            <!-- {% include 'snippets/notice.html' %} -->
             <!-- messages -->
             {% include 'snippets/messages.html' %}
             <div class="container m-t-lg m-b-lg">

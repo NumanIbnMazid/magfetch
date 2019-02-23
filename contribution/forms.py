@@ -46,6 +46,9 @@ class DocumentUploadForm(forms.ModelForm):
         #     'maxlength': 20
         # })
         # self.fields['document'].widget = forms.ClearableFileInput(attrs={'multiple': True})
+        self.fields['document'].widget.attrs.update({
+            'id': 'file-upload',
+        })
 
 
     class Meta:
@@ -58,9 +61,9 @@ class DocumentUploadForm(forms.ModelForm):
             file_extension = os.path.splitext(document.name)[1]
             allowed_types = settings.DOCUMENT_TYPES
             content_type = document.content_type.split('/')[0]
-            file_name_length = len(os.path.splitext(document.name)[0])
-            if file_name_length > 100:
-                raise forms.ValidationError("File name is too long!!! Please rename the file and then try to upload again.")
+            # file_name_length = len(os.path.splitext(document.name)[0])
+            # if file_name_length > 100:
+            #     raise forms.ValidationError("File name is too long!!! Please rename the file and then try to upload again.")
             if not file_extension in allowed_types:
                 if file_extension in settings.IMAGE_TYPES:
                     url = "<a href='/contribution/image/upload/'>here</a>"
@@ -82,6 +85,9 @@ class ImageUploadForm(forms.ModelForm):
         self.fields['title'].widget.attrs.update({
             'placeholder': 'Enter Image Subject',
             'maxlength': 20
+        })
+        self.fields['image'].widget.attrs.update({
+            'id': 'file-upload',
         })
 
     class Meta:
@@ -107,10 +113,10 @@ class ImageUploadForm(forms.ModelForm):
             file_extension = os.path.splitext(image.name)[1]
             allowed_types = settings.IMAGE_TYPES
             content_type = image.content_type.split('/')[0]
-            file_name_length = len(os.path.splitext(document.name)[0])
-            if file_name_length > 100:
-                raise forms.ValidationError(
-                    "File name is too long!!! Please rename the file and then try to upload again.")
+            # file_name_length = len(os.path.splitext(image.name)[0])
+            # if file_name_length > 100:
+            #     raise forms.ValidationError(
+            #         "File name is too long!!! Please rename the file and then try to upload again.")
             if not file_extension in allowed_types:
                 if file_extension in settings.DOCUMENT_TYPES:
                     url = "<a href='/contribution/document/upload/'>here</a>"

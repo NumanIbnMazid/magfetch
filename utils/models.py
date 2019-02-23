@@ -1,5 +1,8 @@
 from django.db import models
 from accounts.models import UserProfile
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
+from contribution.models import Document, Image
 
 class Announcement(models.Model):
     PUBLISHED       = 0
@@ -62,3 +65,17 @@ class Notification(models.Model):
 
     def __str__(self):
         return self.category
+
+
+@receiver(post_delete, sender=Document)
+def delete_notification_document(sender, instance, **kwargs):
+    notification_filter = Notification.objects.filter(slug__iexact=instance.slug)
+    if notification_filter.exists():
+        notification_filter.delete()
+
+
+@receiver(post_delete, sender=Image)
+def delete_notification_image(sender, instance, **kwargs):
+    notification_filter = Notification.objects.filter(slug__iexact=instance.slug)
+    if notification_filter.exists():
+        notification_filter.delete()

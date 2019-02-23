@@ -12,6 +12,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Third Party Apps
     'widget_tweaks',
+    'django_cleanup',
     'django_cool_paginator',
     'django.contrib.sites',
     'allauth',

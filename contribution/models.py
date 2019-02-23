@@ -2,7 +2,7 @@ from django.db import models
 from system_data.models import Date
 from django.db.models.signals import post_save, pre_save
 from accounts.utils import unique_slug_generator
-from .utils import upload_image_path, upload_document_path, slug_generator
+from .utils import upload_image_path, upload_document_path
 from accounts.models import UserProfile
 from django.dispatch import receiver
 import os
@@ -74,16 +74,16 @@ def create_or_update_document_category(sender, instance, created, **kwargs):
             DocumentCategory.objects.create(title=title, slug=slug)
 
 
-def document_pre_save_receiver(sender, instance, *args, **kwargs):
-    if not instance.slug:
-        instance.slug = slug_generator(instance)
-pre_save.connect(document_pre_save_receiver, sender=Document)
+# def document_pre_save_receiver(sender, instance, *args, **kwargs):
+#     if not instance.slug:
+#         instance.slug = slug_generator(instance)
+# pre_save.connect(document_pre_save_receiver, sender=Document)
 
 
-def image_pre_save_receiver(sender, instance, *args, **kwargs):
-    if not instance.slug:
-        instance.slug = unique_slug_generator(instance)
-pre_save.connect(image_pre_save_receiver, sender=Image)
+# def image_pre_save_receiver(sender, instance, *args, **kwargs):
+#     if not instance.slug:
+#         instance.slug = unique_slug_generator(instance)
+# pre_save.connect(image_pre_save_receiver, sender=Image)
 
 
 def document_category_pre_save_receiver(sender, instance, *args, **kwargs):

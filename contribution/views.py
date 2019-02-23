@@ -1,6 +1,6 @@
 from django.shortcuts import render
 # Models Import
-from .models import DocumentCategory
+from .models import DocumentCategory, Document, Image
 from accounts.models import UserProfile
 from system_data.models import Date
 from suspicious.models import Suspicious
@@ -11,7 +11,7 @@ from .forms import (
     ImageUploadForm
 )
 # generic view import
-from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
 # other import
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -22,6 +22,9 @@ from django.contrib import messages
 import datetime
 from django.http import HttpResponseRedirect
 from .handlers import create_notification_to_mc_upload
+from django.core.mail import EmailMultiAlternatives
+from django.core.files.storage import default_storage
+import os
 
 
 # Document Category Create View
@@ -222,17 +225,50 @@ class DocumentUploadView(CreateView):
         user = self.request.user
         profile = UserProfile.objects.filter(user=user).first()
         form.instance.user = profile
+        document = form.save().document
+        base_name = os.path.basename(document.name)
+        form.instance.slug = os.path.splitext(base_name)[0]
         messages.add_message(self.request, messages.SUCCESS,
                              "Your article has been uploaded successfully!!!")
-        # Notification Create
         new_object = form.save()
+        # Delete Previous Uploads
+        document_filter = Document.objects.filter(user=profile, category=new_object.category).exclude(slug=new_object.slug)
+        if document_filter.exists():
+            document_filter.delete()
+        # Notification Create
         slug = new_object.slug
         category = new_object.category
         uploaded_at = new_object.created_at
         message = "%s has uploaded a new Document File.<br>Uploaded at: %s<br>Document Category: %s" %(
             profile.get_smallname(), uploaded_at, category)
         create_notification_to_mc_upload(profile, slug, message)
-        
+        # Sending Email
+        mc_filter = UserProfile.objects.filter(role=2)
+        if mc_filter.exists():
+            if mc_filter.count() > 1:
+                for mc in mc_filter:
+                    subject = '%s Uploaded a new document.' % profile.get_smallname()
+                    from_email = 'admin@magfetch.com'
+                    to = ['%s' % mc.user.email]
+                    text_content = 'Please do not Reply'
+                    html_content = '<h4>Hi <i>%s</i></h4><strong>%s</strong> has uploaded a new Document File.<br>Uploaded at: <strong>%s</strong><br>Document Category: <strong>%s</strong>' % (
+                        mc.get_smallname(), profile.get_smallname(), uploaded_at.strftime('%a %H:%M  %d/%m/%y'), category)
+                    msg = EmailMultiAlternatives(
+                        subject, text_content, from_email, [to])
+                    msg.attach_alternative(html_content, "text/html")
+                    msg.send()
+            else:
+                mc = mc_filter.first()
+                subject = '%s Uploaded a new document.' % profile.get_smallname()
+                from_email = 'admin@magfetch.com'
+                to = ['%s' % mc.user.email]
+                text_content = 'Please do not Reply'
+                html_content = '<h4>Hi <i>%s</i></h4><strong>%s</strong> has uploaded a new Document File.<br>Uploaded at: <strong>%s</strong><br>Document Category: <strong>%s</strong>' % (
+                    mc.get_smallname(), profile.get_smallname(), uploaded_at.strftime('%a %H:%M  %d/%m/%y'), category)
+                msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+                msg.attach_alternative(html_content, "text/html")
+                msg.send()
+
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -246,14 +282,26 @@ class DocumentUploadView(CreateView):
 
     def dispatch(self, request, *args, **kwargs):
         instance_user = self.request.user
+        user = UserProfile.objects.filter(user=instance_user).first()
         today = datetime.datetime.today()
-        date_filter = Date.objects.filter(academic_year=today.year)
+        date_filter = Date.objects.filter(academic_year__iexact=today.year)
         if date_filter.exists():
             date = date_filter.first()
-            if today > date.closure_date:
+            submitted_document = Document.objects.filter(user=user, updated_at__year=today.year)
+            if submitted_document.exists():
+                submitted = True
+            else:
+                submitted = False
+            if today > date.closure_date and submitted == False:
+                messages.add_message(self.request, messages.ERROR,
+                                        "Contribution submitting date has been expired! You are not allowed."
+                                        )
+                return HttpResponseRedirect(reverse('home'))
+            if today > date.final_closure_date and submitted == True:
                 messages.add_message(self.request, messages.ERROR,
                                      "Contribution submitting date has been expired! You are not allowed."
                                      )
+                return HttpResponseRedirect(reverse('home'))
         else:
             messages.add_message(self.request, messages.ERROR,
                                  "No Schedule Added for collecting contributions for magazine! Please wait for the announcement."
@@ -278,6 +326,16 @@ class DocumentUploadView(CreateView):
         return super(DocumentUploadView, self).dispatch(request, *args, **kwargs)
 
 
+# Document List View
+class DocumentListView(ListView):
+    template_name = 'document/list.html'
+
+    def get_queryset(self, *args, **kwargs):
+        today = datetime.datetime.now()
+        query = Document.objects.filter(updated_at__year=today.year)
+        return query
+
+
 # Image Upload View
 @method_decorator(login_required, name='dispatch')
 class ImageUploadView(CreateView):
@@ -288,16 +346,52 @@ class ImageUploadView(CreateView):
         user = self.request.user
         profile = UserProfile.objects.filter(user=user).first()
         form.instance.user = profile
+        image = form.save().image
+        base_name = os.path.basename(image.name)
+        form.instance.slug = os.path.splitext(base_name)[0]
         messages.add_message(self.request, messages.SUCCESS,
                              "Your image has been uploaded successfully!!!")
-        # Notification Create
         new_object = form.save()
+        # Delete Previous Uploads
+        image_filter = Image.objects.filter(
+            user=profile, title=new_object.title).exclude(slug=new_object.slug)
+        if image_filter.exists():
+            image_filter.delete()
+        # Notification Create
         slug = new_object.slug
         title = new_object.title
         uploaded_at = new_object.created_at
         message = "%s has uploaded a new Image File.<br>Uploaded at: %s<br>Image Subject: %s" % (
             profile.get_smallname(), uploaded_at, title)
         create_notification_to_mc_upload(profile, slug, message)
+
+        # Sending Email
+        mc_filter = UserProfile.objects.filter(role=2)
+        if mc_filter.exists():
+            if mc_filter.count() > 1:
+                for mc in mc_filter:
+                    subject = '%s Uploaded a new image.' % profile.get_smallname()
+                    from_email = 'admin@magfetch.com'
+                    to = ['%s' % mc.user.email]
+                    text_content = 'Please do not Reply'
+                    html_content = '<h4>Hi <i>%s</i></h4><strong>%s</strong> has uploaded a new Image File.<br>Uploaded at: <strong>%s</strong><br>Image Subject: <strong>%s</strong>' % (
+                        mc.get_smallname(), profile.get_smallname(), uploaded_at.strftime('%a %H:%M  %d/%m/%y'), title)
+                    msg = EmailMultiAlternatives(
+                        subject, text_content, from_email, [to])
+                    msg.attach_alternative(html_content, "text/html")
+                    msg.send()
+            else:
+                mc = mc_filter.first()
+                subject = '%s Uploaded a new document.' % profile.get_smallname()
+                from_email = 'admin@magfetch.com'
+                to = ['%s' % mc.user.email]
+                text_content = 'Please do not Reply'
+                html_content = '<h4>Hi <i>%s</i></h4><strong>%s</strong> has uploaded a new Image File.<br>Uploaded at: <strong>%s</strong><br>Image Category: <strong>%s</strong>' % (
+                    mc.get_smallname(), profile.get_smallname(), uploaded_at.strftime('%a %H:%M  %d/%m/%y'), title)
+                msg = EmailMultiAlternatives(
+                    subject, text_content, from_email, [to])
+                msg.attach_alternative(html_content, "text/html")
+                msg.send()
         
         return super().form_valid(form)
 
@@ -312,14 +406,27 @@ class ImageUploadView(CreateView):
 
     def dispatch(self, request, *args, **kwargs):
         instance_user = self.request.user
+        user = UserProfile.objects.filter(user=instance_user).first()
         today = datetime.datetime.today()
-        date_filter = Date.objects.filter(academic_year=today.year)
+        date_filter = Date.objects.filter(academic_year__iexact=today.year)
         if date_filter.exists():
             date = date_filter.first()
-            if today > date.closure_date:
+            submitted_image = Image.objects.filter(
+                user=user, updated_at__year=today.year)
+            if submitted_image.exists():
+                submitted = True
+            else:
+                submitted = False
+            if today > date.closure_date and submitted == False:
                 messages.add_message(self.request, messages.ERROR,
                                      "Contribution submitting date has been expired! You are not allowed."
                                      )
+                return HttpResponseRedirect(reverse('home'))
+            if today > date.final_closure_date and submitted == True:
+                messages.add_message(self.request, messages.ERROR,
+                                     "Contribution submitting date has been expired! You are not allowed."
+                                     )
+                return HttpResponseRedirect(reverse('home'))
         else:
             messages.add_message(self.request, messages.ERROR,
                                  "No Schedule Added for collecting contributions for magazine! Please wait for the announcement."

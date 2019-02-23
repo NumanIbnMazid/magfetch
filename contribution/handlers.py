@@ -2,6 +2,7 @@ from utils.models import Notification
 from accounts.models import UserProfile
 
 
+
 def create_notification_to_mc_upload(sender, slug, message):
     receivers = UserProfile.objects.filter(
         role=2, faculty=sender.faculty)

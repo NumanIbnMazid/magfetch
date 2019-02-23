@@ -1,4 +1,5 @@
 {% load widget_tweaks %}
+
 {% if form.visible_fields %}
 <div class="text-center m-b-sm">
     <small class="text-muted">
@@ -50,8 +51,30 @@
     <div class="form">
         <!-- Main Input Item -->
         <!-- {{ field.field.widget.input_type }} -->
-        
+
+        {% if field.field.widget.input_type == "file" %}
+
         {{ field|add_class:'form-control input-sm' }}
+
+        <label for="file-upload" id="file-drag">
+            Select a file to upload
+            <br />OR-
+            <br />Drag a file into this box
+            <br /><br />
+            <span id="file-upload-btn" class="button">
+                Add a file
+            </span>
+        </label>
+        <progress id="file-progress" value="0">
+            <span>0</span>%
+        </progress>
+        <output for="file-upload" id="messages"></output>
+
+        {% else %}
+
+        {{ field|add_class:'form-control input-sm' }}
+
+        {% endif %}
 
         {% comment %} {% if field.help_text %}
         <div class="help">
@@ -65,7 +88,7 @@
         {% for error in field.errors %}
         <div class="error m-t-sm">
             <b class="text-danger">
-                <p>{{ error|safe }}</p>
+                <p id="error-message">{{ error|safe }}</p>
             </b>
         </div>
         {% endfor %}
