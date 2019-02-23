@@ -108,7 +108,7 @@ class DateCreateView(CreateView):
     def dispatch(self, request, *args, **kwargs):
         instance_user   = self.request.user
         today           = datetime.date.today()
-        schedule_filter = Date.objects.filter(academic_year__iexact=today.year)
+        schedule_filter = Date.objects.filter(academic_year=today.year)
         if schedule_filter.exists():
             messages.add_message(self.request, messages.WARNING,
                 "Already have a Schedule for this academic year! You cannot add more."
@@ -145,10 +145,10 @@ class DateUpdateView(UpdateView):
 
     def get_object(self):
         today               = datetime.date.today()
-        schedule_filter     = Date.objects.filter(academic_year__iexact=today.year)
+        schedule_filter     = Date.objects.filter(academic_year=today.year)
         if schedule_filter.exists():
             try:
-                schedule = Date.objects.get(academic_year__iexact=today.year)
+                schedule = Date.objects.get(academic_year=today.year)
             except Date.DoesNotExist:
                 raise Http404("Not Found !!!")
             except Date.MultipleObjectsReturned:

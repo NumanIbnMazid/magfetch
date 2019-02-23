@@ -284,7 +284,7 @@ class DocumentUploadView(CreateView):
         instance_user = self.request.user
         user = UserProfile.objects.filter(user=instance_user).first()
         today = datetime.datetime.today()
-        date_filter = Date.objects.filter(academic_year__iexact=today.year)
+        date_filter = Date.objects.filter(academic_year=today.year)
         if date_filter.exists():
             date = date_filter.first()
             submitted_document = Document.objects.filter(user=user, updated_at__year=today.year)
@@ -408,7 +408,7 @@ class ImageUploadView(CreateView):
         instance_user = self.request.user
         user = UserProfile.objects.filter(user=instance_user).first()
         today = datetime.datetime.today()
-        date_filter = Date.objects.filter(academic_year__iexact=today.year)
+        date_filter = Date.objects.filter(academic_year=today.year)
         if date_filter.exists():
             date = date_filter.first()
             submitted_image = Image.objects.filter(
