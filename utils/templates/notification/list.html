@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load cool_paginate %}
+
+{% block head_title %}{% block page_title %}{% block breadcrumb %}
+All Notifications
+{% endblock %}[Unread: {{notifications_unread}}] [total: {{notifications.count}}]
+{% endblock %}{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
+        {% for object in object_list %}
+        <section class="comment-body panel panel-default">
+            <header class="panel-heading">
+                <small>From</small>
+                <label class="label bg-dark c-text-info m-l-xs">
+                    {{object.sender.user.profile.get_smallname}}
+                </label>
+                <span class="text-muted m-l-sm pull-right">
+                    <i class="fa fa-clock-o"></i>
+                    {{ object.updated_at|timesince }} ago
+                </span>
+            </header>
+            <div class="panel-body">
+                <div class="row">
+                    <a href="{% url 'utils:notification_detail' slug=object.slug %}">
+                    <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12">
+                        <strong class="h6 text-dark {% if object.has_read == False %}font-bold c-text-primary{% endif %}">
+                            {{ object.subject }}
+                        </strong>
+                    </div>
+                    </a>
+                    <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 col-12">
+                        <a href="#" class="btn btn-danger btn-xs">
+                            <i class="fa fa-trash-o text-darger"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% empty %}
+        <div class="container bg-dark text-center">
+            <h4 class="text-warning">
+                No notifications available !
+            </h4>
+        </div>
+        {% endfor %}
+
+        {% if object_list.count >= 1 %}
+        <div class="text-center">
+            {% cool_paginate %}
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+
+
+
+{% endblock %}

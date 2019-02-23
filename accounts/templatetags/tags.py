@@ -1,7 +1,7 @@
 from django import template
 from accounts.models import UserProfile
 from system_data.models import Date
-from utils.models import Announcement
+from utils.models import Announcement, Notification
 import datetime
 
 register = template.Library()
@@ -70,6 +70,32 @@ def get_announcement_tag(context):
     announcement_filter = Announcement.objects.filter(status=0).order_by('-updated_at')
     if announcement_filter.count() > 0:
         return announcement_filter
+    return None
+
+
+@register.simple_tag(takes_context=True)
+def get_notification_tag(context):
+    request = context['request']
+    user = request.user
+    user_profile_filter = UserProfile.objects.filter(user=user)
+    if user_profile_filter.exists():
+        user_profile = user_profile_filter.first()
+        notification_filter = Notification.objects.filter(
+            receiver=user_profile).order_by('-updated_at')
+        return notification_filter
+    return None
+
+
+@register.simple_tag(takes_context=True)
+def get_notification_unread_counter_tag(context):
+    request = context['request']
+    user = request.user
+    user_profile_filter = UserProfile.objects.filter(user=user)
+    if user_profile_filter.exists():
+        user_profile = user_profile_filter.first()
+        notification_filter = Notification.objects.filter(
+            receiver=user_profile, has_read=False).order_by('-updated_at')
+        return notification_filter.count()
     return None
 
 

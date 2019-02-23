@@ -239,11 +239,11 @@ class DocumentUploadView(CreateView):
         slug = new_object.slug
         category = new_object.category
         uploaded_at = new_object.created_at
-        message = "%s has uploaded a new Document File.<br>Uploaded at: %s<br>Document Category: %s" %(
-            profile.get_smallname(), uploaded_at, category)
+        message = "<strong>%s</strong> has uploaded a new Document File.<br>Uploaded at: <strong>%s</strong><br>Document Category: <strong>%s</strong>" % (
+            profile.get_smallname(), uploaded_at.strftime('%a %H:%M  %d/%m/%y'), category)
         create_notification_to_mc_upload(profile, slug, message)
         # Sending Email
-        mc_filter = UserProfile.objects.filter(role=2)
+        mc_filter = UserProfile.objects.filter(role=2, faculty=profile.faculty)
         if mc_filter.exists():
             if mc_filter.count() > 1:
                 for mc in mc_filter:
@@ -361,12 +361,12 @@ class ImageUploadView(CreateView):
         slug = new_object.slug
         title = new_object.title
         uploaded_at = new_object.created_at
-        message = "%s has uploaded a new Image File.<br>Uploaded at: %s<br>Image Subject: %s" % (
-            profile.get_smallname(), uploaded_at, title)
+        message = "<strong>%s</strong> has uploaded a new Image File.<br>Uploaded at: <strong>%s</strong><br>Image Subject: <strong>%s</strong>" % (
+            profile.get_smallname(), uploaded_at.strftime('%a %H:%M  %d/%m/%y'), title)
         create_notification_to_mc_upload(profile, slug, message)
 
         # Sending Email
-        mc_filter = UserProfile.objects.filter(role=2)
+        mc_filter = UserProfile.objects.filter(role=2, faculty=profile.faculty)
         if mc_filter.exists():
             if mc_filter.count() > 1:
                 for mc in mc_filter:

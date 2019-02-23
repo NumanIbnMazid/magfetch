@@ -8,6 +8,8 @@
 {% is_ST_tag as is_ST %}
 {% get_schedule_tag as get_schedule %}
 {% get_announcement_tag as get_announcement %}
+{% get_notification_tag as notifications %}
+{% get_notification_unread_counter_tag as notifications_unread %}
 {% get_datetime_tag as get_datetime %}
 
 {% endif %}
@@ -45,9 +47,12 @@
                 </ul>
                 <!-- .page-title -->
                 <div class="m-b-md">
-                  <h3 class="m-b-none">
+                  <a href="{{request.META.HTTP_REFERER|escape}}" class="btn btn-default btn-xs">
+                      <i class="fa fa-mail-reply text-muted"></i> Go Back 
+                  </a>
+                  <span class="m-b-none m-l-md h4 font-bold bg-light c-text-dark">
                     {% block page_title %}{% endblock %}
-                  </h3>
+                  </span>
                 </div>
                 <!-- development-notice -->
                 <!-- {% include 'snippets/notice.html' %} -->
