@@ -34,7 +34,6 @@ class Command(BaseCommand):
 
 
 
-
     # Create Users
     def _create_users(self):
         # University Administrator
