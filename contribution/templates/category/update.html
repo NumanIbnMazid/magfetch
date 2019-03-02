@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block head_title %}{% block page_title %}{% block breadcrumb %}
+Update Category
+{% endblock %}{% endblock %}{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+        <section class="panel panel-default">
+            <header class="panel-heading font-bold text-center">
+                Update Category
+                <strong class="text-lg c-text-info">
+                    <i>{{object}}</i>
+                </strong>
+            </header>
+            <div class="panel-body">
+                <form class="form" method="POST">
+                    {% csrf_token %}
+                    {% include 'snippets/form.html' %}
+                    <button type="submit" class="btn btn-sm btn-primary pull-left">Update</button>
+                </form>
+                <a href="{% url 'contribution:document_category_create' %}" class="btn btn-xs btn-danger pull-right">
+                    <i class="fa fa-mail-reply"></i> Cancel
+                </a>
+            </div>
+        </section>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+        {% include 'category/doc-cat-list.html' %}
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+        {% include 'category/img-cat-list.html' %}
+    </div>
+</div>
+
+{% endblock %}

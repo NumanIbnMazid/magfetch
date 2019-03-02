@@ -32,9 +32,9 @@
 {% endif %}
 
 {% for field in form.visible_fields %}
-<div class="form-group">
+<div class="form-group" id="{{ field.id_for_label }}-group">
 
-    <label for="{{ field.id_for_label }}" class="control-label">
+    <label for="{{ field.id_for_label }}" class="control-label" id="{{ field.id_for_label }}-label">
         <strong>{{ field.label |title }}</strong>
         {% if field.field.required %}
         <small class="text-info"><i>(required) </i></small>
@@ -69,6 +69,7 @@
             <span>0</span>%
         </progress>
         <output for="file-upload" id="messages"></output>
+        <span id="file-msg" class="text-center font-bold"></span>
 
         {% else %}
 
@@ -98,6 +99,7 @@
         <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
         {% endif %}
     </div>
+    <div class="line line-dashed line-lg pull-in"></div>
 </div>
-<div class="line line-dashed line-lg pull-in"></div>
+
 {% endfor %}

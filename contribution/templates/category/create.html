@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block head_title %}{% block page_title %}{% block breadcrumb %}
+Contribution Category
+{% endblock %}{% endblock %}{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+        <section class="panel panel-default">
+            <header class="panel-heading font-bold text-center">Create Contribution Category</header>
+            <div class="panel-body">
+                <form class="form" method="POST">
+                    {% csrf_token %}
+                    {% include 'snippets/form.html' %}
+                    <button type="submit" class="btn btn-sm btn-primary pull-left">Create</button>
+                </form>
+            </div>
+        </section>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+        {% include 'category/doc-cat-list.html' %}
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+        {% include 'category/img-cat-list.html' %}
+    </div>
+</div>
+
+{% endblock %}

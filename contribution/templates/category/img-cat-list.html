@@ -1,0 +1,45 @@
+{% if img_categories_count >= 1 %}
+
+<section class="panel panel-default">
+    <header class="panel-heading font-bold text-center">
+        Image Category List
+        <span class="label bg-dark c-text-info">{{ img_categories_count }}</span>
+    </header>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table table-striped b-t b-light">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category in img_categories %}
+                    <tr>
+                        <td class="c-text-dark">
+                            {{ category.title }}
+                        </td>
+                        <td>
+                            <a href="{% url 'contribution:category_update' slug=category.slug %}">
+                                <i class="fa fa-edit text-info"></i> Edit
+                            </a>
+                            <a href="{% url 'contribution:category_delete' slug=category.slug %}">
+                                <i class="fa fa-trash-o text-danger m-l-sm"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</section>
+
+{% else %}
+<p class="text-center c-text-warning">
+    There's no Image Category yet!
+</p>
+
+{% endif %}

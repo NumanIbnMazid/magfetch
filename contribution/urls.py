@@ -1,16 +1,19 @@
 from django.urls import path
 from .views import (
-    DocumentCategoryCreateView, 
-    DocumentCategoryUpdateView,
-    DocumentCategoryDeleteView,
-    DocumentUploadView,
-    ImageUploadView
+    ContributionCategoryCreateView,
+    ContributionCategoryUpdateView,
+    ContributionCategoryDeleteView,
+    ContributionUploadView,
 )
 
 urlpatterns = [
-    path('document/category/create/', DocumentCategoryCreateView.as_view(), name='document_category_create'),
-    path('document/category/<slug>/update/', DocumentCategoryUpdateView.as_view(), name='document_category_update'),
-    path('document/category/<slug>/delete/', DocumentCategoryDeleteView.as_view(), name='document_category_delete'),
-    path('document/upload/', DocumentUploadView.as_view(), name='document_upload'),
-    path('image/upload/', ImageUploadView.as_view(), name='image_upload'),
+    # Contribution Category
+    path('category/create/', ContributionCategoryCreateView.as_view(),
+         name='category_create'),
+    path('category/<slug>/update/', ContributionCategoryUpdateView.as_view(),
+         name='category_update'),
+    path('category/<slug>/delete/', ContributionCategoryDeleteView.as_view(),
+         name='category_delete'),
+    # Contribution
+    path('upload/', ContributionUploadView.as_view(), name='upload'),
 ]

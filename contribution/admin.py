@@ -1,29 +1,24 @@
 from django.contrib import admin
-from .models import DocumentCategory, Document, Image
+from .models import ContributionCategory, Contribution
 
 
-class DocumentCategoryAdmin(admin.ModelAdmin):
-    list_display = ['title', 'slug', 'created_at', 'updated_at']
-
-    class Meta:
-        model = DocumentCategory
-
-
-class DocumentAdmin(admin.ModelAdmin):
-    list_display = ['user', 'category', 'document', 'slug', 'created_at', 'updated_at']
+class ContributionCategoryAdmin(admin.ModelAdmin):
+    list_display = ['title', 'category_for',
+                    'slug', 'created_at', 'updated_at']
 
     class Meta:
-        model = Document
+        model = ContributionCategory
 
 
-class ImageAdmin(admin.ModelAdmin):
-    list_display = ['user', 'title', 'image', 'slug', 'created_at', 'updated_at']
+class ContributionAdmin(admin.ModelAdmin):
+    list_display = ['user', 'title', 'file', 'category',
+                    'slug', 'is_commented', 'is_selected', 'created_at', 'updated_at']
 
     class Meta:
-        model = Image
+        model = Contribution
 
 
-admin.site.register(DocumentCategory, DocumentCategoryAdmin)
-admin.site.register(Document, DocumentAdmin)
-admin.site.register(Image, ImageAdmin)
+admin.site.register(ContributionCategory, ContributionCategoryAdmin)
+admin.site.register(Contribution, ContributionAdmin)
+
 

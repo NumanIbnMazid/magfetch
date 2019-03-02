@@ -3,7 +3,7 @@ from .models import Announcement, Notification
 
 
 class AnnouncementAdmin(admin.ModelAdmin):
-    list_display = ['created_by', 'slug', 'category', 'identifier',
+    list_display = ['slug', 'category', 'identifier',
                     'subject', 'status', 'created_at', 'updated_at']
 
     class Meta:

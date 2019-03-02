@@ -1,7 +1,7 @@
 {% url 'home' as home_url %}
 {% url 'system_data:date_create' as date_create_url %}
 {% url 'system_data:date_update' as date_update_url %}
-{% url 'contribution:document_category_create' as document_category_create_url %}
+{% url 'contribution:category_create' as category_create_url %}
 
 <aside class="bg-dark lter aside-md hidden-print" id="nav">
     <section class="vbox">
@@ -58,11 +58,11 @@
                           {% endif %}
 
                           <li>
-                              <a href="{{ document_category_create_url }}">
+                              <a href="{{ category_create_url }}">
                                   <i class="fa fa-pencil icon">
                                       <b class="bg-info"></b>
                                   </i>
-                                  <span>Document Category</span>
+                                  <span>Upload Category</span>
                               </a>
                           </li>
                         {% endif %}

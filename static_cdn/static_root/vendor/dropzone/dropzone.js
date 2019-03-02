@@ -75,7 +75,7 @@
         var xhr = new XMLHttpRequest(),
             fileInput = document.getElementById('class-roster-file'),
             pBar = document.getElementById('file-progress'),
-            fileSizeLimit = 1024; // In MB
+            fileSizeLimit = 2.5; // In MB
         if (xhr.upload) {
             // Check if file is less than x MB
             if (file.size <= fileSizeLimit * 1024 * 1024) {
@@ -101,7 +101,11 @@
                 xhr.setRequestHeader('Content-Type', 'multipart/form-data');
                 xhr.send(file);
             } else {
-                output('Please upload a smaller file (< ' + fileSizeLimit + ' MB).');
+                var msg_label = document.getElementById("file-msg");
+                var errMsg = 'Please upload a smaller file (Max Size: ' + fileSizeLimit + ' MB).';
+                msg_label.innerHTML = errMsg;
+                msg_label.style.color = "red";
+                // output(errMsg);
             }
         }
     }

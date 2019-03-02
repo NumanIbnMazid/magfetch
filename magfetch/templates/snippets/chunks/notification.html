@@ -29,7 +29,7 @@
         </footer>
         {% endif %}
         <div class="list-group list-group-alt animated fadeInRight">
-            {% for notification in notifications|slice:":5" %}
+            {% for notification in notifications %}
             <a href="{% url 'utils:notification_detail' slug=notification.slug %}" class="media list-group-item">
                 <span class="media-body block m-b-none {% if notification.has_read == False %}font-bold c-text-primary{% endif %}">
                 {{ notification.subject }}<br>

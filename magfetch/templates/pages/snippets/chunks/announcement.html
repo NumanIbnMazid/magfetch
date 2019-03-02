@@ -15,12 +15,6 @@
             {{ announcement.subject }}
           </strong>
         </a>
-        <small class="block">
-          <span class="">
-            Announced By -
-            <i class="text-dark">{{ announcement.created_by.user.profile.get_role }}</i>
-          </span>
-        </small>
         <small class="block m-t-sm">
           {{ announcement.message|safe|truncatechars_html:66 }}
         </small>

@@ -2,6 +2,7 @@ import os
 import time
 import random
 import string
+from django.conf import settings
 # from django.utils.text import slugify
 # from accounts.models import UserProfile
 
@@ -12,34 +13,31 @@ def get_filename_ext(filepath):
     return name, ext
 
 
-def upload_document_path(instance, filename):
-    new_filename = "{user}_doc-{category}-{datetime}".format(
+def upload_contribution_path(instance, filename):
+    new_filename = "{user}_{type}-{category}-{datetime}".format(
         user=instance.user,
+        type=instance.category.category_for,
         category=instance.category,
         datetime=time.strftime("%Y%m%d-%H%M%S")
     )
     name, ext = get_filename_ext(filename)
     final_filename = '{new_filename}{ext}'.format(
         new_filename=new_filename, ext=ext)
-    return "documents/user_{0}/{final_filename}".format(
+    if instance.category.category_for == 0:
+        return "user_{0}/documents/{final_filename}".format(
+            instance.user,
+            final_filename=final_filename
+        )
+    if instance.category.category_for == 1:
+        return "user_{0}/images/{final_filename}".format(
+            instance.user,
+            final_filename=final_filename
+        )
+    return "user_{0}/{final_filename}".format(
         instance.user,
         final_filename=final_filename
     )
 
-
-def upload_image_path(instance, filename):
-    new_filename = "{user}_img-{title}-{datetime}".format(
-        user=instance.user,
-        title=instance.title,
-        datetime=time.strftime("%Y%m%d-%H%M%S")
-    )
-    name, ext = get_filename_ext(filename)
-    final_filename = '{new_filename}{ext}'.format(
-        new_filename=new_filename, ext=ext)
-    return "images/user_{0}/{final_filename}".format(
-        instance.user,
-        final_filename=final_filename
-    )
     
 
 def random_string_generator(size=3, chars=string.ascii_lowercase + string.digits):

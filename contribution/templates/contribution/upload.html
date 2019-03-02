@@ -1,0 +1,53 @@
+{% extends 'landing-base.html' %}
+{% load static %}
+
+{% block head_title %}{% block page_title %}{% block breadcrumb %}
+Upload Contribution
+{% endblock %}{% endblock %}{% endblock %}
+
+{% block content %}
+
+
+<!-- Dropzone CSS -->
+<link rel="stylesheet" href="{% static 'vendor/dropzone/dropzone.css' %}" type="text/css" />
+
+<div class="row">
+    <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
+        <section class="panel panel-default">
+            <header class="panel-heading font-bold text-center">Upload Contribution</header>
+            <div class="panel-body">
+                <!-- dropzone attribute form id="file-upload-form"-->
+                <form class="form" id="file-upload-form" method="POST" enctype="multipart/form-data" onsubmit="return checkForm(this);">
+                    {% csrf_token %}
+                    {% include 'snippets/form.html' %}
+                    <!-- agree terms and conditions -->
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="terms" value="check" id="agree" onclick="clickCheck(event)">
+                            I have read and agree to the
+                            <a href="#">Terms and Conditions</a>
+                            <br>
+                            <p id="message" class="text-center m-t-sm"></p>
+                        </label>
+                    </div>
+                    <!-- submit button -->
+                    <div id="submit">
+                        <!-- dropzone attribute button id="submit-button" -->
+                        <button type="submit" id="submit-button" class="btn btn-sm btn-primary pull-left">Upload</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+        <h1>Contribution List</h1>
+    </div>
+</div>
+
+<!-- Dropzone JS -->
+<script src="{% static 'vendor/dropzone/dropzone.js' %}"></script>
+
+<!-- Form Validator JS -->
+<script src="{% static 'js/custom/form-validator.js' %}"></script>
+
+{% endblock %}

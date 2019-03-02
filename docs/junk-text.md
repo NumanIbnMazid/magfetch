@@ -17,3 +17,46 @@ FACULTY_CHOICES                     = (
     (ARCHITECTURE, 'ARCHITECTURE'),
     (TEXTILE_ENGINEERING, 'TEXTILE ENGINEERING')
 )
+
+
+
+# File Category Scripts
+// Starts Loading Category Based on file Load
+        // var img_ext = ['jpg', 'jpeg', 'png', 'svg'];
+        // var file_ext = ['doc', 'docx'];
+        var doc_cat = document.getElementById('doc-category');
+        var img_cat = document.getElementById('img-category');
+
+        var img_ext = new Array();
+        img_ext["jpg"] = 0;
+        img_ext["jpeg"] = 1;
+        img_ext["png"] = 2;
+        img_ext["svg"] = 3;
+
+        var file_ext = new Array();
+        file_ext["doc"] = 0;
+        file_ext["docx"] = 1;
+        
+        var loaded_file = $('#file-upload').val();
+        var loaded_file_ext = loaded_file.split('.').pop();
+        if (loaded_file_ext in file_ext)
+        {
+            doc_cat.required = true;
+            $('#img-category-group').html('').css('display', 'none');
+            doc_cat.setAttribute("name", "category");
+            // var checker = "File Loaded";
+        }
+        else if (loaded_file_ext in img_ext)
+        {
+            img_cat.required = true;
+            $('#doc-category-group').html('').css('display', 'none');
+            img_cat.setAttribute("name", "category");
+            // var checker = "Image Loaded";
+        }
+        else
+        {
+            $('#message').html('File is not valid!').css('color', '#B93232');
+            // $('#submit-button').html('').css('display', 'none');
+        }
+        // $('#message').html(checker)
+// Ends Loading Category Based on file Load

@@ -1,6 +1,11 @@
 <section class="panel b-primary text-center">
     <ul class="list-group">
         <li class="list-group-item">
+            <small class="c-text-primary">Document Format Supported</small>:
+            <strong>.doc</strong>,
+            <strong>.docx</strong>
+        </li>
+        <li class="list-group-item">
             <small class="c-text-primary">Image Format Supported</small>:
             <strong>.jpg</strong>,
             <strong>.jpeg</strong>,
@@ -8,13 +13,13 @@
             <strong>.svg</strong>
         </li>
         <li class="list-group-item">
-            <small class="c-text-primary">Maximum Image Size</small>:
+            <small class="c-text-primary">Maximum File Size Supported</small>:
             <strong>2.5MB</strong>
         </li>
     </ul>
     <footer class="panel-footer">
-        <a href="{% url 'contribution:image_upload' %}" class="btn btn-primary m-t m-b">
-            Upload Image
+        <a href="{% url 'contribution:upload' %}" class="btn btn-primary m-t m-b">
+            Upload Contribution
         </a>
     </footer>
 </section>

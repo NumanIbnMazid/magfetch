@@ -2,31 +2,22 @@
     {% if not get_schedule == None and get_schedule.status == 0 %}
     <!-- New Contribution -->
     {% if get_schedule.closure_date >= get_datetime %}
-    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 animated fadeInUp">
-        {% include 'landing/pages/snippets/chunks/document.html' %}
-    </div>
-    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 animated fadeInUp">
-        {% include 'landing/pages/snippets/chunks/image.html' %}
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 animated fadeInUp">
+        {% include 'landing/pages/snippets/chunks/contribution.html' %}
     </div>
     {% endif %}
     <!-- Update Contribution -->
     {% if get_datetime > get_schedule.closure_date and get_schedule.final_closure_date >= get_datetime %}
-    {% if submitted_document == True %}
-    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 animated fadeInUp">
+
+    {% if is_submitted == True %}
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 animated fadeInUp">
         <header class="panel-heading bg-primary text-center">
-            <h4 class="m-t-sm c-text-dark">Update Document</h4>
+            <h4 class="m-t-sm c-text-dark">Update Contribution</h4>
         </header>
-        {% include 'landing/pages/snippets/chunks/document.html' %}
+        {% include 'landing/pages/snippets/chunks/contribution.html' %}
     </div>
     {% endif %}
-    {% if submitted_image == True %}
-    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 animated fadeInUp">
-        <header class="panel-heading bg-primary text-center">
-            <h4 class="m-t-sm c-text-dark">Update Image</h4>
-        </header>
-        {% include 'landing/pages/snippets/chunks/image.html' %}
-    </div>
-    {% endif %}
+
     {% endif %}
     <!-- No Schedule -->
     {% else %}

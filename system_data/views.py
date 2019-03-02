@@ -58,7 +58,6 @@ class DateCreateView(CreateView):
             "New Schedule has been created successfully !"
         )
         # Creating Announcement
-        created_by  = UserProfile.objects.filter(user=self.request.user).first()
         category    = 'created_schedule'
         slug        = category + '-' + time_str_mix_slug()
         identifier  = 'created_schedule_%s' % today.year
@@ -74,7 +73,6 @@ class DateCreateView(CreateView):
             )
         else:
             Announcement.objects.create(
-                created_by  = created_by,
                 category    = category,
                 slug        = slug,
                 identifier  = identifier,
@@ -189,7 +187,6 @@ class DateUpdateView(UpdateView):
         pre             = self.get_object()
         if start_date != pre.start_date or closure_date != pre.closure_date or final_closure_date != pre.final_closure_date or status != pre.status:
             # Creating Announcement
-            created_by  = UserProfile.objects.filter(user=self.request.user).first()
             category    = 'updated_schedule'
             slug        = category + '-' + time_str_mix_slug()
             identifier  = 'updated_schedule_%s' % today.year
@@ -206,7 +203,6 @@ class DateUpdateView(UpdateView):
                 )
             else:
                 Announcement.objects.create(
-                    created_by  = created_by,
                     category    = category,
                     slug        = slug,
                     identifier  = identifier,

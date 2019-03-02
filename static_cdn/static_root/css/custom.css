@@ -73,3 +73,8 @@ input[type="date"] {
 .c-text-danger{
   color: #BC1F1F;
 }
+
+#notification{
+  height: 315px !important;
+  overflow: scroll !important;
+}

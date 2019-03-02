@@ -2,7 +2,7 @@ from django.db import models
 from accounts.models import UserProfile
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
-from contribution.models import Document, Image
+from contribution.models import Contribution
 
 class Announcement(models.Model):
     PUBLISHED       = 0
@@ -11,10 +11,6 @@ class Announcement(models.Model):
     STATUS_CHOICES  = (
         (PUBLISHED, 'Published'),
         (UNPUBLISHED, 'Unpublished'),
-    )
-
-    created_by      = models.ForeignKey(
-        UserProfile, on_delete=models.CASCADE, related_name='announcement_created_by', verbose_name=('created by')
     )
     category        = models.CharField(max_length=100, null=True, blank=True, verbose_name=('category'))
     slug            = models.SlugField(unique=True, verbose_name=('slug'))
@@ -67,15 +63,8 @@ class Notification(models.Model):
         return self.category
 
 
-@receiver(post_delete, sender=Document)
-def delete_notification_document(sender, instance, **kwargs):
-    notification_filter = Notification.objects.filter(slug__iexact=instance.slug)
-    if notification_filter.exists():
-        notification_filter.delete()
-
-
-@receiver(post_delete, sender=Image)
-def delete_notification_image(sender, instance, **kwargs):
+@receiver(post_delete, sender=Contribution)
+def delete_notification_contribution(sender, instance, **kwargs):
     notification_filter = Notification.objects.filter(slug__iexact=instance.slug)
     if notification_filter.exists():
         notification_filter.delete()
