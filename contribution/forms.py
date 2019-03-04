@@ -89,14 +89,15 @@ class ContributionUploadForm(forms.ModelForm):
         file = self.cleaned_data.get('file')
         if not file == None:
             file_extension = os.path.splitext(file.name)[1]
-            allowed_types = settings.FILE_TYPES
+            allowed_file_types = settings.ALLOWED_FILE_TYPES
+            file_types = settings.FILE_TYPES
             content_type = file.content_type.split('/')[0]
             # file_name_length = len(os.path.splitext(file.name)[0])
             # if file_name_length > 100:
             #     raise forms.ValidationError("File name is too long!!! Please rename the file and then try to upload again.")
-            if not file_extension in allowed_types:
+            if not file_extension in allowed_file_types:
                 raise forms.ValidationError("Only %s file formats are supported! Current file format is %s" % (
-                    allowed_types, file_extension))
+                    file_types, file_extension))
             if file.size > settings.MAX_UPLOAD_SIZE:
                 raise forms.ValidationError("Please keep filesize under %s. Current filesize %s" % (
                     filesizeformat(settings.MAX_UPLOAD_SIZE), filesizeformat(file.size)))

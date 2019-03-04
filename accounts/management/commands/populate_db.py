@@ -39,68 +39,68 @@ class Command(BaseCommand):
         # University Administrator
         if not User.objects.filter(username__iexact='MM').exists():
             u_mm = User(username='MM', email='mm@test.com')
-            u_mm.set_password("test12345")
+            u_mm.set_password("error54321")
             u_mm.save()
 
         if not User.objects.filter(username__iexact='AD').exists():
             u_ad = User(username='AD', email='ad@test.com')
-            u_ad.set_password("test12345")
+            u_ad.set_password("error54321")
             u_ad.save()
 
         # Guest User
         if not User.objects.filter(username__iexact='guest1').exists():
             u_guest_1 = User(username='GUEST1', email='guest1@test.com')
-            u_guest_1.set_password("test12345")
+            u_guest_1.set_password("error54321")
             u_guest_1.save()
 
         # ------------------- Faculty Specific User -------------------
         # IT Department
         if not User.objects.filter(username__iexact='MC_IT').exists():
             u_mc_it = User(username='MC_IT', email='mc_it@test.com')
-            u_mc_it.set_password("test12345")
+            u_mc_it.set_password("error54321")
             u_mc_it.save()
 
         if not User.objects.filter(username__iexact='FG_IT').exists():
             u_fg_it = User(username='FG_IT', email='fg_it@test.com')
-            u_fg_it.set_password("test12345")
+            u_fg_it.set_password("error54321")
             u_fg_it.save()
 
         if not User.objects.filter(username__iexact='ST_IT').exists():
             u_st_it = User(username='ST_IT', email='st_it@test.com')
-            u_st_it.set_password("test12345")
+            u_st_it.set_password("error54321")
             u_st_it.save()
 
 
         # CSE Department
         if not User.objects.filter(username__iexact='MC_CSE').exists():
             u_mc_cse = User(username='MC_CSE', email='mc_cse@test.com')
-            u_mc_cse.set_password("test12345")
+            u_mc_cse.set_password("error54321")
             u_mc_cse.save()
 
         if not User.objects.filter(username__iexact='FG_CSE').exists():
             u_fg_cse = User(username='FG_CSE', email='fg_cse@test.com')
-            u_fg_cse.set_password("test12345")
+            u_fg_cse.set_password("error54321")
             u_fg_cse.save()
 
         if not User.objects.filter(username__iexact='ST_CSE').exists():
             u_st_cse = User(username='ST_CSE', email='st_cse@test.com')
-            u_st_cse.set_password("test12345")
+            u_st_cse.set_password("error54321")
             u_st_cse.save()
 
         # EEE Department
         if not User.objects.filter(username__iexact='MC_EEE').exists():
             u_mc_eee = User(username='MC_EEE', email='mc_eee@test.com')
-            u_mc_eee.set_password("test12345")
+            u_mc_eee.set_password("error54321")
             u_mc_eee.save()
 
         if not User.objects.filter(username__iexact='FG_EEE').exists():
             u_fg_eee = User(username='FG_EEE', email='fg_eee@test.com')
-            u_fg_eee.set_password("test12345")
+            u_fg_eee.set_password("error54321")
             u_fg_eee.save()
 
         if not User.objects.filter(username__iexact='ST_EEE').exists():
             u_st_eee = User(username='ST_EEE', email='st_eee@test.com')
-            u_st_eee.set_password("test12345")
+            u_st_eee.set_password("error54321")
             u_st_eee.save()
 
 

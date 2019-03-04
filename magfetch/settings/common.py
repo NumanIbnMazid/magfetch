@@ -131,7 +131,10 @@ COOL_PAGINATOR_SIZE             = "SMALL"
 COOL_PAGINATOR_ELASTIC          = "300px"
 
 # File Validation Staffs
+ALLOWED_FILE_TYPES = ['.doc', '.docx', '.jpg', '.jpeg', '.png',
+                 '.svg', '.DOC', '.DOCX', '.JPG', '.JPEG', '.PNG', '.SVG']
 FILE_TYPES = ['.doc', '.docx', '.jpg', '.jpeg', '.png', '.svg']
+
 IMAGE_TYPES = ['.jpg', '.jpeg', '.png', '.svg']
 DOCUMENT_TYPES = ['.doc', '.docx']
 
@@ -156,3 +159,30 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = os.path.join('static_cdn', 'static_root')
 MEDIA_ROOT = os.path.join('static_cdn', 'media_root')
+
+
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_HEADERS = (
+    'x-requested-with',
+    'content-type',
+    'accept',
+    'origin',
+    'authorization',
+    'x-csrftoken',
+    'token',
+    'x-device-id',
+    'x-device-type',
+    'x-push-id',
+    'dataserviceversion',
+    'maxdataserviceversion'
+)
+CORS_ALLOW_METHODS = (
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+    'OPTIONS'
+)
