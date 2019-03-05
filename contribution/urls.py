@@ -4,6 +4,7 @@ from .views import (
     ContributionCategoryUpdateView,
     ContributionCategoryDeleteView,
     ContributionUploadView,
+    ContributionListView,
 )
 
 urlpatterns = [
@@ -16,4 +17,6 @@ urlpatterns = [
          name='category_delete'),
     # Contribution
     path('upload/', ContributionUploadView.as_view(), name='upload'),
+    path('list/', ContributionListView.as_view(), name='contribution_list'),
+    path('<slug>/detail/', ContributionUploadView.as_view(), name='contribution_detail'),
 ]

@@ -5,6 +5,7 @@
 #   File Save Naming Convention: username_file_category
 #   After submitting contribution email, system notification
 #   Danger zone if not commented within 10 days
+#   Rating Contributions, later search by rating and select for magazine
 
 ============== TODO TOMMOROW ==============
 # Notification Display

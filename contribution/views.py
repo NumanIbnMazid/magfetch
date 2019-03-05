@@ -344,3 +344,39 @@ class ContributionUploadView(CreateView):
                                  )
             return HttpResponseRedirect(reverse('home'))
         return super(ContributionUploadView, self).dispatch(request, *args, **kwargs)
+
+
+@method_decorator(login_required, name='dispatch')
+class ContributionListView(ListView):
+    template_name = 'contribution/list.html'
+
+    def get_queryset(self):
+        user = UserProfile.objects.filter(user=self.request.user).first()
+        query = Contribution.objects.filter(user__faculty=user.faculty).latest()
+        return query
+    
+    def user_passes_test(self, request):
+        user = request.user
+        if UserProfile.objects.filter(user=user).first().role == 2:
+            return True
+        return False
+
+    def dispatch(self, request, *args, **kwargs):
+        instance_user = self.request.user
+        if not self.user_passes_test(request):
+            suspicious_user = Suspicious.objects.filter(user=instance_user)
+            if suspicious_user.exists():
+                suspicious_user_instance = Suspicious.objects.get(
+                    user=instance_user)
+                current_attempt = suspicious_user_instance.attempt
+                total_attempt = current_attempt + 1
+                update_time = datetime.datetime.now()
+                suspicious_user.update(
+                    attempt=total_attempt, last_attempt=update_time)
+            else:
+                Suspicious.objects.get_or_create(user=instance_user)
+            messages.add_message(self.request, messages.ERROR,
+                                 "You are not allowed. Your account is being tracked for suspicious activity !"
+                                 )
+            return HttpResponseRedirect(reverse('home'))
+        return super(ContributionListView, self).dispatch(request, *args, **kwargs)

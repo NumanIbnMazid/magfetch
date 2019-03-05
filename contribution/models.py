@@ -5,7 +5,11 @@ from accounts.utils import unique_slug_generator
 from .utils import upload_contribution_path
 from accounts.models import UserProfile
 from django.dispatch import receiver
-import os
+from django.urls import reverse
+from django.db.models import Q
+# import os
+
+
 
 
 
@@ -32,6 +36,60 @@ class ContributionCategory(models.Model):
     def __str__(self):
         return self.title
 
+    def get_file_type(self):
+        if self.category_for == 0:
+            return "DOCUMENT"
+        if self.category_for == 1:
+            return "IMAGE"
+        return None
+
+
+class ContributionQuerySet(models.query.QuerySet):
+    def commented(self):
+        return self.filter(is_commented=True)
+
+    def uncommented(self):
+        return self.filter(is_commented=False)
+
+    def selected(self):
+        return self.filter(is_selected=True)
+
+    def latest(self):
+        return self.filter().order_by('-created_at')
+
+    def search(self, query):
+        lookups = (Q(title__icontains=query) |
+                   Q(category__icontains=query) |
+                   Q(user__faculty__title__icontains=query) |
+                   Q(user__user__username__icontains=query) |
+                   Q(user__user__first_name__icontains=query) |
+                   Q(user__user__last_name__icontains=query) |
+                   Q(user__user__email__icontains=query)
+                   )
+        return self.filter(lookups).distinct()
+
+class ContributionManager(models.Manager):
+    def get_queryset(self):
+        return ContributionQuerySet(self.model, using=self._db)
+
+    def all(self):
+        return self.get_queryset()
+
+    def get_by_id(self, id):
+        qs = self.get_queryset().filter(id=id)
+        if qs.count() == 1:
+            return qs.first()
+        return None
+
+    def get_by_slug(self, slug):
+        qs = self.get_queryset().filter(slug=slug)
+        if qs.count() == 1:
+            return qs.first()
+        return None
+
+    def search(self, query):
+        return self.get_queryset()
+
 
 class Contribution(models.Model):
     user = models.ForeignKey(
@@ -49,13 +107,40 @@ class Contribution(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='created at')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='updated at')
 
+    objects = ContributionManager()
+
     class Meta:
         verbose_name = 'Contribution'
         verbose_name_plural = 'Contributions'
         ordering = ['-updated_at']
 
+    def get_absolute_url(self):
+        return reverse("contribution:contribution_detail", kwargs={"slug": self.slug})
+
     def __str__(self):
         return self.title
+
+
+
+class Comment(models.Model):
+    contribution = models.ForeignKey(
+        Contribution, on_delete=models.CASCADE, related_name='user_contribution_file', verbose_name='contribution'
+    )
+    commented_by = models.ForeignKey(
+        UserProfile, on_delete=models.CASCADE, related_name='user_comment', verbose_name='commented by'
+    )
+    comment = models.TextField(max_length=1000, verbose_name='comment')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='created at')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='updated at')
+
+    class Meta:
+        verbose_name = 'Comment'
+        verbose_name_plural = 'Comments'
+        ordering = ['-updated_at']
+
+    def __str__(self):
+        return self.contribution.title
+
 
 
 @receiver(post_save, sender=Date)
@@ -82,5 +167,14 @@ def contribution_category_pre_save_receiver(sender, instance, *args, **kwargs):
         instance.slug = unique_slug_generator(instance)
 
 pre_save.connect(contribution_category_pre_save_receiver, sender=ContributionCategory)
+
+
+@receiver(post_save, sender=Comment)
+def create_or_update_comment_status(sender, instance, created, **kwargs):
+    if created:
+        contribution_filter = Contribution.objects.filter(slug=instance.contribution.slug)
+        if contribution_filter.exists():
+            if contribution_filter.first().is_commented == False:
+                contribution_filter.update(is_commented=True)
 
 

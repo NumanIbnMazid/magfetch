@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_title %}{% block page_title %}{% block breadcrumb %}
+All Contributions
+{% endblock %}{% endblock %}{% endblock %}
+
+{% block content %}
+
+<!-- Datatable CSS -->
+<link rel="stylesheet" href="{% static 'vendor/datatable/dataTables.min.css' %}" type="text/css" />
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="table-responsive">
+            <table id="datatable" class="table table-striped table-bordered row-border b-t b-light" style="width:100%">
+                <thead>
+                    <tr>
+                        <th width="10">#</th>
+                        <th>Student</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Type</th>
+                        <th>Comment Status</th>
+                        <th>Selection Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for object in object_list %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>
+                            <span class="thumb-sm avatar pull-left">
+                                <img src="{% static 'images/raw/avatar/avatar.jpg' %}">
+                            </span>
+                            {{object.user.get_smallname}}
+                        </td>
+                        <td>{{object.title}}</td>
+                        <td>{{object.category}}</td>
+                        <td>{{object.category.get_file_type}}</td>
+                        <td>{{object.is_commented}}</td>
+                        <td>{{object.is_selected}}</td>
+                        <td>
+                            <a href="#" class="btn btn-xs btn-default">
+                                View File
+                            </a>
+                            <a href="#" class="btn btn-xs btn-default">
+                                Comment
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th width="10">#</th>
+                        <th>Student</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Type</th>
+                        <th>Comment Status</th>
+                        <th>Selection Status</th>
+                        <th>Action</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#datatable').DataTable({
+            "pagingType": "full_numbers",
+            "scrollY": "50vh",
+            "scrollX": true,
+            "scrollCollapse": true,
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "info":     true,
+            "language": {
+                "lengthMenu": "Show _MENU_ records per page",
+                "zeroRecords": "Nothing found - sorry",
+                "info": "Showing page _PAGE_ of _PAGES_",
+                "infoEmpty": "No records available",
+                "infoFiltered": "(filtered from _MAX_ total records)"
+            }
+        });
+    });
+</script>
+
+<!-- Datatable JS -->
+<script src="{% static 'vendor/datatable/dataTables.min.js' %}"></script>
+
+{% endblock %}

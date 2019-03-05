@@ -2,6 +2,7 @@
 {% url 'system_data:date_create' as date_create_url %}
 {% url 'system_data:date_update' as date_update_url %}
 {% url 'contribution:category_create' as category_create_url %}
+{% url 'contribution:contribution_list' as contribution_list_url %}
 
 <aside class="bg-dark lter aside-md hidden-print" id="nav">
     <section class="vbox">
@@ -66,6 +67,18 @@
                               </a>
                           </li>
                         {% endif %}
+
+                        {% if is_MC %}
+                        <li>
+                            <a href="{{ contribution_list_url }}">
+                                <i class="fa fa-file-text icon">
+                                    <b class="bg-info"></b>
+                                </i>
+                                <span>Contribution List</span>
+                            </a>
+                        </li>
+                        {% endif %}
+
                         <li>
                             <a href="#pages">
                                 <i class="fa fa-file-text icon">
