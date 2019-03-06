@@ -47,13 +47,19 @@ function categoryFunction() {
 
     var img_ext = new Array();
     img_ext["jpg"] = 0;
-    img_ext["jpeg"] = 1;
-    img_ext["png"] = 2;
-    img_ext["svg"] = 3;
+    img_ext["JPG"] = 1;
+    img_ext["jpeg"] = 2;
+    img_ext["JPEG"] = 3;
+    img_ext["png"] = 4;
+    img_ext["PNG"] = 5;
+    img_ext["svg"] = 6;
+    img_ext["SVG"] = 7;
 
     var file_ext = new Array();
     file_ext["doc"] = 0;
-    file_ext["docx"] = 1;
+    file_ext["DOC"] = 1;
+    file_ext["docx"] = 2;
+    file_ext["DOCX"] = 3;
 
     var doc_category = document.getElementById("doc-category");
     var doc_category_group = document.getElementById("doc-category-group");
