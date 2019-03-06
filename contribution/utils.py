@@ -14,10 +14,11 @@ def get_filename_ext(filepath):
 
 
 def upload_contribution_path(instance, filename):
-    new_filename = "{user}_{type}-{category}-{datetime}".format(
+    new_filename = "{user}_{type}-{category}-{title}-{datetime}".format(
         user=instance.user,
         type=instance.category.category_for,
         category=instance.category,
+        title=instance.title,
         datetime=time.strftime("%Y%m%d-%H%M%S")
     )
     name, ext = get_filename_ext(filename)

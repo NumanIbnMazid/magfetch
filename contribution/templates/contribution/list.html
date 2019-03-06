@@ -9,6 +9,8 @@ All Contributions
 
 <!-- Datatable CSS -->
 <link rel="stylesheet" href="{% static 'vendor/datatable/dataTables.min.css' %}" type="text/css" />
+<!-- Image-Magnify CSS -->
+<link rel="stylesheet" href="{% static 'vendor/image-viewer/jquery.magnify.css' %}" type="text/css" />
 
 <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -43,11 +45,15 @@ All Contributions
                         <td>{{object.is_selected}}</td>
                         <td>
                             <!-- <iframe class="doc" src="https://docs.google.com/gview?url=http://writing.engr.psu.edu/workbooks/formal_report_template.doc&embedded=true"></iframe> -->
+                            {% if object.category.category_for == 0 %}
                             <iframe class="doc" src="https://docs.google.com/gview?url=https://magfetch.herokuapp.com{{object.file.url}}&embedded=true"></iframe>
-                            <a href="#" class="btn btn-xs btn-default">
-                                View File
+                            {% endif %}
+                            {% if object.category.category_for == 1 %}
+                            <a data-magnify="gallery" data-caption="{{object.title}}" data-group="" href="{{object.file.url}}" class="btn btn-xs btn-info">
+                                View Image
                             </a>
-                            <a href="#" class="btn btn-xs btn-default">
+                            {% endif %}
+                            <a href="#" class="btn btn-xs btn-dark">
                                 Comment
                             </a>
                         </td>
@@ -71,29 +77,13 @@ All Contributions
     </div>
 </div>
 
-<script>
-    $(document).ready(function () {
-        $('#datatable').DataTable({
-            "pagingType": "full_numbers",
-            "scrollY": "50vh",
-            "scrollX": true,
-            "scrollCollapse": true,
-            "paging": true,
-            "searching": true,
-            "ordering": true,
-            "info":     true,
-            "language": {
-                "lengthMenu": "Show _MENU_ records per page",
-                "zeroRecords": "Nothing found - sorry",
-                "info": "Showing page _PAGE_ of _PAGES_",
-                "infoEmpty": "No records available",
-                "infoFiltered": "(filtered from _MAX_ total records)"
-            }
-        });
-    });
-</script>
+<!-- Image-Magnify JS -->
+<script src="{% static 'vendor/image-viewer/jquery.magnify.js' %}"></script>
+<script src="{% static 'vendor/image-viewer/magnify-conf.js' %}"></script>
+
 
 <!-- Datatable JS -->
+<script src="{% static 'vendor/datatable/datatable-conf.js' %}"></script>
 <script src="{% static 'vendor/datatable/dataTables.min.js' %}"></script>
 
 {% endblock %}
