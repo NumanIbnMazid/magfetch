@@ -42,7 +42,10 @@ All Contributions
                         <td>{{object.is_commented}}</td>
                         <td>{{object.is_selected}}</td>
                         <td>
-                            <iframe src="https://docs.google.com/gview?url={{object.file.url}}&embedded=true"></iframe>
+                            <a href="{{object.file.url}}" class="embed" id="embedURL">Download file</a>
+                            <iframe src="https://view.officeapps.live.com/op/view.aspx?src={{object.file.url}}"
+                                frameborder="0" style="width: 800px; height: 500px;">
+                            </iframe>
                             <a href="#" class="btn btn-xs btn-default">
                                 View File
                             </a>
@@ -69,7 +72,13 @@ All Contributions
         </div>
     </div>
 </div>
-
+<script>
+    $('a.embed').zohoViewer({
+        width: 400,
+        height: 500
+    });
+    $('#embedURL').zohoViewer();
+</script>
 <script>
     $(document).ready(function () {
         $('#datatable').DataTable({
@@ -80,7 +89,7 @@ All Contributions
             "paging": true,
             "searching": true,
             "ordering": true,
-            "info":     true,
+            "info": true,
             "language": {
                 "lengthMenu": "Show _MENU_ records per page",
                 "zeroRecords": "Nothing found - sorry",
@@ -94,5 +103,6 @@ All Contributions
 
 <!-- Datatable JS -->
 <script src="{% static 'vendor/datatable/dataTables.min.js' %}"></script>
+<script src="{% static 'vendor/docviewer/jquery.zohoviewer.min.js' %}"></script>
 
 {% endblock %}
