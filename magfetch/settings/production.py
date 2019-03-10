@@ -17,6 +17,13 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 # DEBUG_COLLECTSTATIC = os.environ.get('DEBUG_COLLECTSTATIC')  # SET to 1
 # DISABLE_COLLECTSTATIC = os.environ.get('DISABLE_COLLECTSTATIC')  # SET to 1
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
 ADMINS = (
     ('admin', 'admin@magfetch.com'),
 )
