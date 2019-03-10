@@ -14,6 +14,17 @@
     - last_login        (DateTimeField)
     - date_joined       (DateTimeField)
 
+
+# Faculty
+    - code              (CharField)
+    - title             (title)
+    - created_at        (DateTimeField)
+    - updated_at        (DateTimeField)
+
 # UserProfile
     - user              (OneToOneField)         to - user (profile)
     - slug              (SlugField)
+    - role              (PositiveSmallIntegerField)
+    - faculty           (ForeignKey)            to - Faculty (user_faculty)
+    - created_at        (DateTimeField)
+    - updated_at        (DateTimeField)
