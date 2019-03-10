@@ -35,8 +35,10 @@ class ContributionCategoryCreateView(CreateView):
 
     def form_valid(self, form):
         title = form.instance.title
+        category_for = form.instance.category_for
         # category_for = form.instance.category_for
-        qs = ContributionCategory.objects.filter(title__iexact=title)
+        qs = ContributionCategory.objects.filter(
+            title__iexact=title, category_for=category_for)
         if qs.exists():
             form.add_error(
                 'title', forms.ValidationError(
@@ -108,8 +110,10 @@ class ContributionCategoryUpdateView(UpdateView):
     def form_valid(self, form):
         pre = self.get_object()
         title = form.instance.title
+        category_for = form.instance.category_for
         if not pre.title == title:
-            qs = ContributionCategory.objects.filter(title__iexact=title)
+            qs = ContributionCategory.objects.filter(
+                title__iexact=title, category_for=category_for)
             if qs.exists():
                 form.add_error(
                     'title', forms.ValidationError(
