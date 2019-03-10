@@ -15,7 +15,7 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=False, cast=bool)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': config('DB_NAME'),
+        'NAME': config('DB_NAME_PAW'),
         'USER': config('DB_USER_PAW'),
         'PASSWORD': config('DB_PASSWORD_PAW'),
         'HOST': config('DB_HOST_PAW'),
