@@ -169,6 +169,14 @@ def contribution_category_pre_save_receiver(sender, instance, *args, **kwargs):
 pre_save.connect(contribution_category_pre_save_receiver, sender=ContributionCategory)
 
 
+def contribution_pre_save_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = unique_slug_generator(instance)
+
+
+pre_save.connect(contribution_pre_save_receiver, sender=Contribution)
+
+
 @receiver(post_save, sender=Comment)
 def create_or_update_comment_status(sender, instance, created, **kwargs):
     if created:

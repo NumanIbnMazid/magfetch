@@ -251,7 +251,7 @@ class ContributionUploadView(CreateView):
         form.instance.user = profile
         file = form.save().file
         base_name = os.path.basename(file.name)
-        form.instance.slug = os.path.splitext(base_name)[0]
+        # form.instance.slug = os.path.splitext(base_name)[0]
         messages.add_message(self.request, messages.SUCCESS,
                              "Your article has been uploaded successfully!!!")
         new_object = form.save()

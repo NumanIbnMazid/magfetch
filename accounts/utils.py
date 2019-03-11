@@ -4,7 +4,7 @@ import time
 from django.utils.text import slugify
 
 
-def random_string_generator(size=3, chars=string.ascii_lowercase + string.digits):
+def random_string_generator(size=4, chars=string.ascii_lowercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
 
 def random_number_generator(size=3, chars='1234567890'):
