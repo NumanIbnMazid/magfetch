@@ -10,16 +10,22 @@ All Contributions
 <!-- Datatable CSS -->
 <link rel="stylesheet" href="{% static 'vendor/datatable/dataTables.min.css' %}" type="text/css" />
 <!-- Image-Magnify CSS -->
-<link rel="stylesheet" href="{% static 'vendor/image-viewer/jquery.magnify.css' %}" type="text/css" />
+<link rel="stylesheet" href="{% static 'vendor/image-viewer/viewbox.css' %}" type="text/css" />
 
 <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <span id="tst-msg"></span>
         {% if object_list.count >= 1 %}
         <div class="table-responsive">
             <table id="datatable" class="table table-striped table-bordered row-border b-t b-light" style="width:100%">
                 <thead>
                     <tr>
                         <th width="10">#</th>
+                        <th>
+                            <button onclick="send_query(document.getElementsByTagName('input'))" class="btn btn-xs btn-dark">
+                                Download Marked
+                            </button>
+                        </th>
                         <th>Student</th>
                         <th>Title</th>
                         <th>Category</th>
@@ -33,6 +39,9 @@ All Contributions
                     {% for object in object_list %}
                     <tr>
                         <td>{{ forloop.counter }}</td>
+                        <td>
+                            <input type="checkbox" name="file_select" value="https://magfetch.pythonanywhere.com{{object.file.url}}" id="file_select">
+                        </td>
                         <td>
                             <span class="thumb-sm avatar pull-left">
                                 <img src="{% static 'images/raw/avatar/avatar.jpg' %}">
@@ -48,14 +57,20 @@ All Contributions
                             <!-- <iframe class="doc" src="https://docs.google.com/gview?url=http://writing.engr.psu.edu/workbooks/formal_report_template.doc&embedded=true"></iframe> -->
                             {% if object.category.category_for == 0 %}
                             <iframe class="doc" src="https://docs.google.com/gview?url=https://magfetch.pythonanywhere.com{{object.file.url}}&embedded=true"></iframe>
+                            <br>
                             {% endif %}
+
                             {% if object.category.category_for == 1 %}
-                            <a data-magnify="gallery" data-caption="{{object.title}}" data-group="" href="{{object.file.url}}" class="btn btn-xs btn-info">
-                                View Image
+                            <a href="{{object.file.url}}" class="thumbnail list-img" title="{{object.title}}">
+                                <img src="{{object.file.url}}" alt="{{object.title}}">
                             </a>
                             {% endif %}
+
                             <a href="#" class="btn btn-xs btn-dark">
                                 Comment
+                            </a>
+                            <a href="#" class="btn btn-xs btn-dark">
+                                Download
                             </a>
                         </td>
                     </tr>
@@ -64,6 +79,7 @@ All Contributions
                 <tfoot>
                     <tr>
                         <th width="10">#</th>
+                        <th>Button</th>
                         <th>Student</th>
                         <th>Title</th>
                         <th>Category</th>
@@ -83,10 +99,38 @@ All Contributions
     </div>
 </div>
 
-<!-- Image-Magnify JS -->
-<script src="{% static 'vendor/image-viewer/jquery.magnify.js' %}"></script>
-<script src="{% static 'vendor/image-viewer/magnify-conf.js' %}"></script>
+<!-- <script>
+    function send_query(check) {
+        var values = [];
+        for (i = 0; i < check.length; i++) {
+            if (check[i].checked == true) {
+                values.push(check[i].value);
+            }
+        }
+        value_list = values.join();
+        $('#tst-msg').html(value_list).css('color', '#B93232');
+        // console.log(values.join());
+    }
+    function addFileArray(e) {
+        var file_select = $('#file_select').val();
+        if (file_select != '') {
+            $('#tst-msg').html(file_select).css('color', '#B93232');
+        }
+        if (file_select == '') {
+            $('#tst-msg').html("File is empty").css('color', '#B93232');
+        }
+    }
+</script> -->
 
+<!-- Image-Magnify JS -->
+<script src="{% static 'vendor/image-viewer/jquery.viewbox.min.js' %}"></script>
+<script src="{% static 'vendor/image-viewer/viewbox-conf.js' %}"></script>
+
+<!-- Zip Downloader JS -->
+<script src="{% static 'vendor/zip-downloader/jszip.min.js' %}"></script>
+<script src="{% static 'vendor/zip-downloader/jszip-utils.js' %}"></script>
+<script src="{% static 'vendor/zip-downloader/zip-config.js' %}"></script>
+<script src="{% static 'vendor/zip-downloader/FileSaver.js' %}"></script>
 
 <!-- Datatable JS -->
 <script src="{% static 'vendor/datatable/datatable-conf.js' %}"></script>
