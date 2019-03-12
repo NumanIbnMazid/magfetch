@@ -358,6 +358,14 @@ class ContributionListView(ListView):
         user = UserProfile.objects.filter(user=self.request.user).first()
         query = Contribution.objects.filter(user__faculty=user.faculty).latest()
         return query
+
+    def get_context_data(self, **kwargs):
+        context = super(ContributionListView, self).get_context_data(**kwargs)
+        user = UserProfile.objects.filter(user=self.request.user).first()
+        faculty = user.faculty
+        context['faculty'] = faculty
+        context['faculty_code'] = faculty.code
+        return context
     
     def user_passes_test(self, request):
         user = request.user

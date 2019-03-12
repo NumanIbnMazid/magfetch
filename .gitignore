@@ -86,6 +86,7 @@ local_settings.py
 development.py
 /media
 /static
+/static_cdn
 db.sqlite3
 
 # Environments

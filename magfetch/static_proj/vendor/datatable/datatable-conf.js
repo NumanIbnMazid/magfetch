@@ -1,12 +1,12 @@
 $(document).ready(function () {
     $('#datatable').DataTable({
         "pagingType": "full_numbers",
-        "scrollY": "50vh",
+        "scrollY": "54vh",
         "scrollX": true,
         "scrollCollapse": true,
         "paging": true,
         "searching": true,
-        "ordering": true,
+        "ordering": false,
         "info": true,
         "language": {
             "lengthMenu": "Show _MENU_ records per page",
