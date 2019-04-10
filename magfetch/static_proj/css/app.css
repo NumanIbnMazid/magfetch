@@ -619,7 +619,7 @@ a:hover .caret-white {
     width: 150px;
   }
   .aside-md {
-    width: 220px;
+    width: 245px;
   }
   .aside-lg {
     width: 250px;
@@ -850,9 +850,9 @@ a:hover .caret-white {
 .nav-primary ul.nav > li > a:focus,
 .nav-primary ul.nav > li > a:active,
 .nav-primary ul.nav > li.active > a {
-  color: #fff;
+  color: rgb(255, 255, 255);
   background-color: inherit;
-  background-color: rgba(0,0,0,0.05) !important;
+  background-image: linear-gradient(to right, #243949 0%, #517fa4 100%);
   text-shadow: none;
 }
 .nav-primary ul.nav > li:hover > a > i.icon,

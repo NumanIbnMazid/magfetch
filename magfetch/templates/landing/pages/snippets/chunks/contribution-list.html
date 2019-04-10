@@ -1,0 +1,157 @@
+{% load static %}
+
+<!-- Datatable CSS -->
+<link rel="stylesheet" href="{% static 'vendor/datatable/dataTables.min.css' %}" type="text/css" />
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="text-center">
+            <button id="download_btn" class="hide btn btn-md btn-dark">
+                <span class="c-text-info">Download Files as Zip</span>
+            </button>
+        </div>
+        <!-- Zip Download progress and Result -->
+        <div class="progress hide" id="progress_bar">
+            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                style="width: 0%;">
+            </div>
+        </div>
+        <p class="hide" id="result"></p>
+        <input type="hidden" id="zip-name" name="zip-name" value="{{ request.user.profile.get_smallname }}">
+        <!-- Zip Download progress and Result -->
+
+        <div class="table-responsive">
+            <table id="datatable" class="table table-bordered row-border b-t b-light" style="width:100%">
+                <thead class="text-dark">
+                    <tr>
+                        <th class="text-center">
+                            <span id="check-all">
+                                <i class="fa fa-square" id="dflt"></i>
+                                <i class="fa fa-check-square hide" id="chkd"></i>
+                                <i class="fa fa-square hide" id="uchkd"></i>
+                            </span>
+                        </th>
+                        <th>#</th>
+                        <th class="text-center">Title</th>
+                        <th class="text-center">Category</th>
+                        <!-- <th class="text-center">
+                            <span class="label bg-dark">File</span>
+                        </th> -->
+                        <th class="text-center">
+                            Action
+                        </th>
+                        <th class="text-center">Uploaded at</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for object in contributions %}
+                    <tr {% if object.is_selected == True %}class="bg-c-soft-green" {% endif %}>
+                        <td class="text-center">
+                            <div>
+                                <!-- <input type="checkbox" class="check-box m-t-sm" data-url="http://magfetch.pythonanywhere.com{{object.file.url}}"> -->
+                                <input type="checkbox" class="check-box m-t-sm"
+                                    data-url="http://127.0.0.1:8000{{object.file.url}}">
+                            </div>
+                        </td>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{object.title}}</td>
+                        <td>{{object.category}}</td>
+                        <!-- <td class="text-center">
+                            {% if object.category.category_for == 0 %}
+                            <iframe class="doc" src="https://docs.google.com/gview?url=http://magfetch.pythonanywhere.com{{object.file.url}}&embedded=true"
+                                width="270" height="60"></iframe>
+                            <iframe class="doc" src="#" width="270" height="60"></iframe>
+                            {% endif %}
+
+                            {% if object.category.category_for == 1 %}
+                            <a href="{{object.file.url}}" class="c-thumbnail" title="{{object.title}}">
+                                <img src="{{object.file.url}}" alt="{{object.title}}" width="270" height="60">
+                            </a>
+                            {% endif %}
+                        </td> -->
+                        <td>
+                            <button type="button" class="btn btn-sm btn-raised ripple-effect btn-info js-view-contribution"
+                                value="{{object.slug}}" data-category="{{object.category.category_for}}" data-file="{{object.file.url}}" 
+                                data-title="{{object.title}}" data-toggle="modal"
+                                data-target="#modal-view-contribution">
+                                View
+                            </button>
+                            <a class="btn btn-sm btn-raised ripple-effect btn-default" href="http://127.0.0.1:8000{{object.file.url}}" download>
+                                <span class="c-text-dark">Download</span>
+                            </a>
+                            <button type="button" class="btn btn-sm btn-raised ripple-effect btn-danger js-delete-contribution"
+                                value="{{object.slug}}" data-selected="{{object.is_selected}}" data-toggle="modal"
+                                data-target="#modal-delete-contribution">
+                                Delete
+                            </button>
+                            
+                        </td>
+                        <td width="7%">
+                            {{object.created_at}}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% include 'landing/pages/snippets/chunks/modals/modals.html' %}
+
+<script>
+    $(".js-view-contribution").click(function() {
+        var $this = $(this);
+        var slug = $this.val();
+        var file_url = $this.data("file");
+        var category = $this.data("category");
+        var title = $this.data("title");
+        //var file_html = document.getElementById('file');
+
+        if (category == 0){
+            $('#file').html("<iframe class='doc' id='iframe' \
+            src='https://docs.google.com/gview?url=http://magfetch.pythonanywhere.com"+file_url+"&embedded=true'\
+                width='270' height='60'></iframe>");
+        }
+        else if (category == 1){
+            $('#file').html(" <a href='"+file_url+"' class='c-thumbnail'> \
+            <img src='"+file_url+"' alt='"+title+" class='img-fluid' height='480' width='640' /> \
+            ");
+        }
+        else{
+            $('#file').html("<h3>File not found!!!</h3>").css('color', '#B93232');
+        };
+        $('#viewContribution').html("<span>Contribution Title</span>: <span class='font-20 font-bold text-info'> \
+            "+title+"</span> ");
+        
+        //console.log($this);
+        //console.log(slug);
+        //console.log(file_url);
+        //console.log(category);
+        //console.log(title);
+    });
+</script>
+
+<script>
+    $(".js-delete-contribution").click(function() {
+        let contribution_slug = this.value ;
+        $('#contribution_slug_modal2').val(contribution_slug);
+        //console.log(contribution_slug);
+    });
+    document.querySelector('#form1').addEventListener('submit', function(e) {
+        let form = this;
+        e.preventDefault();
+        form.submit();
+        
+    });
+</script>
+
+<!-- Datatable JS -->
+<script src="{% static 'vendor/datatable/datatable-conf.js' %}"></script>
+<script src="{% static 'vendor/datatable/dataTables.min.js' %}"></script>
+
+<!-- Zip Downloader JS -->
+<script src="{% static 'vendor/zip-downloader/jszip.min.js' %}"></script>
+<script src="{% static 'vendor/zip-downloader/jszip-utils.js' %}"></script>
+<script src="{% static 'vendor/zip-downloader/zip-config.js' %}"></script>
+<script src="{% static 'vendor/zip-downloader/FileSaver.js' %}"></script>

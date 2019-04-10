@@ -13,7 +13,7 @@ function checkForm(form) {
 function clickCheck(e) {
     var agree = $('#agree').val();
     if (agree == 'check') {
-        $('#message').html('')
+        $('#message').html('');
         $('#submit').css('display', 'inline');
     } else {
         $('#message').html('Please Read and Check Terms and Conditions').css('color', '#B93232')

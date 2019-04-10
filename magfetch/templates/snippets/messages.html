@@ -1,4 +1,4 @@
-{% if messages %}
+<!-- {% if messages %}
 <div class="messages text-center font-bold font-15">
     {% for message in messages %}
     <div class="alert alert-{% if message.tags %}{{ message.tags }}{% else %}info{% endif %} alert-dismissible" role="alert">
@@ -8,4 +8,76 @@
     </div>
     {% endfor %}
 </div>
+{% endif %} -->
+
+{% if messages %}
+    {% for message in messages %}
+        {% if message.tags %}
+            <input type="hidden" class="msg-type" value="{{ message.tags }}">
+        {% else %}
+            <input type="hidden" class="msg-type" value="info">
+        {% endif %}
+        <input type="hidden" class="msg" value="{{ message }}">
+        <script>
+            window.onload = function () {
+                var type = $('.msg-type').val();
+                var title = type.toUpperCase();
+                var msg = $('.msg').val();
+                var icon = "fa fa-bell";
+                if (type == 'debug') {
+                    icon = "fa fa-exclamation";
+                }
+                if (type == 'info') {
+                    icon = "fa fa-info-circle";
+                }
+                if (type == 'success') {
+                    icon = "fa fa-check";
+                }
+                if (type == 'warning') {
+                    icon = "fa fa-exclamation-triangle";
+                }
+                if (type == 'error') {
+                    icon = "fa fa-times-circle";
+                }
+                //console.log(type);
+                //console.log(msg);
+                $.notify({
+                    // options
+                    title: '<strong class="font-italic">$title</strong><br>'.replace('$title', title),
+                    message: '<span class="font-15">$message<span>'.replace('$message', msg),
+                    icon: icon,
+                    //url: 'https://github.com/mouse0270/bootstrap-notify',
+                    //target: '_blank'
+                },{
+                    // settings
+                    element: 'body',
+                    //position: null,
+                    type: type,
+                    allow_dismiss: true,
+                    newest_on_top: false,
+                    showProgressbar: false,
+                    placement: {
+                        from: "top",
+                        align: "center"
+                    },
+                    offset: 20,
+                    spacing: 10,
+                    z_index: 1031000000,
+                    delay: 5000,
+                    timer: 2000,
+                    //url_target: '_blank',
+                    mouse_over: 'pause',
+                    animate: {
+                        enter: 'animated fadeInRight',
+                        exit: 'animated fadeOutRight'
+                    },
+                    onShow: null,
+                    onShown: null,
+                    onClose: null,
+                    onClosed: null,
+                    icon_type: 'class',
+                });
+            }
+        </script>
+    {% endfor %}
 {% endif %}

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 # Models Import
 from .models import ContributionCategory, Contribution
 from accounts.models import UserProfile
@@ -19,11 +19,13 @@ from django.core.paginator import Paginator
 from django import forms
 from django.contrib import messages
 import datetime
-from django.http import HttpResponseRedirect
 from .handlers import create_notification_to_mc_upload
 from django.core.mail import EmailMultiAlternatives
 from django.core.files.storage import default_storage
 import os
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+
 
 
 
@@ -436,3 +438,120 @@ class ContributionDetailView(DetailView):
                                  )
             return HttpResponseRedirect(reverse('home'))
         return super(ContributionListView, self).dispatch(request, *args, **kwargs)
+
+
+
+@csrf_exempt
+def contribution_delete(request):
+    url = reverse('home')
+    if request.method == "POST":
+        slug = request.POST.get("slug")
+        qs = Contribution.objects.filter(slug=slug)
+        if qs.exists():
+            contribution = qs.first()
+            if contribution.user.user == request.user:
+                if contribution.is_selected == False:
+                    qs.delete()
+                    messages.add_message(request, messages.SUCCESS,
+                                    "Contribution deleted successfully!"
+                                    )
+                    return redirect("/")
+                else:
+                    messages.add_message(request, messages.WARNING,
+                                    "You cannot delete this contribution as it has been selected for the magazine!"
+                                    )
+            else:
+                instance_user = request.user
+                suspicious_user = Suspicious.objects.filter(user=instance_user)
+                if suspicious_user.exists():
+                    suspicious_user_instance = Suspicious.objects.get(
+                        user=instance_user)
+                    current_attempt = suspicious_user_instance.attempt
+                    total_attempt = current_attempt + 1
+                    update_time = datetime.datetime.now()
+                    suspicious_user.update(
+                        attempt=total_attempt, last_attempt=update_time)
+                else:
+                    Suspicious.objects.get_or_create(user=instance_user)
+                messages.add_message(request, messages.ERROR,
+                                    "You are not allowed. Your account is being tracked for suspicious activity !"
+                                    )
+        else:
+            messages.add_message(request, messages.WARNING,
+                                 "Contribution Doesn't Exists!!!"
+                                 )
+    return HttpResponseRedirect(url)
+
+
+@login_required
+def mark_as_selected(request, slug):
+    url = reverse('home')
+    contribution_filter = Contribution.objects.filter(slug=slug)
+    if contribution_filter.exists():
+        contribution = contribution_filter.first()
+        user_filter = UserProfile.objects.filter(user=request.user, role=2)
+        if user_filter.exists() and user_filter.first().faculty == contribution.user.faculty:
+            contribution_filter.update(
+                is_selected = True
+            )
+            url = reverse('contribution:contribution_list')
+            messages.add_message(request, messages.SUCCESS,
+                                 "Successfully marked as selected contribution!"
+                                 )
+        else:
+            instance_user = request.user
+            suspicious_user = Suspicious.objects.filter(user=instance_user)
+            if suspicious_user.exists():
+                suspicious_user_instance = Suspicious.objects.get(
+                    user=instance_user)
+                current_attempt = suspicious_user_instance.attempt
+                total_attempt = current_attempt + 1
+                update_time = datetime.datetime.now()
+                suspicious_user.update(
+                    attempt=total_attempt, last_attempt=update_time)
+            else:
+                Suspicious.objects.get_or_create(user=instance_user)
+            messages.add_message(request, messages.ERROR,
+                                "You are not allowed. Your account is being tracked for suspicious activity !"
+                                )
+    else:
+        messages.add_message(request, messages.WARNING,
+                             "Contribution doesn't exists !!!")
+    return HttpResponseRedirect(url)
+
+
+@login_required
+def mark_as_unselected(request, slug):
+    url = reverse('home')
+    contribution_filter = Contribution.objects.filter(slug=slug)
+    if contribution_filter.exists():
+        contribution = contribution_filter.first()
+        user_filter = UserProfile.objects.filter(user=request.user, role=2)
+        if user_filter.exists() and user_filter.first().faculty == contribution.user.faculty:
+            contribution_filter.update(
+                is_selected=False
+            )
+            url = reverse('contribution:contribution_list')
+            messages.add_message(request, messages.SUCCESS,
+                                 "Successfully removed from selected contribution!"
+                                 )
+        else:
+            instance_user = request.user
+            suspicious_user = Suspicious.objects.filter(user=instance_user)
+            if suspicious_user.exists():
+                suspicious_user_instance = Suspicious.objects.get(
+                    user=instance_user)
+                current_attempt = suspicious_user_instance.attempt
+                total_attempt = current_attempt + 1
+                update_time = datetime.datetime.now()
+                suspicious_user.update(
+                    attempt=total_attempt, last_attempt=update_time)
+            else:
+                Suspicious.objects.get_or_create(user=instance_user)
+            messages.add_message(request, messages.ERROR,
+                                    "You are not allowed. Your account is being tracked for suspicious activity !"
+                                    )
+    else:
+        messages.add_message(request, messages.WARNING,
+                             "Contribution doesn't exists !!!")
+    return HttpResponseRedirect(url)

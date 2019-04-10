@@ -128,9 +128,9 @@ $('#download_btn').click(function () {
                 var d = new Date();
                 var year = d.getFullYear();
 
-                var faculty_code = $('#faculty').val();
+                var zip_name = $('#zip-name').val();
 
-                saveAs(blob, "magfetch_" + faculty_code + "-" + year + ".zip");
+                saveAs(blob, "magfetch_" + zip_name + "-" + year + ".zip");
 
                 showMessage("Zip File Downloaded Successfully !!!");
 

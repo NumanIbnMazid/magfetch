@@ -8,7 +8,34 @@ Home Page
 
 <div class="row">
     <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
-        {% include 'landing/pages/snippets/left-content.html' %}
+        <section class="panel panel-default">
+            <header class="panel-heading bg-light">
+                <ul class="nav nav-tabs nav-justified">
+                    <li class="{% if not contributions.count >= 1 %}active{% endif %}">
+                        <a href="#upload" data-toggle="tab">Upload Contribution</a>
+                    </li>
+                    {% if contributions.count >= 1 %}
+                    <li class="active"><a href="#uploaded" data-toggle="tab">Uploaded Contributions</a></li>
+                    {% endif %}
+                    <li><a href="#messages" data-toggle="tab">Messages</a></li>
+                    <li><a href="#settings" data-toggle="tab">Settings</a></li>
+                </ul>
+            </header>
+            <div class="panel-body">
+                <div class="tab-content">
+                    <div class="tab-pane {% if not contributions.count >= 1 %}active{% endif %}" id="upload">
+                        {% include 'landing/pages/snippets/upload-contribution.html' %}
+                    </div>
+                    {% if contributions.count >= 1 %}
+                    <div class="tab-pane active" id="uploaded">
+                        {% include 'landing/pages/snippets/uploaded-contributions.html' %}
+                    </div>
+                    {% endif %}
+                    <div class="tab-pane" id="messages">message</div>
+                    <div class="tab-pane" id="settings">settings</div>
+                </div>
+            </div>
+        </section>
     </div>
     <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
         {% include 'landing/pages/snippets/right-content.html' %}

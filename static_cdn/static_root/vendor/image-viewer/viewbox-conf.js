@@ -1,4 +1,4 @@
-$('.thumbnail').viewbox({
+$('.c-thumbnail').viewbox({
     // template
     template: '<div class="viewbox-container"><div class="viewbox-body"><div class="viewbox-header"></div><div class="viewbox-content"></div><div class="viewbox-footer"></div></div></div>',
     // loading spinner

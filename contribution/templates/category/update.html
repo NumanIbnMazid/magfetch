@@ -27,12 +27,16 @@ Update Category
             </div>
         </section>
     </div>
+    {% if doc_categories_count >= 1 %}
     <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
         {% include 'category/doc-cat-list.html' %}
     </div>
+    {% endif %}
+    {% if img_categories_count >= 1 %}
     <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
         {% include 'category/img-cat-list.html' %}
     </div>
+    {% endif %}
 </div>
 
 {% endblock %}

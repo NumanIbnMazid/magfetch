@@ -6,6 +6,9 @@ from .views import (
     ContributionUploadView,
     ContributionListView,
     ContributionDetailView,
+    mark_as_selected,
+    mark_as_unselected,
+    contribution_delete,
 )
 
 urlpatterns = [
@@ -18,6 +21,9 @@ urlpatterns = [
          name='category_delete'),
     # Contribution
     path('upload/', ContributionUploadView.as_view(), name='upload'),
+    path('delete/', contribution_delete, name='contribution_delete'),
     path('list/', ContributionListView.as_view(), name='contribution_list'),
     path('<slug>/detail/', ContributionDetailView.as_view(), name='contribution_detail'),
+    path('<slug>/mark/selected/', mark_as_selected, name='contribution_selected'),
+    path('<slug>/mark/unselected/', mark_as_unselected, name='contribution_unselected'),
 ]

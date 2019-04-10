@@ -20,7 +20,33 @@ function urlToPromise(url) {
     });
 }
 
+
 var box = document.getElementsByTagName('input');
+
+$('#check-all').click(function () {
+    var values = [];
+    for (i = 0; i < box.length; i++) {
+        if (box[i].checked == true) {
+            values.push(box[i].value);
+        }
+    }
+    if (values.length >= 1) {
+        $("#dflt").addClass("hide");
+        $("#chkd").addClass("hide");
+        $("#uchkd").removeClass("hide");
+        $(".check-box").prop('checked', false);
+        $("#download_btn").addClass("hide");
+    } else {
+        $("#dflt").addClass("hide");
+        $("#chkd").removeClass("hide");
+        $("#uchkd").addClass("hide");
+        $(".check-box").prop('checked', true);
+        $("#download_btn").removeClass("hide");
+    }
+    resetMessage();
+    $("#progress_bar").addClass("hide");
+});
+
 $(box).click(function () {
     var values = [];
     for (i = 0; i < box.length; i++) {
@@ -30,8 +56,7 @@ $(box).click(function () {
     }
     if (values.length >= 1) {
         $("#download_btn").removeClass("hide");
-    }
-    else{
+    } else {
         $("#download_btn").addClass("hide");
     }
     resetMessage();
@@ -103,9 +128,9 @@ $('#download_btn').click(function () {
                 var d = new Date();
                 var year = d.getFullYear();
 
-                var faculty_code = $('#faculty').val();
+                var zip_name = $('#zip-name').val();
 
-                saveAs(blob, "magfetch_" + faculty_code + "-" + year + ".zip");
+                saveAs(blob, "magfetch_" + zip_name + "-" + year + ".zip");
 
                 showMessage("Zip File Downloaded Successfully !!!");
 
