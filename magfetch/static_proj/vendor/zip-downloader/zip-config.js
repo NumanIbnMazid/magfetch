@@ -36,12 +36,14 @@ $('#check-all').click(function () {
         $("#uchkd").removeClass("hide");
         $(".check-box").prop('checked', false);
         $("#download_btn").addClass("hide");
+        $("#cancel_btn").addClass("hide");
     } else {
         $("#dflt").addClass("hide");
         $("#chkd").removeClass("hide");
         $("#uchkd").addClass("hide");
         $(".check-box").prop('checked', true);
         $("#download_btn").removeClass("hide");
+        $("#cancel_btn").removeClass("hide");
     }
     resetMessage();
     $("#progress_bar").addClass("hide");
@@ -56,8 +58,10 @@ $(box).click(function () {
     }
     if (values.length >= 1) {
         $("#download_btn").removeClass("hide");
+        $("#cancel_btn").removeClass("hide");
     } else {
         $("#download_btn").addClass("hide");
+        $("#cancel_btn").addClass("hide");
     }
     resetMessage();
     $("#progress_bar").addClass("hide");
@@ -136,6 +140,9 @@ $('#download_btn').click(function () {
 
                 $(".check-box").prop('checked', false);
 
+                $("#clear_btn").removeClass("hide");
+                $("#zip_btn_div").addClass("hide");
+
             }, function (e) {
                 showError(e);
             });
@@ -193,3 +200,10 @@ function updatePercent(percent) {
 //     showError("This demo works only with a recent browser !");
 //     return;
 // }
+
+$('#clear_btn').click(function () {
+    $("#zip_div").addClass("hide");
+});
+$('#cancel_btn').click(function () {
+    $("#zip_div").addClass("hide");
+});

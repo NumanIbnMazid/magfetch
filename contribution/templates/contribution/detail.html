@@ -1,24 +1,186 @@
-{% extends 'landing-base.html' %}
+{% extends custom_base %}
 {% load static %}
 
 {% block head_title %}{% block page_title %}{% block breadcrumb %}
-Contribution Detail
+Contribution Details
 {% endblock %}{% endblock %}{% endblock %}
 
 {% block content %}
 
-
+<!-- Image-Magnify CSS -->
+<link rel="stylesheet" href="{% static 'vendor/image-magnify/jquery.magnify.css' %}" type="text/css" />
 
 <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <section class="panel panel-default">
-            <header class="panel-heading font-bold text-center">Contribution Detail</header>
+            <!-- <header class="panel-heading font-bold text-center">Contribution Details</header> -->
             <div class="panel-body">
-                <h1>DETAIL</h1>
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                        {% if object.category.category_for == 0 %}
+                        <iframe class="doc img-thumbnail" height="480" width="640"
+                        src="https://docs.google.com/gview?url=http://magfetch.pythonanywhere.com{{object.file.url}}&embedded=true">
+                        </iframe>
+                        <!-- <iframe class="doc img-thumbnail" src="#"></iframe> -->
+                        {% endif %}
+                        {% if object.category.category_for == 1 %}
+                        <a data-magnify="gallery" data-caption="{{object.title}}" data-group=""
+                            href="{{ object.file.url }}">
+                            <img class="img-thumbnail" src="{{ object.file.url }}" alt="{{object.title}}">
+                        </a>
+                        {% endif %}
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                        <section class="panel panel-default">
+                            <header class="panel-heading bg-light">
+                                <ul class="nav nav-tabs nav-justified">
+                                    <li class="{% if comments.count >= 1 %}active{% endif %}">
+                                        <a href="#comments" data-toggle="tab">
+                                            Comments
+                                            <span class="badge bg-info">{{comments.count}}</span>
+                                        </a>
+                                    </li>
+                                    <li class="{% if not comments.count >= 1 %}active{% endif %}">
+                                        <a href="#details" data-toggle="tab">Contribution Details</a>
+                                    </li>
+                                </ul>
+                            </header>
+                            <div class="panel-body">
+                                <div class="tab-content">
+                                    <div class="tab-pane {% if comments.count >= 1 %}active{% endif %}" id="comments">
+                                        {% include 'contribution/comments/comments.html' %}
+                                    </div>
+                                    <div class="tab-pane {% if not comments.count >= 1 %}active{% endif %}"
+                                        id="details">
+                                        {% include 'contribution/snippets/detail-panel.html' %}
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
             </div>
         </section>
     </div>
 </div>
 
+<script>
+    $('[data-magnify=gallery]').magnify({
+
+        // is draggable
+        draggable: true,
+
+        // is resizable
+        resizable: true,
+
+        // is draggable
+        movable: true,
+
+        // keyboard navigation
+        keyboard: true,
+
+        // shows titles
+        title: true,
+
+        // modal size
+        modalWidth: 320,
+        modalHeight: 320,
+
+        // fixed content
+        fixedContent: true,
+
+        // fixed moda size
+        //fixed < a href = "https://www.jqueryscript.net/tags.php?/Modal/" > Modal < /a>Size: false,
+
+        // maximize the image viewer on init
+        initMaximized: false,
+
+        // threshold 
+        gapThreshold: 0.02,
+        ratioThreshold: 0.1,
+
+        // min/max ratio
+        minRatio: 0.1,
+        maxRatio: 16,
+
+        // toolbar options
+        headToolbar: [
+            'maximize',
+            'close'
+        ],
+        footToolbar: [
+            'zoomIn',
+            'zoomOut',
+            'prev',
+            'fullscreen',
+            'next',
+            'actualSize',
+            'rotateRight'
+        ],
+
+        // customize icons
+        icons: {
+            minimize: 'fa fa-window-minimize',
+            maximize: 'fa fa-window-maximize',
+            close: 'fa fa-close',
+            zoomIn: 'fa fa-search-plus',
+            zoomOut: 'fa fa-search-minus',
+            prev: 'fa fa-arrow-left',
+            next: 'fa fa-arrow-right',
+            fullscreen: 'fa fa-photo',
+            actualSize: 'fa fa-arrows-alt',
+            rotateLeft: 'fa fa-rotate-left',
+            rotateRight: 'fa fa-rotate-right',
+            loader: 'fa fa-spinner fa-pulse'
+        },
+
+        // language
+        i18n: {
+            minimize: 'minimize',
+            maximize: 'maximize',
+            close: 'close',
+            zoomIn: 'zoom-in(+)',
+            zoomOut: 'zoom-out(-)',
+            prev: 'prev(←)',
+            next: 'next(→)',
+            fullscreen: 'fullscreen',
+            actualSize: 'actual-size(Ctrl+Alt+0)',
+            rotateLeft: 'rotate-left(Ctrl+,)',
+            rotateRight: 'rotate-right(Ctrl+.)'
+        },
+
+        // enable multiple instances
+        multiInstances: true,
+
+        // default trigger event
+        initEvent: 'click',
+
+        // enable animation
+        //init < a href = "https://www.jqueryscript.net/animation/" > Animation < /a>: true,
+
+        // the modal size will be fixed when change images
+        fixedModalPos: false,
+
+        // z-index
+        zIndex: 1090,
+
+        // css selector of drag handler
+        dragHandle: '.magnify-modal',
+
+        // callback functions
+        callbacks: {
+            beforeOpen: $.noop,
+            opened: $.noop,
+            beforeClose: $.noop,
+            closed: $.noop,
+            beforeChange: $.noop,
+            changed: $.noop
+        }
+
+    });
+</script>
+
+<!-- Image-Magnify JS -->
+<script src="{% static 'vendor/image-magnify/jquery.magnify.js' %}"></script>
 
 {% endblock %}

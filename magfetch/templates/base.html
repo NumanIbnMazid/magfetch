@@ -17,64 +17,67 @@
 <!DOCTYPE html>
 <html lang="en" class="app">
 
-  <head>
-    <!-- meta tags -->
-    {% include "snippets/meta_tags.html" %}
-    <title>
-      {% block head_title %}magFetch{% endblock %} | magFetch Magazine Collection Management System |
-    </title>
-    <!-- css files -->
-    {% include "snippets/css.html" %}
-  </head>
+<head>
+  <!-- meta tags -->
+  {% include "snippets/meta_tags.html" %}
+  <title>
+    {% block head_title %}magFetch{% endblock %} | magFetch Magazine Collection Management System |
+  </title>
+  <!-- css files -->
+  {% include "snippets/css.html" %}
+</head>
 
-  <body>
+<body>
 
-    <section class="vbox bg-c-white">
-      {% include 'snippets/header.html' %}
-      <section>
-        <section class="hbox stretch">
-          <!-- .aside -->
-          {% include 'snippets/sidebar.html' %}
-          <section id="content">
-            <section class="vbox">
-              <section class="scrollable padder m-b-lg">
-                <!-- .breadcrumb -->
-                <ul class="breadcrumb no-border no-radius b-b b-light pull-in">
-                  <li><a href="{% url 'home' %}"><i class="fa fa-home"></i> Home</a></li>
-                  <li class="active">
-                    {% block breadcrumb %}{% endblock %}
-                  </li>
-                </ul>
-                <!-- .page-title -->
-                <div class="m-b-md">
-                  <a href="{{request.META.HTTP_REFERER|escape}}" class="btn btn-default btn-xs">
-                      <i class="fa fa-mail-reply text-muted"></i> Go Back 
+  <section class="vbox bg-c-white">
+    {% include 'snippets/header.html' %}
+    <section>
+      <section class="hbox stretch">
+        <!-- .aside -->
+        {% include 'snippets/sidebar.html' %}
+        <section id="content">
+          <section class="vbox">
+            <section class="scrollable padder m-b-lg">
+              <!-- .breadcrumb -->
+              <ul class="breadcrumb no-border no-radius b-b b-light pull-in">
+                <li><a href="{% url 'home' %}"><i class="fa fa-home"></i> Home</a></li>
+                <li class="active">
+                  {% block breadcrumb %}{% endblock %}
+                </li>
+              </ul>
+              <!-- .page-title -->
+              <div class="m-b-md">
+                <span class="pull-right">
+                  <a href="{{request.META.HTTP_REFERER|escape}}" 
+                  class="btn btn-xs btn-raised ripple-effect btn-dark">
+                    <i class="fa fa-mail-reply text-muted"></i> Go Back
                   </a>
-                  <span class="m-b-none m-l-md h4 font-bold bg-light c-text-dark">
-                    {% block page_title %}{% endblock %}
-                  </span>
-                </div>
-                <!-- development-notice -->
-                <!-- {% include 'snippets/notice.html' %} -->
-                <!-- messages -->
-                {% include 'snippets/messages.html' %}
-                <!-- main content -->
-                {% block content %}{% endblock %}
-              </section>
+                </span>
+                <span class="m-b-none m-l-md h4 font-bold c-text-dark">
+                  {% block page_title %}{% endblock %}
+                </span>
+              </div>
+              <!-- development-notice -->
+              <!-- {% include 'snippets/notice.html' %} -->
+              <!-- messages -->
+              {% include 'snippets/messages.html' %}
+              <!-- main content -->
+              {% block content %}{% endblock %}
             </section>
-            <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
           </section>
-          <aside class="bg-light lter b-l aside-md hide" id="notes">
-            <div class="wrapper">Notification</div>
-          </aside>
+          <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
         </section>
+        <aside class="bg-light lter b-l aside-md hide" id="notes">
+          <div class="wrapper">Notification</div>
+        </aside>
       </section>
     </section>
+  </section>
 
-    <!-- javascript files -->
-    {% include "snippets/js.html" %}
-    
+  <!-- javascript files -->
+  {% include "snippets/js.html" %}
 
-  </body>
+
+</body>
 
 </html>

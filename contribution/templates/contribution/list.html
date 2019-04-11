@@ -9,107 +9,97 @@ All Contributions [{{faculty}}]
 
 <!-- Datatable CSS -->
 <link rel="stylesheet" href="{% static 'vendor/datatable/dataTables.min.css' %}" type="text/css" />
-<!-- Image-Magnify CSS -->
-<link rel="stylesheet" href="{% static 'vendor/image-viewer/viewbox.css' %}" type="text/css" />
 
 <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        <div class="text-center">
-            <button id="download_btn" class="hide btn btn-md btn-dark">
-                <span class="c-text-info">Download Files as Zip</span>
-            </button>
-        </div>
-        <!-- Zip Download progress and Result -->
-        <div class="progress hide" id="progress_bar">
-            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+        <div id="zip_div" class="text-center">
+            <div class="text-center" id="zip_btn_div">
+                <button id="download_btn" class="hide btn btn-md btn-dark btn-raised ripple-effect">
+                    <span class="c-text-info">Download Files as Zip</span>
+                </button> <br>
+                <button id="cancel_btn" class="hide btn btn-xs btn-danger m-t-sm btn-raised ripple-effect" onClick="window.location.reload()">
+                    <span class="">Cancel</span>
+                </button>
             </div>
+            <!-- Zip Download progress and Result -->
+            <div class="progress hide" id="progress_bar">
+                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                    style="width: 0%;">
+                </div>
+            </div>
+            <p class="hide" id="result"></p>
+            <button id="clear_btn" class="hide btn btn-sm btn-danger btn-raised ripple-effect" onClick="window.location.reload()">
+                <span class="c-text-dark">Clear</span>
+            </button>
+            <input type="hidden" id="zip-name" name="zip-name" value="{{ faculty_code }}">
+            <!-- Zip Download progress and Result -->
         </div>
-        <p class="hide" id="result"></p>
-        <input type="hidden" id="zip-name" name="zip-name" value="{{ faculty_code }}">
-        <!-- Zip Download progress and Result -->
 
         {% if object_list.count >= 1 %}
         <div class="table-responsive">
             <table id="datatable" class="table table-bordered row-border b-t b-light" style="width:100%">
                 <thead class="text-dark">
-                    <tr>
-                        <th width="20" class="text-center">
+                    <tr class="text-center">
+                        <th>
                             <span id="check-all">
                                 <i class="fa fa-square" id="dflt"></i>
                                 <i class="fa fa-check-square hide" id="chkd"></i>
                                 <i class="fa fa-square hide" id="uchkd"></i>
                             </span>
                         </th>
+                        <th>#</th>
+                        <th>Uploader</th>
+                        <th>Title</th>
+                        <th>Comment</th>
+                        <th>Selection</th>
                         <th>
                             Action
                         </th>
-                        <th>Student</th>
-                        <th>Title</th>
-                        <th>Category</th>
-                        <th>Type</th>
-                        <th>Commented</th>
-                        <th>Selection</th>
-                        <th class="text-center">
-                            <span class="label bg-dark">File</span>
-                        </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="text-center">
                     {% for object in object_list %}
                     <tr {% if object.is_selected == True %}class="bg-c-soft-green" {% endif %}>
-                        <td class="text-center">
-                            <div class="m-b-xs">
-                                {{ forloop.counter }}
-                            </div>
-                            <div>
-                                <!-- <input type="checkbox" class="check-box m-t-sm" data-url="http://magfetch.pythonanywhere.com{{object.file.url}}"> -->
-                                <input type="checkbox" class="check-box m-t-sm" data-url="http://127.0.0.1:8000{{object.file.url}}">
-                            </div>
-                        </td>
                         <td>
-                            <div class="m-b-xs">
-                                <a href="#" class="btn btn-xs btn-info">
-                                    <span class="c-text-dark">Comment</span>
-                                </a>
-                            </div>
                             <div>
-                                <!-- <a class="btn-xs btn-primary" href="http://magfetch.pythonanywhere.com{{object.file.url}}"
-                                    download>
-                                    <span class="c-text-dark">Download</span>
-                                </a> -->
-                                <a class="btn-xs btn-primary" href="http://127.0.0.1:8000{{object.file.url}}" download>
-                                    <span class="c-text-dark">Download</span>
-                                </a>
+                                <!-- ------------- CHANGE PORTION FOR PRODUCTION MODE ------------ -->
+                                <!-- <input type="checkbox" class="check-box m-t-sm" data-url="http://magfetch.pythonanywhere.com{{object.file.url}}"> -->
+                                <input type="checkbox" class="check-box m-t-sm"
+                                    data-url="http://127.0.0.1:8000{{object.file.url}}">
                             </div>
-                            <!-- <a href="#" class="btn btn-xs btn-dark">
-                                Download
-                            </a> -->
                         </td>
+                        <td>{{ forloop.counter }}</td>
                         <td>
                             <span class="thumb-sm avatar pull-left">
                                 <img src="{% static 'images/raw/avatar/avatar.jpg' %}">
                             </span>
                             {{object.user.get_smallname}}
                         </td>
-                        <td>{{object.title}}</td>
-                        <td>{{object.category}}</td>
-                        <td>{{object.category.get_file_type}}</td>
-                        <td>{{object.is_commented}}</td>
+                        <td>{{object.title|truncatechars:15}}</td>
+                        <td>
+                            {% if object.is_commented == True %}
+                            <span class="badge bg-success">Commented</span>
+                            {% else %}
+                            <span class="badge bg-danger">Not Commented</span>
+                            {% endif %}
+                        </td>
                         <td>
                             {% if object.is_selected == False %}
-                            <a href="{% url 'contribution:contribution_selected' slug=object.slug %}" id="select-con" class="btn btn-sm btn-dark" data-url="{{ object.slug }}">
+                            <a href="{% url 'contribution:contribution_selected' slug=object.slug %}" id="select-con"
+                                class="btn btn-sm btn-dark btn-raised ripple-effect" data-url="{{ object.slug }}">
                                 <span class="">Mark as Selected</span>
                             </a>
                             {% else %}
-                            <a href="{% url 'contribution:contribution_unselected' slug=object.slug %}" id="unselect-con" class="btn btn-sm btn-danger">
+                            <a href="{% url 'contribution:contribution_unselected' slug=object.slug %}"
+                                id="unselect-con" class="btn btn-sm btn-danger btn-raised ripple-effect">
                                 <span class="">Remove from Selected</span>
                             </a>
                             {% endif %}
                         </td>
-                        <td>
+                        <!-- <td>
                             {% if object.category.category_for == 0 %}
-                            <!-- <iframe class="doc" src="https://docs.google.com/gview?url=http://magfetch.pythonanywhere.com{{object.file.url}}&embedded=true"
-                                width="270" height="60"></iframe> -->
+                            <iframe class="doc" src="https://docs.google.com/gview?url=http://magfetch.pythonanywhere.com{{object.file.url}}&embedded=true"
+                                width="270" height="60"></iframe>
                             <iframe class="doc" src="#" width="270" height="60"></iframe>
                             {% endif %}
 
@@ -118,6 +108,31 @@ All Contributions [{{faculty}}]
                                 <img src="{{object.file.url}}" alt="{{object.title}}" width="270" height="60">
                             </a>
                             {% endif %}
+                        </td> -->
+                        <td>
+                            <!-- <button type="button" class="btn btn-sm btn-raised ripple-effect btn-info js-view-contribution"
+                                    value="{{object.slug}}" data-category="{{object.category.category_for}}" data-file="{{object.file.url}}" 
+                                    data-title="{{object.title}}" data-toggle="modal"
+                                    data-target="#modal-view-contribution">
+                                    View
+                                </button> -->
+                            <a class="btn btn-sm btn-raised ripple-effect btn-info"
+                                href="{% url 'contribution:contribution_detail' slug=object.slug %}">
+                                View
+                            </a>
+                            <a class="btn btn-sm btn-raised ripple-effect btn-default"
+                                href="http://127.0.0.1:8000{{object.file.url}}" download>
+                                <span class="c-text-dark">Download</span>
+                            </a>
+                            <!-- ------------- CHANGE PORTION FOR PRODUCTION MODE ------------ -->
+                            <!-- <a class="btn btn-sm btn-raised ripple-effect btn-default"
+                                href="http://magfetch.pythonanywhere.com{{object.file.url}}" download>
+                                <span class="c-text-dark">Download</span>
+                            </a> -->
+                            <a class="btn btn-sm btn-raised ripple-effect btn-primary"
+                                href="{% url 'contribution:contribution_detail' slug=object.slug %}">
+                                Comment
+                            </a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -136,10 +151,6 @@ All Contributions [{{faculty}}]
 <!-- Datatable JS -->
 <script src="{% static 'vendor/datatable/datatable-conf.js' %}"></script>
 <script src="{% static 'vendor/datatable/dataTables.min.js' %}"></script>
-
-<!-- Image-Magnify JS -->
-<script src="{% static 'vendor/image-viewer/jquery.viewbox.min.js' %}"></script>
-<script src="{% static 'vendor/image-viewer/viewbox-conf.js' %}"></script>
 
 <!-- Zip Downloader JS -->
 <script src="{% static 'vendor/zip-downloader/jszip.min.js' %}"></script>

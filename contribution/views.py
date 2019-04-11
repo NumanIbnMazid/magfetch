@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 # Models Import
-from .models import ContributionCategory, Contribution
+from .models import ContributionCategory, Contribution, Comment
 from accounts.models import UserProfile
 from system_data.models import Date
 from suspicious.models import Suspicious
@@ -403,19 +403,32 @@ class ContributionDetailView(DetailView):
     def get_object(self, *args, **kwargs):
         slug = self.kwargs.get('slug')
         try:
-            instance = Room.objects.get(slug=slug, is_active=True)
-        except Room.DoesNotExist:
+            instance = Contribution.objects.get(slug=slug)
+        except Contribution.DoesNotExist:
             raise Http404("Not Found !!!")
-        except Room.MultipleObjectsReturned:
-            qs = Room.objects.filter(slug=slug, is_active=True)
+        except Contribution.MultipleObjectsReturned:
+            qs = Contribution.objects.filter(slug=slug)
             instance = qs.first()
         except:
             raise Http404("Something went wrong !!!")
         return instance
 
+    def get_context_data(self, **kwargs):
+        context = super(ContributionDetailView, self).get_context_data(**kwargs)
+        self.object = self.get_object()
+        user_role = UserProfile.objects.filter(user=self.request.user).first().role
+        qs = Comment.objects.filter(contribution__slug=self.object.slug)
+        context['comments'] = qs
+        if user_role == 0 or user_role == 1 or user_role == 2 or user_role == 3 or user_role == 7:
+            context['custom_base'] = "base.html"
+        else:
+            context['custom_base'] = "landing-base.html"
+        return context
+
     def user_passes_test(self, request):
         user = request.user
-        if UserProfile.objects.filter(user=user).first().role == 2:
+        user_role = UserProfile.objects.filter(user=user).first().role
+        if user_role == 2 or user_role == 4 or user_role == 0:
             return True
         return False
 
@@ -437,7 +450,7 @@ class ContributionDetailView(DetailView):
                                  "You are not allowed. Your account is being tracked for suspicious activity !"
                                  )
             return HttpResponseRedirect(reverse('home'))
-        return super(ContributionListView, self).dispatch(request, *args, **kwargs)
+        return super(ContributionDetailView, self).dispatch(request, *args, **kwargs)
 
 
 

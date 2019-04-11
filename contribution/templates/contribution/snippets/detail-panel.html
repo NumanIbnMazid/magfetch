@@ -1,0 +1,40 @@
+<section class="panel panel-default">
+    <div class="list-group no-radius alt">
+        <p class="list-group-item" href="#">
+            <span class="badge bg-info">{{object.title}}</span>
+            Title
+        </p>
+        <p class="list-group-item" href="#">
+            <span class="badge bg-light">{{object.category}}</span>
+            Category
+        </p>
+        <p class="list-group-item" href="#">
+            {% if object.is_selected == True %}
+            <span class="badge bg-success">
+                {{object.get_selection_status}}
+            </span>
+            {% else %}
+            <span class="badge bg-danger">
+                {{object.get_selection_status}}
+            </span>
+            {% endif %}
+            Selection Status
+        </p>
+        <p class="list-group-item" href="#">
+            <span class="badge bg-light">{{object.created_at}}</span>
+            Uploaded at
+        </p>
+        <p class="list-group-item" href="#">
+            <span class="badge bg-light">{{object.category.get_file_type}}</span>
+            File Type
+        </p>
+        <p class="list-group-item" href="#">
+            <span class="badge bg-light">{{object.file.size|filesizeformat}}</span>
+            File Size
+        </p>
+        <p class="list-group-item" href="#">
+            <span class="badge bg-light">{{object.get_file_extension}}</span>
+            File Extension
+        </p>
+    </div>
+</section>

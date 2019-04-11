@@ -7,7 +7,7 @@ from accounts.models import UserProfile
 from django.dispatch import receiver
 from django.urls import reverse
 from django.db.models import Q
-# import os
+import os
 
 
 
@@ -119,6 +119,17 @@ class Contribution(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_selection_status(self):
+        if self.is_selected == True:
+            return "SELECTED"
+        else:
+            return "NOT SELECTED"
+        return None
+
+    def get_file_extension(self):
+        fileName, fileExtension = os.path.splitext(self.file.name)
+        return fileExtension
 
 
 
