@@ -188,12 +188,12 @@ def contribution_pre_save_receiver(sender, instance, *args, **kwargs):
 pre_save.connect(contribution_pre_save_receiver, sender=Contribution)
 
 
-@receiver(post_save, sender=Comment)
-def create_or_update_comment_status(sender, instance, created, **kwargs):
-    if created:
-        contribution_filter = Contribution.objects.filter(slug=instance.contribution.slug)
-        if contribution_filter.exists():
-            if contribution_filter.first().is_commented == False:
-                contribution_filter.update(is_commented=True)
+# @receiver(post_save, sender=Comment)
+# def create_or_update_comment_status(sender, instance, created, **kwargs):
+#     if created:
+#         contribution_filter = Contribution.objects.filter(slug=instance.contribution.slug)
+#         if contribution_filter.exists():
+#             if contribution_filter.first().is_commented == False:
+#                 contribution_filter.update(is_commented=True)
 
 

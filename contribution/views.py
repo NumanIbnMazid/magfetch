@@ -367,6 +367,10 @@ class ContributionListView(ListView):
         faculty = user.faculty
         context['faculty'] = faculty
         context['faculty_code'] = faculty.code
+        # contributions = Contribution.objects.filter(user__faculty=user.faculty)
+        # for contribution in contributions:
+        #     comments = contribution.user_contribution_file.all()
+        #     context['comments'] = comments
         return context
     
     def user_passes_test(self, request):
@@ -568,3 +572,99 @@ def mark_as_unselected(request, slug):
         messages.add_message(request, messages.WARNING,
                              "Contribution doesn't exists !!!")
     return HttpResponseRedirect(url)
+
+
+@login_required
+def comment_create(request, slug):
+    url = reverse('home')
+    if request.method == 'POST':
+        user = request.user
+        user_profile = UserProfile.objects.filter(user=user).first()
+        comment = request.POST.get('comment')
+        comment_area = request.POST.get('comment_area')
+        if user_profile.role ==  2 or user_profile.role == 4:
+            contribution_qs = Contribution.objects.filter(slug=slug)
+            if contribution_qs.exists():
+                contribution = contribution_qs.first()
+                Comment.objects.create(contribution=contribution,commented_by=user_profile, comment=comment)
+                # messages.add_message(request, messages.SUCCESS, "Commented successfully!")
+                if user_profile.role ==  2:
+                    contribution_qs.update(is_commented=True)
+                if comment_area == "absolute_comment":
+                    url = reverse('contribution:comment_view', kwargs={'slug': slug})
+                else:
+                    url = reverse('contribution:contribution_detail', kwargs={'slug': slug})
+            else:
+                messages.add_message(request, messages.WARNING,
+                             "Contribution doesn't exists !!!")
+        else:
+            instance_user = request.user
+            suspicious_user = Suspicious.objects.filter(user=instance_user)
+            if suspicious_user.exists():
+                suspicious_user_instance = Suspicious.objects.get(
+                    user=instance_user)
+                current_attempt = suspicious_user_instance.attempt
+                total_attempt = current_attempt + 1
+                update_time = datetime.datetime.now()
+                suspicious_user.update(
+                    attempt=total_attempt, last_attempt=update_time)
+            else:
+                Suspicious.objects.get_or_create(user=instance_user)
+            messages.add_message(request, messages.ERROR,
+                                    "You are not allowed. Your account is being tracked for suspicious activity !"
+                                    )
+    return HttpResponseRedirect(url)
+
+
+@method_decorator(login_required, name='dispatch')
+class CommentListView(ListView):
+    template_name = 'contribution/comments/view.html'
+
+    def get_queryset(self):
+        slug = self.kwargs['slug']
+        query = Comment.objects.filter(contribution__slug=slug)
+        return query
+
+    def get_context_data(self, **kwargs):
+        context = super(CommentListView, self).get_context_data(**kwargs)
+        context['contribution_slug'] = self.kwargs['slug']
+        user_role = UserProfile.objects.filter(user=self.request.user).first().role
+        if user_role == 0 or user_role == 1 or user_role == 2 or user_role == 3 or user_role == 7:
+            context['custom_base'] = "base.html"
+        else:
+            context['custom_base'] = "landing-base.html"
+        qs = Contribution.objects.filter(slug=self.kwargs['slug'])
+        if qs.exists():
+            context['contribution'] = qs.first()
+        return context
+
+    def user_passes_test(self, request):
+        slug = self.kwargs['slug']
+        qs = Contribution.objects.filter(slug=slug)
+        user = request.user
+        user_profile = UserProfile.objects.filter(user=user).first()
+        if qs.exists():
+            contribution = qs.first()
+            if contribution.user.faculty == user_profile.faculty:
+                return True
+        return False
+
+    def dispatch(self, request, *args, **kwargs):
+        instance_user = self.request.user
+        if not self.user_passes_test(request):
+            suspicious_user = Suspicious.objects.filter(user=instance_user)
+            if suspicious_user.exists():
+                suspicious_user_instance = Suspicious.objects.get(
+                    user=instance_user)
+                current_attempt = suspicious_user_instance.attempt
+                total_attempt = current_attempt + 1
+                update_time = datetime.datetime.now()
+                suspicious_user.update(
+                    attempt=total_attempt, last_attempt=update_time)
+            else:
+                Suspicious.objects.get_or_create(user=instance_user)
+            messages.add_message(self.request, messages.ERROR,
+                                 "You are not allowed. Your account is being tracked for suspicious activity !"
+                                 )
+            return HttpResponseRedirect(reverse('home'))
+        return super(CommentListView, self).dispatch(request, *args, **kwargs)

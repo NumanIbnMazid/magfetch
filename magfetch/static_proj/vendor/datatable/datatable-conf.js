@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $('#datatable').DataTable({
         "pagingType": "full_numbers",
-        "scrollY": "54vh",
+        // "scrollY": "54vh",
         "scrollX": true,
         "scrollCollapse": true,
         "paging": true,

@@ -1,0 +1,143 @@
+{% extends custom_base %}
+
+{% load static %}
+
+{% block head_title %}{% block page_title %}{% block breadcrumb %}
+Comment
+{% endblock %}{% endblock %}{% endblock %}
+{% block content %}
+
+{% load static %}
+
+<!-- Image-Magnify CSS -->
+<link rel="stylesheet" href="{% static 'vendor/image-magnify/jquery.magnify.css' %}" type="text/css" />
+
+<div class="row">
+    <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
+        <!-- comment form -->
+        <article class="comment-item media m-t-md m-b-md" id="comment-form">
+            <a class="pull-left thumb-sm avatar">
+                <img src="{% static 'images/raw/avatar/avatar.jpg' %}" class="img-rounded">
+            </a>
+
+            <section class="media-body">
+                <form action="{% url 'contribution:comment_create' slug=contribution_slug %}" method="POST"
+                    class="m-b-none" id="comment_form">
+                    {% csrf_token %}
+                    <div class="">
+                        <input type="hidden" name="comment_area" value="absolute_comment">
+                        <textarea class="form-control" name="comment" rows="3" cols="3" id="comment"></textarea>
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-primary btn-raised ripple-effect m-t-sm"
+                                id="comment-btn">
+                                Comment
+                            </button>
+                        </span>
+                    </div>
+                </form>
+            </section>
+        </article>
+        <!-- /comment form -->
+        <header class="panel-heading font-bold text-center">Contribution Details</header>
+        {% if contribution.category.category_for == 0 %}
+        <iframe class="doc img-thumbnail" height="480" width="640"
+            src="https://docs.google.com/gview?url=http://magfetch.pythonanywhere.com{{contribution.file.url}}&embedded=true">
+        </iframe>
+        <!-- <iframe class="doc img-thumbnail" src="#"></iframe> -->
+        {% endif %}
+        {% if contribution.category.category_for == 1 %}
+        <a data-magnify="gallery" data-caption="{{contribution.title}}" data-group=""
+            href="{{ contribution.file.url }}">
+            <img class="img-thumbnail" src="{{ contribution.file.url }}" alt="{{contribution.title}}">
+        </a>
+        {% endif %}
+        <section class="panel panel-default">
+            <div class="list-group no-radius alt">
+                <p class="list-group-item" href="#">
+                    <span class="badge bg-info">{{contribution.title}}</span>
+                    Title
+                </p>
+                <p class="list-group-item" href="#">
+                    <span class="badge bg-light">{{contribution.category}}</span>
+                    Category
+                </p>
+                <p class="list-group-item" href="#">
+                    {% if contribution.is_selected == True %}
+                    <span class="badge bg-success">
+                        {{contribution.get_selection_status}}
+                    </span>
+                    {% else %}
+                    <span class="badge bg-danger">
+                        {{contribution.get_selection_status}}
+                    </span>
+                    {% endif %}
+                    Selection Status
+                </p>
+                <p class="list-group-item" href="#">
+                    <span class="badge bg-light">{{contribution.created_at}}</span>
+                    Uploaded at
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <div class="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-12">
+        <section class="comment-list block slim-scroll" data-height="430px" {% if object_list.count >= 7 %}
+            style="overflow: scroll; width: auto; height: 640px;" {% endif %}>
+
+            {% for comment in object_list %}
+            {% if comment.commented_by == request.user.profile %}
+            <article id="comment-id-1" class="comment-item">
+                <a class="pull-left thumb-sm">
+                    <img src="{% static 'images/raw/avatar/avatar.jpg' %}" class="img-rounded">
+                </a>
+                <section class="comment-body m-b">
+                    <header>
+                        <strong>{{ comment.commented_by.get_smallname }}</strong>
+                        <label class="label bg-success m-l-xs">
+                            You
+                        </label>
+                        <span class="text-muted text-xs block m-t-xs">
+                            {{ comment.created_at|timesince }} ago
+                        </span>
+                    </header>
+                    <div class="m-t-sm">{{ comment.comment|safe|linebreaks }}</div>
+                </section>
+            </article>
+            {% else %}
+            <!-- .comment-reply -->
+            <article id="comment-id-2" class="comment-item comment-reply">
+                <a class="pull-left thumb-sm">
+                    <img src="{% static 'images/raw/avatar/avatar.jpg' %}" class="img-rounded">
+                </a>
+                <section class="comment-body m-b">
+                    <header>
+                        <strong>{{ comment.commented_by.get_smallname }}</strong>
+                        <label class="label bg-dark m-l-xs">
+                            {{ comment.commented_by.get_role }}
+                        </label>
+                        <span class="text-muted text-xs block m-t-xs">
+                            {{ comment.created_at|timesince }} ago
+                        </span>
+                    </header>
+                    <div class="m-t-sm">
+                        {{ comment.comment|safe|linebreaks }}
+                    </div>
+                </section>
+            </article>
+            {% endif %}
+            <!-- / .comment-reply -->
+            {% empty %}
+            <div class="bg-light text-center">
+                <label class="label bg-dark m-l-xs">Not Commented yet!</label>
+            </div>
+            {% endfor %}
+
+        </section>
+    </div>
+</div>
+
+<!-- Image-Magnify JS -->
+<script src="{% static 'vendor/image-magnify/jquery.magnify.js' %}"></script>
+
+{% endblock %}

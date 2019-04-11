@@ -17,8 +17,6 @@ Home Page
                     {% if contributions.count >= 1 %}
                     <li class="active"><a href="#uploaded" data-toggle="tab">Uploaded Contributions</a></li>
                     {% endif %}
-                    <li><a href="#messages" data-toggle="tab">Messages</a></li>
-                    <li><a href="#settings" data-toggle="tab">Settings</a></li>
                 </ul>
             </header>
             <div class="panel-body">
@@ -31,8 +29,6 @@ Home Page
                         {% include 'landing/pages/snippets/uploaded-contributions.html' %}
                     </div>
                     {% endif %}
-                    <div class="tab-pane" id="messages">message</div>
-                    <div class="tab-pane" id="settings">settings</div>
                 </div>
             </div>
         </section>

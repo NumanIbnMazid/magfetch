@@ -103,3 +103,13 @@ class ContributionUploadForm(forms.ModelForm):
                     filesizeformat(settings.MAX_UPLOAD_SIZE), filesizeformat(file.size)))
             return file
         return None
+
+
+# class CommentCreateForm(forms.ModelForm):
+#     def __init__(self, *args, **kwargs):
+#         super(CommentCreateForm, self).__init__(*args, **kwargs)
+#         self.fields['comment'].help_text = "Enter comment"
+#         self.fields['comment'].widget.attrs.update({
+#             'placeholder': 'Enter your comment here...',
+#             'maxlength': 1000
+#         })

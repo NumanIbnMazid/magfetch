@@ -44,11 +44,12 @@
                         <th>#</th>
                         <th>Title</th>
                         <th>Category</th>
+                        <th>Type</th>
                         <!-- <th>
                             <span class="label bg-dark">File</span>
                         </th> -->
                         <th>
-                            Action
+                            Actions
                         </th>
                         <th>Uploaded at</th>
                     </tr>
@@ -67,6 +68,7 @@
                         <td>{{ forloop.counter }}</td>
                         <td>{{object.title|truncatechars:15}}</td>
                         <td>{{object.category}}</td>
+                        <td>{{object.category.get_file_type}}</td>
                         <!-- <td>
                             {% if object.category.category_for == 0 %}
                             <iframe class="doc" src="https://docs.google.com/gview?url=http://magfetch.pythonanywhere.com{{object.file.url}}&embedded=true"
@@ -87,11 +89,11 @@
                                 data-target="#modal-view-contribution">
                                 View
                             </button> -->
-                            <a class="btn btn-sm btn-raised ripple-effect btn-info"
+                            <a class="btn btn-xs btn-raised ripple-effect btn-info"
                                 href="{% url 'contribution:contribution_detail' slug=object.slug %}">
-                                View
+                                <span class="c-text-dark">View</span>
                             </a>
-                            <a class="btn btn-sm btn-raised ripple-effect btn-default"
+                            <a class="btn btn-xs btn-raised ripple-effect btn-default"
                                 href="http://127.0.0.1:8000{{object.file.url}}" download>
                                 <span class="c-text-dark">Download</span>
                             </a>
@@ -101,11 +103,22 @@
                                 <span class="c-text-dark">Download</span>
                             </a> -->
                             <button type="button"
-                                class="btn btn-sm btn-raised ripple-effect btn-danger js-delete-contribution"
+                                class="btn btn-xs btn-raised ripple-effect btn-danger js-delete-contribution"
                                 value="{{object.slug}}" data-selected="{{object.is_selected}}" data-toggle="modal"
                                 data-target="#modal-delete-contribution">
                                 Delete
                             </button>
+
+                            {% for comment in object.user_contribution_file.all reversed %}
+                                {% if forloop.last %}
+                                    {% if not comment.commented_by == request.user.profile %}
+                                    <a class="btn btn-xs btn-raised ripple-effect btn-warning"
+                                        href="{% url 'contribution:comment_view' slug=object.slug %}">
+                                        <span class="c-text-dark">Reply</span>
+                                    </a>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
 
                         </td>
                         <td>

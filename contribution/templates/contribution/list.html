@@ -50,25 +50,27 @@ All Contributions [{{faculty}}]
                         <th>#</th>
                         <th>Uploader</th>
                         <th>Title</th>
+                        <th>Type</th>
+                        <th>Category</th>
                         <th>Comment</th>
                         <th>Selection</th>
                         <th>
-                            Action
+                            Actions
                         </th>
                     </tr>
                 </thead>
                 <tbody class="text-center">
                     {% for object in object_list %}
                     <tr {% if object.is_selected == True %}class="bg-c-soft-green" {% endif %}>
-                        <td>
+                        <td width="2%">
                             <div>
                                 <!-- ------------- CHANGE PORTION FOR PRODUCTION MODE ------------ -->
                                 <!-- <input type="checkbox" class="check-box m-t-sm" data-url="http://magfetch.pythonanywhere.com{{object.file.url}}"> -->
-                                <input type="checkbox" class="check-box m-t-sm"
+                                <input type="checkbox" class="check-box"
                                     data-url="http://127.0.0.1:8000{{object.file.url}}">
                             </div>
                         </td>
-                        <td>{{ forloop.counter }}</td>
+                        <td width="2%">{{ forloop.counter }}</td>
                         <td>
                             <span class="thumb-sm avatar pull-left">
                                 <img src="{% static 'images/raw/avatar/avatar.jpg' %}">
@@ -76,23 +78,25 @@ All Contributions [{{faculty}}]
                             {{object.user.get_smallname}}
                         </td>
                         <td>{{object.title|truncatechars:15}}</td>
+                        <td>{{object.category.get_file_type}}</td>
+                        <td>{{object.category|truncatechars:20}}</td>
                         <td>
                             {% if object.is_commented == True %}
-                            <span class="badge bg-success">Commented</span>
+                            <span class="badge bg-success font-10">Commented</span>
                             {% else %}
-                            <span class="badge bg-danger">Not Commented</span>
+                            <span class="badge bg-danger font-10">Not Commented</span>
                             {% endif %}
                         </td>
                         <td>
                             {% if object.is_selected == False %}
                             <a href="{% url 'contribution:contribution_selected' slug=object.slug %}" id="select-con"
-                                class="btn btn-sm btn-dark btn-raised ripple-effect" data-url="{{ object.slug }}">
+                                class="btn btn-xs btn-dark btn-raised ripple-effect" data-url="{{ object.slug }}">
                                 <span class="">Mark as Selected</span>
                             </a>
                             {% else %}
                             <a href="{% url 'contribution:contribution_unselected' slug=object.slug %}"
-                                id="unselect-con" class="btn btn-sm btn-danger btn-raised ripple-effect">
-                                <span class="">Remove from Selected</span>
+                                id="unselect-con" class="btn btn-xs btn-danger btn-raised ripple-effect">
+                                <span class="c-text-dark c-bg-danger">Remove from Selected</span>
                             </a>
                             {% endif %}
                         </td>
@@ -116,23 +120,35 @@ All Contributions [{{faculty}}]
                                     data-target="#modal-view-contribution">
                                     View
                                 </button> -->
-                            <a class="btn btn-sm btn-raised ripple-effect btn-info"
+                            <a class="btn btn-xs btn-raised ripple-effect btn-info"
                                 href="{% url 'contribution:contribution_detail' slug=object.slug %}">
-                                View
+                                <span class="c-text-dark">View</span>
                             </a>
-                            <a class="btn btn-sm btn-raised ripple-effect btn-default"
+                            <a class="btn btn-xs btn-raised ripple-effect btn-default"
                                 href="http://127.0.0.1:8000{{object.file.url}}" download>
                                 <span class="c-text-dark">Download</span>
                             </a>
                             <!-- ------------- CHANGE PORTION FOR PRODUCTION MODE ------------ -->
-                            <!-- <a class="btn btn-sm btn-raised ripple-effect btn-default"
+                            <!-- <a class="btn btn-xs btn-raised ripple-effect btn-default"
                                 href="http://magfetch.pythonanywhere.com{{object.file.url}}" download>
                                 <span class="c-text-dark">Download</span>
                             </a> -->
-                            <a class="btn btn-sm btn-raised ripple-effect btn-primary"
-                                href="{% url 'contribution:contribution_detail' slug=object.slug %}">
-                                Comment
+
+                            {% for comment in object.user_contribution_file.all reversed %}
+                                {% if forloop.last %}
+                                    {% if not comment.commented_by == request.user.profile %}
+                                    <a class="btn btn-xs btn-raised ripple-effect btn-warning"
+                                        href="{% url 'contribution:comment_view' slug=object.slug %}">
+                                        <span class="c-text-dark">Reply</span>
+                                    </a>
+                                    {% endif %}
+                                {% endif %}
+                            {% empty %}
+                            <a class="btn btn-xs btn-raised ripple-effect btn-primary"
+                                href="{% url 'contribution:comment_view' slug=object.slug %}">
+                                <span class="c-text-dark">Comment</span>
                             </a>
+                            {% endfor %}
                         </td>
                     </tr>
                     {% endfor %}

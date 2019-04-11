@@ -9,6 +9,8 @@ from .views import (
     mark_as_selected,
     mark_as_unselected,
     contribution_delete,
+    comment_create,
+    CommentListView
 )
 
 urlpatterns = [
@@ -26,4 +28,7 @@ urlpatterns = [
     path('<slug>/detail/', ContributionDetailView.as_view(), name='contribution_detail'),
     path('<slug>/mark/selected/', mark_as_selected, name='contribution_selected'),
     path('<slug>/mark/unselected/', mark_as_unselected, name='contribution_unselected'),
+    #comment
+    path('comment/<slug>/create/', comment_create, name='comment_create'),
+    path('comment/<slug>/view/', CommentListView.as_view(), name='comment_view'),
 ]
