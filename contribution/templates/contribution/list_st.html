@@ -60,9 +60,8 @@
                         <td>
                             <div>
                                 <!-- ------------- CHANGE PORTION FOR PRODUCTION MODE ------------ -->
-                                <!-- <input type="checkbox" class="check-box m-t-sm" data-url="http://magfetch.pythonanywhere.com{{object.file.url}}"> -->
-                                <input type="checkbox" class="check-box m-t-sm"
-                                    data-url="http://127.0.0.1:8000{{object.file.url}}">
+                                <input type="checkbox" class="check-box m-t-sm" data-url="http://magfetch.pythonanywhere.com{{object.file.url}}">
+                                <!-- <input type="checkbox" class="check-box m-t-sm" data-url="http://127.0.0.1:8000{{object.file.url}}"> -->
                             </div>
                         </td>
                         <td>{{ forloop.counter }}</td>
@@ -93,15 +92,15 @@
                                 href="{% url 'contribution:contribution_detail' slug=object.slug %}">
                                 <span class="c-text-dark">View</span>
                             </a>
-                            <a class="btn btn-xs btn-raised ripple-effect btn-default"
+                            <!-- <a class="btn btn-xs btn-raised ripple-effect btn-default"
                                 href="http://127.0.0.1:8000{{object.file.url}}" download>
                                 <span class="c-text-dark">Download</span>
-                            </a>
+                            </a> -->
                             <!-- ------------- CHANGE PORTION FOR PRODUCTION MODE ------------ -->
-                            <!-- <a class="btn btn-sm btn-raised ripple-effect btn-default"
+                            <a class="btn btn-sm btn-raised ripple-effect btn-default"
                                 href="http://magfetch.pythonanywhere.com{{object.file.url}}" download>
                                 <span class="c-text-dark">Download</span>
-                            </a> -->
+                            </a>
                             <button type="button"
                                 class="btn btn-xs btn-raised ripple-effect btn-danger js-delete-contribution"
                                 value="{{object.slug}}" data-selected="{{object.is_selected}}" data-toggle="modal"
