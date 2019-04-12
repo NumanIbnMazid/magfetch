@@ -15,7 +15,7 @@ Selected Contributions
     <div class="hide" id="download_all_div" style="display:none">
         {% for contribution in file_urls %}
         <!-- ------------- CHANGE PORTION FOR PRODUCTION MODE ------------ -->
-        <input type="hidden" class="download-all-check-box" data-url="http://magfetch.pythonanywhere.com{{contribution.file.url}}">
+        <input type="checkbox" class="download-all-check-box" data-url="http://magfetch.pythonanywhere.com{{contribution.file.url}} checked">
         <!-- <input type="checkbox" class="download-all-check-box" data-url="http://127.0.0.1:8000{{contribution.file.url}}" checked> -->
         {% endfor %}
     </div>
