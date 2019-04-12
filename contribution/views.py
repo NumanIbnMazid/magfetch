@@ -24,7 +24,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.core.files.storage import default_storage
 import os
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect, Http404, JsonResponse
 
 
 

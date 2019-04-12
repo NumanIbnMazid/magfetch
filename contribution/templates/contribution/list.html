@@ -40,21 +40,21 @@ All Contributions [{{faculty}}]
             <table id="datatable" class="table table-bordered row-border b-t b-light" style="width:100%">
                 <thead class="text-dark">
                     <tr class="text-center">
-                        <th>
+                        <th width="2%">
                             <span id="check-all">
                                 <i class="fa fa-square" id="dflt"></i>
                                 <i class="fa fa-check-square hide" id="chkd"></i>
                                 <i class="fa fa-square hide" id="uchkd"></i>
                             </span>
                         </th>
-                        <th>#</th>
-                        <th>Uploader</th>
-                        <th>Title</th>
-                        <th>Type</th>
-                        <th>Category</th>
-                        <th>Comment</th>
-                        <th>Selection</th>
-                        <th>
+                        <th width="2%">#</th>
+                        <th width="9%">Uploader</th>
+                        <th width="15%">Title</th>
+                        <th width="7%">Type</th>
+                        <th width="10%">Category</th>
+                        <th width="10%">Comment</th>
+                        <th width="15%">Selection</th>
+                        <th width="30%">
                             Actions
                         </th>
                     </tr>
@@ -62,14 +62,14 @@ All Contributions [{{faculty}}]
                 <tbody class="text-center">
                     {% for object in object_list %}
                     <tr {% if object.is_selected == True %}class="bg-c-soft-green" {% endif %}>
-                        <td width="2%">
+                        <td>
                             <div>
                                 <!-- ------------- CHANGE PORTION FOR PRODUCTION MODE ------------ -->
                                 <input type="checkbox" class="check-box m-t-sm" data-url="http://magfetch.pythonanywhere.com{{object.file.url}}">
                                 <!-- <input type="checkbox" class="check-box" data-url="http://127.0.0.1:8000{{object.file.url}}"> -->
                             </div>
                         </td>
-                        <td width="2%">{{ forloop.counter }}</td>
+                        <td>{{ forloop.counter }}</td>
                         <td>
                             <span class="thumb-sm avatar pull-left">
                                 <img src="{% static 'images/raw/avatar/avatar.jpg' %}">

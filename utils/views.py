@@ -11,7 +11,7 @@ from django.utils.decorators import method_decorator
 # Other imports
 import datetime
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
 
 

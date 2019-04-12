@@ -1,28 +1,30 @@
-<div class="row">
-    {% if not get_schedule == None and get_schedule.status == 0 %}
-    <!-- New Contribution -->
-    {% if get_schedule.closure_date >= get_datetime %}
-    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 animated fadeInUp">
-        {% include 'landing/pages/snippets/chunks/contribution.html' %}
-    </div>
-    {% endif %}
-    <!-- Update Contribution -->
-    {% if get_datetime > get_schedule.closure_date and get_schedule.final_closure_date >= get_datetime %}
+<div class="m-lg">
+    <div class="row">
+        {% if not get_schedule == None and get_schedule.status == 0 %}
+        <!-- New Contribution -->
+        {% if get_schedule.closure_date >= get_datetime %}
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 animated fadeInUp">
+            {% include 'landing/pages/snippets/chunks/contribution.html' %}
+        </div>
+        {% endif %}
+        <!-- Update Contribution -->
+        {% if get_datetime > get_schedule.closure_date and get_schedule.final_closure_date >= get_datetime %}
 
-    {% if is_submitted == True %}
-    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 animated fadeInUp">
-        <header class="panel-heading bg-primary text-center">
-            <h4 class="m-t-sm c-text-dark">Update Contribution</h4>
-        </header>
-        {% include 'landing/pages/snippets/chunks/contribution.html' %}
-    </div>
-    {% endif %}
+        {% if is_submitted == True %}
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 animated fadeInUp">
+            <header class="panel-heading bg-primary text-center">
+                <h4 class="m-t-sm c-text-dark">Update Contribution</h4>
+            </header>
+            {% include 'landing/pages/snippets/chunks/contribution.html' %}
+        </div>
+        {% endif %}
 
-    {% endif %}
-    <!-- No Schedule -->
-    {% else %}
-    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 animated fadeInUp">
-        {% include 'landing/pages/snippets/chunks/coming-slider.html' %}
+        {% endif %}
+        <!-- No Schedule -->
+        {% else %}
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 animated fadeInUp">
+            {% include 'landing/pages/snippets/chunks/coming-slider.html' %}
+        </div>
+        {% endif %}
     </div>
-    {% endif %}
 </div>
