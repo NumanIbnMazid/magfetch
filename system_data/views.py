@@ -167,25 +167,25 @@ class DateUpdateView(UpdateView):
         final_closure_date  = form.instance.final_closure_date
         validated_closure_date          = (start_date + datetime.timedelta(days=15))
         validated_final_closure_date    = (validated_closure_date + datetime.timedelta(days=14))
-        # Validate Closure Date
-        if not closure_date >= validated_closure_date:
-            form.add_error(
-                'closure_date', forms.ValidationError(
-                    "Difference between Start Date and Closure Date must be at least 15 days!"
-                    )
-                )
-            return super().form_invalid(form)
-        # Validate Final Closure Date
-        if not final_closure_date >= validated_final_closure_date:
-            form.add_error(
-                'final_closure_date', forms.ValidationError(
-                    "Difference between Closure Date and Final Closure Date must be at least 14 days!"
-                    )
-                )
-            return super().form_invalid(form)
         # Checking Form Change
         pre             = self.get_object()
         if start_date != pre.start_date or closure_date != pre.closure_date or final_closure_date != pre.final_closure_date or status != pre.status:
+            # Validate Closure Date
+            if not closure_date >= validated_closure_date:
+                form.add_error(
+                    'closure_date', forms.ValidationError(
+                        "Difference between Start Date and Closure Date must be at least 15 days!"
+                        )
+                    )
+                return super().form_invalid(form)
+            # Validate Final Closure Date
+            if not final_closure_date >= validated_final_closure_date:
+                form.add_error(
+                    'final_closure_date', forms.ValidationError(
+                        "Difference between Closure Date and Final Closure Date must be at least 14 days!"
+                        )
+                    )
+                return super().form_invalid(form)
             # Creating Announcement
             category    = 'updated_schedule'
             slug        = category + '-' + time_str_mix_slug()

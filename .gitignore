@@ -87,6 +87,7 @@ development.py
 /media
 /static
 /static_cdn
+static_cdn
 db.sqlite3
 
 # Environments
