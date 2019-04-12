@@ -2,7 +2,7 @@ from magfetch.settings.common import *
 from decouple import config, Csv
 
 SECRET_KEY = config('SECRET_KEY')
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 EMAIL_BACKEND = config('EMAIL_BACKEND', default='')
@@ -25,3 +25,6 @@ DATABASES = {
         },
     }
 }
+
+# STATIC_URL = '/static/'
+# MEDIA_URL = '/media/'
