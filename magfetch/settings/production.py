@@ -29,6 +29,15 @@ ADMINS = (
 )
 MANAGERS = ADMINS
 
+# Static Files
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static_proj'),
+]
+STATIC_ROOT = os.path.join('static_cdn', 'static_root')
+MEDIA_ROOT = os.path.join('static_cdn', 'media_root')
 
 # HEROKU DEPLOYMENT
 
@@ -46,3 +55,4 @@ SECURE_FRAME_DENY               = True
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
+
