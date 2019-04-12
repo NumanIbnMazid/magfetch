@@ -9,8 +9,8 @@ def create_notification_to_mc_upload(sender, slug, message):
     category = 'uploaded_contribution'
     identifier = sender.user.username + "_" + "uploaded_contribution"
     subject = "%s has submitted a new contribution" % sender.get_smallname()
-    link = "<a href='http://magfetch.pythonanywhere.com/contribution/%s/detail/' class='text-primary'>here</a>" %slug
-    message_bind = "<p>%s</p><br>Click %s to view contribution." % (message, link)
+    link = "<a href='http://magfetch.pythonanywhere.com/contribution/%s/detail/' class='c-text-primary'>here</a>" %slug
+    message_bind = "<p>%s</p><h4><br>Click %s to view contribution.</h4>" % (message, link)
     if receivers.count() > 1:
         for receiver in receivers:
             Notification.objects.create(

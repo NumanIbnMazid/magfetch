@@ -3,6 +3,7 @@
 {% url 'system_data:date_update' as date_update_url %}
 {% url 'contribution:category_create' as category_create_url %}
 {% url 'contribution:contribution_list' as contribution_list_url %}
+{% url 'contribution:selected_contribution_list' as selected_contribution_list_url %}
 
 <aside class="bg-c-smoke lter aside-md hidden-print" id="nav">
     <section class="vbox">
@@ -74,7 +75,18 @@
                                 <i class="fa fa-file-text icon">
                                     <b class="bg-info"></b>
                                 </i>
-                                <span>Contribution List</span>
+                                <span>Contributions</span>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% if is_MM %}
+                        <li class="{% if request.path == selected_contribution_list_url %} active {% endif %}">
+                            <a href="{{ selected_contribution_list_url }}">
+                                <i class="fa fa-file-text icon">
+                                    <b class="bg-info"></b>
+                                </i>
+                                <span>Selected Contributions</span>
                             </a>
                         </li>
                         {% endif %}

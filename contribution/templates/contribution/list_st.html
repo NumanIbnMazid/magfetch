@@ -101,12 +101,15 @@
                                 href="http://magfetch.pythonanywhere.com{{object.file.url}}" download>
                                 <span class="c-text-dark">Download</span>
                             </a>
+
+                            {% if get_schedule.closure_date > get_datetime %}
                             <button type="button"
                                 class="btn btn-xs btn-raised ripple-effect btn-danger js-delete-contribution"
                                 value="{{object.slug}}" data-selected="{{object.is_selected}}" data-toggle="modal"
                                 data-target="#modal-delete-contribution">
                                 Delete
                             </button>
+                            {% endif %}
 
                             {% for comment in object.user_contribution_file.all reversed %}
                                 {% if forloop.last %}

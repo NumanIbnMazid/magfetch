@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_title %}{% block page_title %}{% block breadcrumb %}
+Selected Contributions
+{% endblock %}{% endblock %}{% endblock %}
+{% block content %}
+
+
+<!-- Datatable CSS -->
+<link rel="stylesheet" href="{% static 'vendor/datatable/dataTables.min.css' %}" type="text/css" />
+
+{% if file_urls.count >= 1 %}
+<div class="m-sm" id="download-all-parent">
+    <div class="hide" id="download_all_div" style="display:none">
+        {% for contribution in file_urls %}
+        <!-- ------------- CHANGE PORTION FOR PRODUCTION MODE ------------ -->
+        <input type="hidden" class="download-all-check-box" data-url="http://magfetch.pythonanywhere.com{{contribution.file.url}}">
+        <!-- <input type="checkbox" class="download-all-check-box" data-url="http://127.0.0.1:8000{{contribution.file.url}}" checked> -->
+        {% endfor %}
+    </div>
+    <div class="" id="download_all_btn_div">
+        <button id="download_all_btn" type="button" class="btn btn-md btn-dark btn-raised ripple-effect">
+            <span class="text-warning">Download All</span>
+        </button>
+    </div>
+</div>
+{% endif %}
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div id="zip_div" class="text-center">
+            <div class="text-center" id="zip_btn_div">
+                <button id="download_btn" class="hide btn btn-md btn-dark btn-raised ripple-effect">
+                    <span class="c-text-info">Download Files as Zip</span>
+                </button> <br>
+                <button id="cancel_btn" class="hide btn btn-xs btn-danger m-t-sm btn-raised ripple-effect" onClick="window.location.reload()">
+                    <span class="">Cancel</span>
+                </button>
+            </div>
+            <!-- Zip Download progress and Result -->
+            <div class="progress hide" id="progress_bar">
+                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                    style="width: 0%;">
+                </div>
+            </div>
+            <p class="hide" id="result"></p>
+            <button id="clear_btn" class="hide btn btn-sm btn-danger btn-raised ripple-effect" onClick="window.location.reload()">
+                <span class="c-text-dark">Clear</span>
+            </button>
+            <!-- |date:"M d, Y" -->
+            <input type="hidden" id="zip-name" name="zip-name" value="contributions">
+            <!-- Zip Download progress and Result -->
+        </div>
+
+        {% if object_list.count >= 1 %}
+        <div class="table-responsive">
+            <table id="datatable" class="table table-bordered row-border b-t b-light" style="width:100%">
+                <thead class="text-dark">
+                    <tr class="text-center">
+                        <th width="2%">
+                            <span id="check-all">
+                                <i class="fa fa-square" id="dflt"></i>
+                                <i class="fa fa-check-square hide" id="chkd"></i>
+                                <i class="fa fa-square hide" id="uchkd"></i>
+                            </span>
+                        </th>
+                        <th width="2%">#</th>
+                        <th width="">Uploader</th>
+                        <th width="">Title</th>
+                        <th width="">Type</th>
+                        <th width="">Category</th>
+                        <th width="">
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    {% for object in object_list %}
+                    <tr {% if object.is_selected == True %}class="bg-c-soft-green" {% endif %}>
+                        <td>
+                            <div>
+                                <!-- ------------- CHANGE PORTION FOR PRODUCTION MODE ------------ -->
+                                <input type="checkbox" class="check-box m-t-sm" data-url="http://magfetch.pythonanywhere.com{{object.file.url}}">
+                                <!-- <input type="checkbox" class="check-box" data-url="http://127.0.0.1:8000{{object.file.url}}"> -->
+                            </div>
+                        </td>
+                        <td>{{ forloop.counter }}</td>
+                        <td>
+                            <span class="thumb-sm avatar pull-left">
+                                <img src="{% static 'images/raw/avatar/avatar.jpg' %}">
+                            </span>
+                            {{object.user.get_smallname}}
+                        </td>
+                        <td>{{object.title|truncatechars:50}}</td>
+                        <td>{{object.category.get_file_type}}</td>
+                        <td>{{object.category|truncatechars:20}}</td>
+                        <td>
+                            <a class="btn btn-xs btn-raised ripple-effect btn-info"
+                                href="{% url 'contribution:contribution_detail' slug=object.slug %}">
+                                <span class="c-text-dark">View</span>
+                            </a>
+                            <!-- ------------- CHANGE PORTION FOR PRODUCTION MODE ------------ -->
+                            <a class="btn btn-xs btn-raised ripple-effect btn-default"
+                                href="http://magfetch.pythonanywhere.com{{object.file.url}}" download>
+                                <span class="c-text-dark">Download</span>
+                            </a>
+                            <!-- <a class="btn btn-xs btn-raised ripple-effect btn-default"
+                                href="http://127.0.0.1:8000{{object.file.url}}" download>
+                                <span class="c-text-dark">Download</span>
+                            </a> -->
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-warning text-center">
+            <strong>There's no selected contribution available!!!</strong>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+
+<!-- Datatable JS -->
+<script src="{% static 'vendor/datatable/datatable-conf.js' %}"></script>
+<script src="{% static 'vendor/datatable/dataTables.min.js' %}"></script>
+
+<!-- Zip Downloader JS -->
+<script src="{% static 'vendor/zip-downloader/jszip.min.js' %}"></script>
+<script src="{% static 'vendor/zip-downloader/jszip-utils.js' %}"></script>
+<script src="{% static 'vendor/zip-downloader/zip-config.js' %}"></script>
+<script src="{% static 'vendor/zip-downloader/FileSaver.js' %}"></script>
+
+{% endblock %}

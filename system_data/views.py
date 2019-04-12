@@ -267,3 +267,4 @@ class DateUpdateView(UpdateView):
             )
             return HttpResponseRedirect(reverse('home'))
         return super(DateUpdateView, self).dispatch(request, *args, **kwargs)
+

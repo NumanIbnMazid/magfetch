@@ -432,7 +432,7 @@ class ContributionDetailView(DetailView):
     def user_passes_test(self, request):
         user = request.user
         user_role = UserProfile.objects.filter(user=user).first().role
-        if user_role == 2 or user_role == 4 or user_role == 0:
+        if user_role == 2 or user_role == 4 or user_role == 0 or user_role == 3:
             return True
         return False
 
@@ -467,16 +467,28 @@ def contribution_delete(request):
         if qs.exists():
             contribution = qs.first()
             if contribution.user.user == request.user:
-                if contribution.is_selected == False:
-                    qs.delete()
-                    messages.add_message(request, messages.SUCCESS,
-                                    "Contribution deleted successfully!"
-                                    )
-                    return redirect("/")
-                else:
-                    messages.add_message(request, messages.WARNING,
-                                    "You cannot delete this contribution as it has been selected for the magazine!"
-                                    )
+                today = datetime.datetime.now()
+                academic_year = Date.objects.filter(academic_year=str(today.year))
+                if academic_year.exists():
+                    closure_date = academic_year.first().closure_date
+                    # today_format = today.strptime('2018-11-10 10:55:31', '%Y-%m-%d %H:%M:%S')
+                    # print(closure_date)
+                    # print(today_format)
+                    if closure_date > today:
+                        if contribution.is_selected == False:
+                            qs.delete()
+                            messages.add_message(request, messages.SUCCESS,
+                                            "Contribution deleted successfully!"
+                                            )
+                            return redirect("/")
+                        else:
+                            messages.add_message(request, messages.WARNING,
+                                            "You cannot delete this contribution as it has been selected for the magazine!"
+                                            )
+                    else:
+                        messages.add_message(request, messages.WARNING,
+                                            "Modification time has been expired ! You cannot delete this."
+                                            )
             else:
                 instance_user = request.user
                 suspicious_user = Suspicious.objects.filter(user=instance_user)
@@ -668,3 +680,47 @@ class CommentListView(ListView):
                                  )
             return HttpResponseRedirect(reverse('home'))
         return super(CommentListView, self).dispatch(request, *args, **kwargs)
+
+
+
+
+
+class SelectedContributionListView(ListView):
+    template_name = 'contribution/selected_list.html'
+
+    def get_queryset(self, *args, **kwargs):
+        query = Contribution.objects.all().selected().latest()
+        return query
+
+    def get_context_data(self, **kwargs):
+        context             = super(SelectedContributionListView, self).get_context_data(**kwargs)
+        qs = self.get_queryset()
+        context['file_urls'] = qs
+        return context
+
+    def user_passes_test(self, request):
+        user = request.user
+        user_role = UserProfile.objects.filter(user=user).first().role
+        if user_role == 0 or user_role == 3:
+            return True
+        return False
+
+    def dispatch(self, request, *args, **kwargs):
+        instance_user = self.request.user
+        if not self.user_passes_test(request):
+            suspicious_user = Suspicious.objects.filter(user=instance_user)
+            if suspicious_user.exists():
+                suspicious_user_instance = Suspicious.objects.get(
+                    user=instance_user)
+                current_attempt = suspicious_user_instance.attempt
+                total_attempt = current_attempt + 1
+                update_time = datetime.datetime.now()
+                suspicious_user.update(
+                    attempt=total_attempt, last_attempt=update_time)
+            else:
+                Suspicious.objects.get_or_create(user=instance_user)
+            messages.add_message(self.request, messages.ERROR,
+                                 "You are not allowed. Your account is being tracked for suspicious activity !"
+                                 )
+            return HttpResponseRedirect(reverse('home'))
+        return super(SelectedContributionListView, self).dispatch(request, *args, **kwargs)
