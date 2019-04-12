@@ -37,12 +37,8 @@ STATICFILES_DIRS = [
 # MEDIA_ROOT = os.path.join('static_cdn', 'media_root')
 
 # ======== Place It in PythonAnyWhere Static Files Section =======
-# STATIC_ROOT = /home/magfetch/magfetch/static_cdn/static_root
-# MEDIA_ROOT = /home/magfetch/static_cdn/media_root
-
-# ======== Place It in PythonAnyWhere Static Files Section =======
-STATIC_ROOT = '/home/magfetch/magfetch/static_cdn/static_root'
-MEDIA_ROOT = '/home/magfetch/magfetch/static_cdn/media_root'
+STATIC_ROOT = '/home/magfetch/static_cdn/static_root'
+MEDIA_ROOT = '/home/magfetch/static_cdn/media_root'
 
 # Neededf for CorsHeader (accept connections from everywhere)
 # CORS_ORIGIN_ALLOW_ALL = True
