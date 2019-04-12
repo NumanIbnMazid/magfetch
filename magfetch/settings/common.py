@@ -155,15 +155,15 @@ DOCUMENT_TYPES = ['.doc', '.docx']
 MAX_UPLOAD_SIZE = 2621440
 
 
-# Static Files
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
+# # Static Files
+# STATIC_URL = '/static/'
+# MEDIA_URL = '/media/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static_proj'),
-]
-STATIC_ROOT = os.path.join('static_cdn', 'static_root')
-MEDIA_ROOT = os.path.join('static_cdn', 'media_root')
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static_proj'),
+# ]
+# STATIC_ROOT = os.path.join('static_cdn', 'static_root')
+# MEDIA_ROOT = os.path.join('static_cdn', 'media_root')
 
 # STATICFILES_FINDERS = [
 #     'django.contrib.staticfiles.finders.FileSystemFinder',
