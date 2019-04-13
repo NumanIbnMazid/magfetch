@@ -524,9 +524,18 @@ def mark_as_selected(request, slug):
                 is_selected = True
             )
             url = reverse('contribution:contribution_list')
+            if request.method == 'POST':
+                if not request.POST.get('default_comment') == "":
+                    default_comment = request.POST.get('default_comment')
+                    user_profile = user_filter.first()
+                    comment = request.POST.get('comment')
+                    if user_profile.role ==  2:
+                        Comment.objects.create(contribution=contribution,commented_by=user_profile, comment=default_comment)
+                        if user_profile.role ==  2:
+                            contribution_filter.update(is_commented=True)
             messages.add_message(request, messages.SUCCESS,
-                                 "Successfully marked as selected contribution!"
-                                 )
+                "Successfully marked as selected contribution!"
+            )
         else:
             instance_user = request.user
             suspicious_user = Suspicious.objects.filter(user=instance_user)

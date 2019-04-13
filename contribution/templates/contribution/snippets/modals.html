@@ -1,0 +1,30 @@
+<div class="modal fade" id="modal-comment-default">
+    <div class="modal-dialog">
+        <div class="modal-content bg-c-water">
+            <div class="modal-header text-center">
+                <!-- <h5 class="modal-title" id="exampleModalLabel">Default Comment</h5> -->
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="dflt-cmnt-mdl">
+                <form method="POST" action="jquerySlugUrl" id="default-comment-form">
+                    <!-- <input type="button" value="jquerySlugUrl" id="test_btn"> -->
+                    {% csrf_token %}
+                    <input type="hidden" id="default_comment_input" name="default_comment" value="Congratulations! Your contribution has been selected for the magazine...">
+                    <div class="form-group text-center">
+                        <p class="c-text-primary font-bold font-15">
+                            Would you like to place a default comment informing the contributor about the selection status?
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="jquerySlugUrl" class="btn btn-danger btn-raised ripple-effect" id="skip-comment">
+                            No
+                        </a>
+                        <button type="submit" class="btn btn-success btn-raised ripple-effect" id="comment-default">Yes, I like</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

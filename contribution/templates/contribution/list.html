@@ -88,10 +88,17 @@ All Contributions [{{faculty}}]
                         </td>
                         <td>
                             {% if object.is_selected == False %}
-                            <a href="{% url 'contribution:contribution_selected' slug=object.slug %}" id="select-con"
-                                class="btn btn-xs btn-dark btn-raised ripple-effect" data-url="{{ object.slug }}">
-                                <span class="">Mark as Selected</span>
-                            </a>
+                                {% if object.is_commented == False %}
+                                <button type="button" class="btn btn-xs btn-dark btn-raised ripple-effect cmnt-dflt-btn"
+                                    value="{{object.slug}}" data-toggle="modal" data-target="#modal-comment-default">
+                                    Mark as Selected
+                                </button>
+                                {% else %}
+                                <a href="{% url 'contribution:contribution_selected' slug=object.slug %}" id="select-con"
+                                    class="btn btn-xs btn-dark btn-raised ripple-effect" data-url="{{ object.slug }}">
+                                    <span class="">Mark as Selected</span>
+                                </a>
+                                {% endif %}
                             {% else %}
                             <a href="{% url 'contribution:contribution_unselected' slug=object.slug %}"
                                 id="unselect-con" class="btn btn-xs btn-danger btn-raised ripple-effect">
@@ -99,26 +106,7 @@ All Contributions [{{faculty}}]
                             </a>
                             {% endif %}
                         </td>
-                        <!-- <td>
-                            {% if object.category.category_for == 0 %}
-                            <iframe class="doc" src="https://docs.google.com/gview?url=http://magfetch.pythonanywhere.com{{object.file.url}}&embedded=true"
-                                width="270" height="60"></iframe>
-                            <iframe class="doc" src="#" width="270" height="60"></iframe>
-                            {% endif %}
-
-                            {% if object.category.category_for == 1 %}
-                            <a href="{{object.file.url}}" class="c-thumbnail" title="{{object.title}}">
-                                <img src="{{object.file.url}}" alt="{{object.title}}" width="270" height="60">
-                            </a>
-                            {% endif %}
-                        </td> -->
                         <td>
-                            <!-- <button type="button" class="btn btn-sm btn-raised ripple-effect btn-info js-view-contribution"
-                                    value="{{object.slug}}" data-category="{{object.category.category_for}}" data-file="{{object.file.url}}" 
-                                    data-title="{{object.title}}" data-toggle="modal"
-                                    data-target="#modal-view-contribution">
-                                    View
-                                </button> -->
                             <a class="btn btn-xs btn-raised ripple-effect btn-info"
                                 href="{% url 'contribution:contribution_detail' slug=object.slug %}">
                                 <span class="c-text-dark">View</span>
@@ -161,6 +149,28 @@ All Contributions [{{faculty}}]
         {% endif %}
     </div>
 </div>
+
+{% include 'contribution/snippets/modals.html' %}
+
+<script>
+    $(".cmnt-dflt-btn").click(function () {
+        let contribution_slug = this.value;
+        // $('#contribution_slug_modal2').val(contribution_slug);
+        let domain = document.location.origin;
+        let url = domain + "/contribution/" + contribution_slug + "/mark/selected/";
+        // alert(url);
+        $('#default-comment-form').attr("action", url);
+        $('#skip-comment').attr("href", url);
+        // $('#test_btn').attr("value", url);
+        // $('#dflt-cmnt-mdl').html($('#dflt-cmnt-mdl').html().replace(/jquerySlugUrl/g, url));
+    });
+    document.querySelector('#default-comment-form').addEventListener('submit', function (e) {
+        let form = this;
+        e.preventDefault();
+        form.submit();
+
+    });
+</script>
 
 
 <!-- Datatable JS -->
