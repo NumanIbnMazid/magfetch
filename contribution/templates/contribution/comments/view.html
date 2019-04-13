@@ -12,6 +12,10 @@ Comment
 <!-- Image-Magnify CSS -->
 <link rel="stylesheet" href="{% static 'vendor/image-magnify/jquery.magnify.css' %}" type="text/css" />
 
+{% if custom_base == "landing-base.html" %}
+<div class="container">
+{% endif %}
+
 <div class="row">
     <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
         <!-- comment form -->
@@ -136,6 +140,10 @@ Comment
         </section>
     </div>
 </div>
+
+{% if custom_base == "landing-base.html" %}
+</div>
+{% endif %}
 
 <!-- Image-Magnify JS -->
 <script src="{% static 'vendor/image-magnify/jquery.magnify.js' %}"></script>

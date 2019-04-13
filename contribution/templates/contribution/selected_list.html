@@ -67,6 +67,7 @@ Selected Contributions
                         </th>
                         <th width="2%">#</th>
                         <th width="">Uploader</th>
+                        <th width="">Faculty</th>
                         <th width="">Title</th>
                         <th width="">Type</th>
                         <th width="">Category</th>
@@ -92,6 +93,7 @@ Selected Contributions
                             </span>
                             {{object.user.get_smallname}}
                         </td>
+                        <td>{{object.user.faculty}}</td>
                         <td>{{object.title|truncatechars:50}}</td>
                         <td>{{object.category.get_file_type}}</td>
                         <td>{{object.category|truncatechars:20}}</td>

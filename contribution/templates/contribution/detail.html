@@ -34,26 +34,29 @@ Contribution Details
                         <section class="panel panel-default">
                             <header class="panel-heading bg-light">
                                 <ul class="nav nav-tabs nav-justified">
-                                    <li class="{% if comments.count >= 1 %}active{% endif %}">
-                                        <a href="#comments" data-toggle="tab">
-                                            Comments
-                                            <span class="badge bg-light">{{comments.count}}</span>
-                                        </a>
-                                    </li>
-                                    <li class="{% if not comments.count >= 1 %}active{% endif %}">
+                                    <li class="active">
                                         <a href="#details" data-toggle="tab">Contribution Details</a>
                                     </li>
+                                    {% if is_ST or is_MC %}
+                                    <li class="">
+                                        <a href="#comments" data-toggle="tab">
+                                            Comments<span class="badge bg-light">{{comments.count}}</span>
+                                        </a>
+                                    </li>
+                                    {% endif %}
                                 </ul>
                             </header>
                             <div class="panel-body">
                                 <div class="tab-content">
-                                    <div class="tab-pane {% if comments.count >= 1 %}active{% endif %}" id="comments">
-                                        {% include 'contribution/comments/comments.html' %}
-                                    </div>
-                                    <div class="tab-pane {% if not comments.count >= 1 %}active{% endif %}"
+                                    <div class="tab-pane active"
                                         id="details">
                                         {% include 'contribution/snippets/detail-panel.html' %}
                                     </div>
+                                    {% if is_ST or is_MC %}
+                                    <div class="tab-pane" id="comments">
+                                        {% include 'contribution/comments/comments.html' %}
+                                    </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </section>

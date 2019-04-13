@@ -1,5 +1,7 @@
 {% load tags %}
 {% if request.user.is_authenticated %}
+{% is_MC_tag as is_MC %}
+{% is_ST_tag as is_ST %}
 {% get_schedule_tag as get_schedule %}
 {% get_announcement_tag as get_announcement %}
 {% get_datetime_tag as get_datetime %}
