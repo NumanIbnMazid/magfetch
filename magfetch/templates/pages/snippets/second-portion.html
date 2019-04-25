@@ -1,0 +1,17 @@
+{% if is_MM %}
+<div class="row">
+  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+    <div class="row">
+      <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+        {% include 'pages/snippets/chunks/contribution-percentage.html' %}
+      </div>
+      <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+        {% include 'pages/snippets/chunks/contributions-each-year.html' %}
+      </div>
+      <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+        {% include 'pages/snippets/chunks/contributors-each-year.html' %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}

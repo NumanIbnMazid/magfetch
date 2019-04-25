@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import HomeView
+from .views import HomeView, statistics_search
 from .routers import router
 
 urlpatterns = [
@@ -13,6 +13,7 @@ urlpatterns = [
     path('utils/', include(('utils.urls', 'utils'), namespace='utils')),
     path('contribution/', include(('contribution.urls', 'contribution'), namespace='contribution')),
     path('api/', include(router.urls)),
+    path('statistics/search/', statistics_search, name='statistics_search')
 ]
 
 if settings.DEBUG:

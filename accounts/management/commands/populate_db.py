@@ -87,6 +87,22 @@ class Command(BaseCommand):
             u_st_cse.set_password("error54321")
             u_st_cse.save()
 
+        # SWE Department
+        if not User.objects.filter(username__iexact='MC_SWE').exists():
+            u_mc_swe = User(username='MC_SWE', email='mc_swe@test.com')
+            u_mc_swe.set_password("error54321")
+            u_mc_swe.save()
+
+        if not User.objects.filter(username__iexact='FG_SWE').exists():
+            u_fg_swe = User(username='FG_SWE', email='fg_swe@test.com')
+            u_fg_swe.set_password("error54321")
+            u_fg_swe.save()
+
+        if not User.objects.filter(username__iexact='ST_SWE').exists():
+            u_st_swe = User(username='ST_SWE', email='st_swe@test.com')
+            u_st_swe.set_password("error54321")
+            u_st_swe.save()
+
         # EEE Department
         if not User.objects.filter(username__iexact='MC_EEE').exists():
             u_mc_eee = User(username='MC_EEE', email='mc_eee@test.com')
@@ -151,6 +167,23 @@ class Command(BaseCommand):
             st_cse_filter = UserProfile.objects.filter(user__username__iexact='ST_CSE')
             if st_cse_filter.exists():
                 st_cse_filter.update(role=4, faculty=f_cse)
+
+        # SWE Department
+        qs_swe = Faculty.objects.filter(code__iexact='SWE')
+        if qs_swe.exists():
+            f_swe = qs_swe.first()
+
+            mc_swe_filter = UserProfile.objects.filter(user__username__iexact='MC_SWE')
+            if mc_swe_filter.exists():
+                mc_swe_filter.update(role=2, faculty=f_swe)
+
+            fg_swe_filter = UserProfile.objects.filter(user__username__iexact='FG_SWE')
+            if fg_swe_filter.exists():
+                fg_swe_filter.update(role=3, faculty=f_swe)
+
+            st_swe_filter = UserProfile.objects.filter(user__username__iexact='ST_SWE')
+            if st_swe_filter.exists():
+                st_swe_filter.update(role=4, faculty=f_swe)
 
         # EEE Department
         qs_eee = Faculty.objects.filter(code__iexact='EEE')

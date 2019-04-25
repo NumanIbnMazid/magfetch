@@ -99,3 +99,19 @@ class NotificationDetailView(DetailView):
                                  )
             return HttpResponseRedirect(reverse('home'))
         return super(NotificationDetailView, self).dispatch(request, *args, **kwargs)
+
+
+
+@login_required
+def mark_all_as_read(request):
+    user = request.user
+    url = reverse('home')
+    profile = request.user.profile
+    qs = Notification.objects.filter(receiver=profile)
+    if qs.exists():
+        qs.update(has_read=True)
+        messages.add_message(request, messages.SUCCESS,
+                                 "All Notifications has been marked as read !"
+                                 )
+        url = reverse('utils:notification_list')
+    return HttpResponseRedirect(url)

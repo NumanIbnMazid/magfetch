@@ -2,7 +2,7 @@
   <header class="panel-heading">
     <span class="label bg-dark">{{ get_announcement.count }}</span> Announcements
   </header>
-  <section class="panel-body slim-scroll" data-height="230px">
+  <section class="panel-body slim-scroll" data-height="110px">
     {% for announcement in get_announcement %}
     {% if announcement.status == 0 %}
     <article class="media">

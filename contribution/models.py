@@ -7,6 +7,7 @@ from accounts.models import UserProfile
 from django.dispatch import receiver
 from django.urls import reverse
 from django.db.models import Q
+import datetime
 import os
 
 
@@ -56,6 +57,22 @@ class ContributionQuerySet(models.query.QuerySet):
 
     def latest(self):
         return self.filter().order_by('-created_at')
+    
+    def contributions_this_year(self):
+        today = datetime.datetime.now()
+        return self.filter(created_at__year=today.year)
+
+    def contributions_by_year(self, year_search):
+        return self.filter(created_at__year=year_search)
+
+    def contributions_by_faculty(self, request_user_profile):
+        return self.filter(user__faculty=request_user_profile.faculty)
+
+    def contributions_doc(self):
+        return self.filter(category__category_for=0)
+    
+    def contributions_img(self):
+        return self.filter(category__category_for=1)
 
     def search(self, query):
         lookups = (Q(title__icontains=query) |
@@ -132,6 +149,23 @@ class Contribution(models.Model):
         return fileExtension
 
 
+class CommentQuerySet(models.query.QuerySet):
+    def is_special(self):
+        return self.filter(is_special=True)
+
+class CommentManager(models.Manager):
+    def get_queryset(self):
+        return CommentQuerySet(self.model, using=self._db)
+
+    def all(self):
+        return self.get_queryset()
+
+    def get_by_id(self, id):
+        qs = self.get_queryset().filter(id=id)
+        if qs.count() == 1:
+            return qs.first()
+        return None
+
 
 class Comment(models.Model):
     contribution = models.ForeignKey(
@@ -141,8 +175,11 @@ class Comment(models.Model):
         UserProfile, on_delete=models.CASCADE, related_name='user_comment', verbose_name='commented by'
     )
     comment = models.TextField(max_length=1000, verbose_name='comment')
+    is_special = models.BooleanField(default=False, verbose_name='is_special')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='created at')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='updated at')
+
+    objects = CommentManager()
 
     class Meta:
         verbose_name = 'Comment'

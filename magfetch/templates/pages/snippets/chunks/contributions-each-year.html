@@ -1,0 +1,45 @@
+{% load static %}
+
+<!-- YearPicker CSS -->
+<link rel="stylesheet" href="{% static 'vendor/yearpicker/yearpicker.css' %}" type="text/css" />
+
+<section class="panel panel-default">
+    <header class="panel-heading font-bold">Contribtions ({{input_value}})
+        {% if IT_contributions.count == 0 and CSE_contributions.count == 0 and SWE_contributions.count == 0 and EEE_contributions.count == 0 %}
+        <span class="badge badge-warning pull-right c-text-warning">No Data Found !!!</span>
+        {% endif %}
+    </header>
+    <div class="text-center wrapper bg-light lt">
+        <!-- <div class="sparkline inline" data-type="pie" data-height="165" data-slice-colors="['#77c587','#41586e','#f2f2f2']">45000,23200,15000</div> -->
+        <div class="sparkline inline" data-type="pie" data-height="165"
+            data-slice-colors="['#77c587','#41586e','#f2f2f2','#4CC0C1']">
+            {{IT_contributions.count}},{{CSE_contributions.count}},{{SWE_contributions.count}},{{EEE_contributions.count}}
+        </div>
+    </div>
+    <ul class="list-group no-radius">
+        <li class="list-group-item">
+            <span class="pull-right">{{IT_contributions.count}}</span>
+            <span class="label bg-primary">1</span>
+            IT
+        </li>
+        <li class="list-group-item">
+            <span class="pull-right">{{CSE_contributions.count}}</span>
+            <span class="label bg-dark">2</span>
+            CSE
+        </li>
+        <li class="list-group-item">
+            <span class="pull-right">{{SWE_contributions.count}}</span>
+            <span class="label bg-light">3</span>
+            SWE
+        </li>
+        <li class="list-group-item">
+            <span class="pull-right">{{EEE_contributions.count}}</span>
+            <span class="label bg-info">4</span>
+            EEE
+        </li>
+    </ul>
+</section>
+
+<!-- YearPicker JS -->
+<script src="{% static 'vendor/yearpicker/yearpicker.js' %}"></script>
+<script src="{% static 'vendor/yearpicker/yearpicker-config.js' %}"></script>

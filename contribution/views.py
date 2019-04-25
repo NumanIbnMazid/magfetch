@@ -358,7 +358,7 @@ class ContributionListView(ListView):
 
     def get_queryset(self):
         user = UserProfile.objects.filter(user=self.request.user).first()
-        query = Contribution.objects.filter(user__faculty=user.faculty).latest()
+        query = Contribution.objects.filter(user__faculty=user.faculty).contributions_this_year().latest()
         return query
 
     def get_context_data(self, **kwargs):
@@ -459,6 +459,7 @@ class ContributionDetailView(DetailView):
 
 
 @csrf_exempt
+@login_required
 def contribution_delete(request):
     url = reverse('home')
     if request.method == "POST":
@@ -607,7 +608,13 @@ def comment_create(request, slug):
             contribution_qs = Contribution.objects.filter(slug=slug)
             if contribution_qs.exists():
                 contribution = contribution_qs.first()
-                Comment.objects.create(contribution=contribution,commented_by=user_profile, comment=comment)
+                today = datetime.datetime.now()
+                is_special = False
+                if contribution.is_commented == False:
+                    day_difference = today - contribution.created_at
+                    if day_difference.days > 14:
+                        is_special = True
+                Comment.objects.create(contribution=contribution,commented_by=user_profile, comment=comment, is_special=is_special)
                 # messages.add_message(request, messages.SUCCESS, "Commented successfully!")
                 if user_profile.role ==  2:
                     contribution_qs.update(is_commented=True)

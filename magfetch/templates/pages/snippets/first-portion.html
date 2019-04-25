@@ -1,0 +1,21 @@
+<div class="row m-md">
+  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 text-center">
+    {% if is_MC or is_FG %}
+    {% include 'pages/snippets/chunks/contributions_catwise_by_faculty.html' %}
+    {% endif %}
+
+    {% if is_MM %}
+    <form action="{% url 'statistics_search' %}" method="POST">
+      <div class="input-group">
+        {% csrf_token %}
+        <input type="text" name="contribution_search" class="form-control yearpicker text-center" value="{{input_value}}" required>
+        <span class="input-group-btn">
+          <button class="btn btn-sm btn-primary pull-right btn-raised ripple-effect" type="submit">
+            Search By Year
+          </button>
+        </span>
+      </div>
+    </form>
+    {% endif %}
+  </div>
+</div>

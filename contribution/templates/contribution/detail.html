@@ -29,6 +29,29 @@ Contribution Details
                             <img class="img-thumbnail" src="{{ object.file.url }}" alt="{{object.title}}">
                         </a>
                         {% endif %}
+
+                        {% if is_MC %}
+                        <section class="panel panel-info text-center">
+                            {% if object.is_selected == False %}
+                            {% if object.is_commented == False %}
+                            <button type="button" class="btn btn-xs btn-dark btn-raised ripple-effect cmnt-dflt-btn"
+                                value="{{object.slug}}" data-toggle="modal" data-target="#modal-comment-default">
+                                Mark as Selected
+                            </button>
+                            {% else %}
+                            <a href="{% url 'contribution:contribution_selected' slug=object.slug %}" id="select-con"
+                                class="btn btn-xs btn-dark btn-raised ripple-effect" data-url="{{ object.slug }}">
+                                <span class="">Mark as Selected</span>
+                            </a>
+                            {% endif %}
+                            {% else %}
+                            <a href="{% url 'contribution:contribution_unselected' slug=object.slug %}"
+                                id="unselect-con" class="btn btn-xs btn-danger btn-raised ripple-effect">
+                                <span class="c-text-dark c-bg-danger">Remove from Selected</span>
+                            </a>
+                            {% endif %}
+                        </section>
+                        {% endif %}
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
                         <section class="panel panel-default">
@@ -66,6 +89,30 @@ Contribution Details
         </section>
     </div>
 </div>
+
+{% if is_MC %}
+{% include 'contribution/snippets/modals.html' %}
+
+<script>
+    $(".cmnt-dflt-btn").click(function () {
+        let contribution_slug = this.value;
+        // $('#contribution_slug_modal2').val(contribution_slug);
+        let domain = document.location.origin;
+        let url = domain + "/contribution/" + contribution_slug + "/mark/selected/";
+        // alert(url);
+        $('#default-comment-form').attr("action", url);
+        $('#skip-comment').attr("href", url);
+        // $('#test_btn').attr("value", url);
+        // $('#dflt-cmnt-mdl').html($('#dflt-cmnt-mdl').html().replace(/jquerySlugUrl/g, url));
+    });
+    document.querySelector('#default-comment-form').addEventListener('submit', function (e) {
+        let form = this;
+        e.preventDefault();
+        form.submit();
+
+    });
+</script>
+{% endif %}
 
 <script>
     $('[data-magnify=gallery]').magnify({

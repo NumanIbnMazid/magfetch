@@ -1,0 +1,98 @@
+<div class="panel-group m-b" id="accordion2">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                Contributions
+                <span class="c-text-warning">(Selected)</span>
+                <span class="badge bg-dark c-text-info">{{ contributions_selected.count }}</span>
+            </a>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse" style="height: 0px;">
+            <div class="panel-body text-sm">
+                {% include 'contribution/list-common.html' with dynamic_variable=contributions_selected dynamic_datatable='dynamic_datatable1' %}
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2"
+                href="#collapseThree">
+                Contributions
+                <span class="c-text-warning">(Documents)</span>
+                <span class="badge bg-dark c-text-info">{{ contributions_doc.count }}</span>
+            </a>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse">
+            <div class="panel-body text-sm">
+                {% include 'contribution/list-common.html' with dynamic_variable=contributions_doc dynamic_datatable='dynamic_datatable2' %}
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">
+                Contributions
+                <span class="c-text-warning">(Images)</span>
+                <span class="badge bg-dark c-text-info">{{ contributions_img.count }}</span>
+            </a>
+        </div>
+        <div id="collapseFour" class="panel-collapse collapse">
+            <div class="panel-body text-sm">
+                {% include 'contribution/list-common.html' with dynamic_variable=contributions_img dynamic_datatable='dynamic_datatable3' %}
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                Contributions
+                <span class="c-text-warning">(Without Comment)</span>
+                <span class="badge bg-dark c-text-info">{{ uncommented_contributions.count }}</span>
+            </a>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse" style="height: 0px;">
+            <div class="panel-body text-sm">
+                {% include 'contribution/list-common.html' with dynamic_variable=uncommented_contributions dynamic_datatable='dynamic_datatable4' %}
+            </div>
+        </div>
+    </div>
+    {% if is_FG %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseFive">
+                Contributions
+                <span class="c-text-warning">(Without Comment After 14 Days)</span>
+                <span class="badge bg-dark c-text-info">{{ special_comments.count }}</span>
+            </a>
+        </div>
+        <div id="collapseFive" class="panel-collapse collapse">
+            <div class="panel-body text-sm">
+                {% include 'contribution/list-common.html' with dynamic_variable=special_comments dynamic_datatable='dynamic_datatable5' %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+$('#collapseOne').on('shown.bs.collapse', function () {
+    $($.fn.dataTable.tables(true)).DataTable()
+        .columns.adjust();
+});
+$('#collapseTwo').on('shown.bs.collapse', function () {
+    $($.fn.dataTable.tables(true)).DataTable()
+        .columns.adjust();
+});
+$('#collapseThree').on('shown.bs.collapse', function () {
+    $($.fn.dataTable.tables(true)).DataTable()
+        .columns.adjust();
+});
+$('#collapseFour').on('shown.bs.collapse', function () {
+    $($.fn.dataTable.tables(true)).DataTable()
+        .columns.adjust();
+});
+$('#collapseFive').on('shown.bs.collapse', function () {
+    $($.fn.dataTable.tables(true)).DataTable()
+        .columns.adjust();
+});
+</script>
