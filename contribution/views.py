@@ -24,8 +24,9 @@ from django.core.mail import EmailMultiAlternatives
 from django.core.files.storage import default_storage
 import os
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse, HttpResponseRedirect, Http404, JsonResponse
-
+from django.http import HttpResponse, HttpResponseRedirect, Http404, JsonResponse 
+from accounts.utils import get_client_ip
+from uuid import getnode as get_mac
 
 
 
@@ -88,7 +89,9 @@ class ContributionCategoryCreateView(CreateView):
                 suspicious_user.update(
                     attempt=total_attempt, last_attempt=update_time)
             else:
-                Suspicious.objects.get_or_create(user=instance_user)
+                client_ip = get_client_ip(request)
+                client_mac = get_mac()
+                Suspicious.objects.get_or_create(user=instance_user, ip=client_ip, mac=client_mac)
             messages.add_message(self.request, messages.ERROR,
                                  "You are not allowed. Your account is being tracked for suspicious activity !"
                                  )
@@ -162,7 +165,9 @@ class ContributionCategoryUpdateView(UpdateView):
                 suspicious_user.update(
                     attempt=total_attempt, last_attempt=update_time)
             else:
-                Suspicious.objects.get_or_create(user=instance_user)
+                client_ip = get_client_ip(request)
+                client_mac = get_mac()
+                Suspicious.objects.get_or_create(user=instance_user, ip=client_ip, mac=client_mac)
             messages.add_message(self.request, messages.ERROR,
                                  "You are not allowed. Your account is being tracked for suspicious activity !"
                                  )
@@ -220,7 +225,9 @@ class ContributionCategoryDeleteView(DeleteView):
                 suspicious_user.update(
                     attempt=total_attempt, last_attempt=update_time)
             else:
-                Suspicious.objects.get_or_create(user=instance_user)
+                client_ip = get_client_ip(request)
+                client_mac = get_mac()
+                Suspicious.objects.get_or_create(user=instance_user, ip=client_ip, mac=client_mac)
             messages.add_message(self.request, messages.ERROR,
                                  "You are not allowed. Your account is being tracked for suspicious activity !"
                                  )
@@ -261,13 +268,14 @@ class ContributionUploadView(CreateView):
         slug = new_object.slug
         category = new_object.category
         uploaded_at = new_object.created_at
+        link = "<a href='http://magfetch.pythonanywhere.com/contribution/%s/detail/' class='c-text-primary'>here</a>" %slug
         message = "<strong>%s</strong> has uploaded a new Contribution.<br>Uploaded at: <strong>%s</strong><br>Category: <strong>%s</strong><br>Title: <strong>%s</strong>" % (
             profile.get_smallname(), uploaded_at.strftime('%a %H:%M  %d/%m/%y'), category, title)
         create_notification_to_mc_upload(profile, slug, message)
         # Sending Email
         mc_filter = UserProfile.objects.filter(role=2, faculty=profile.faculty)
         if mc_filter.exists():
-            mail_msg = message
+            mail_msg = message + "<br>Click " + link + " to view the contribution"
             mail_subject = '%s Uploaded a new Contribution.' % profile.get_smallname()
             mail_from = 'admin@magfetch.com'
             mail_text = 'Please do not Reply'
@@ -277,7 +285,7 @@ class ContributionUploadView(CreateView):
                     from_email = mail_from
                     to = ['%s' % mc.user.email]
                     text_content = mail_text
-                    html_content = mail_msg
+                    html_content = "Hi " + mc.get_smallname() + "!<br>" + mail_msg + "<br>Have a nice day."
                     msg = EmailMultiAlternatives(
                         subject, text_content, from_email, [to])
                     msg.attach_alternative(html_content, "text/html")
@@ -288,7 +296,7 @@ class ContributionUploadView(CreateView):
                 from_email = mail_from
                 to = ['%s' % mc.user.email]
                 text_content = mail_text
-                html_content = mail_msg
+                html_content = "Hi " + mc.get_smallname() + "!<br>" + mail_msg + "<br>Have a nice day."
                 msg = EmailMultiAlternatives(
                     subject, text_content, from_email, [to])
                 msg.attach_alternative(html_content, "text/html")
@@ -344,7 +352,9 @@ class ContributionUploadView(CreateView):
                 suspicious_user.update(
                     attempt=total_attempt, last_attempt=update_time)
             else:
-                Suspicious.objects.get_or_create(user=instance_user)
+                client_ip = get_client_ip(request)
+                client_mac = get_mac()
+                Suspicious.objects.get_or_create(user=instance_user, ip=client_ip, mac=client_mac)
             messages.add_message(self.request, messages.ERROR,
                                  "You are not allowed. Your account is being tracked for suspicious activity !"
                                  )
@@ -392,7 +402,9 @@ class ContributionListView(ListView):
                 suspicious_user.update(
                     attempt=total_attempt, last_attempt=update_time)
             else:
-                Suspicious.objects.get_or_create(user=instance_user)
+                client_ip = get_client_ip(request)
+                client_mac = get_mac()
+                Suspicious.objects.get_or_create(user=instance_user, ip=client_ip, mac=client_mac)
             messages.add_message(self.request, messages.ERROR,
                                  "You are not allowed. Your account is being tracked for suspicious activity !"
                                  )
@@ -431,8 +443,15 @@ class ContributionDetailView(DetailView):
 
     def user_passes_test(self, request):
         user = request.user
-        user_role = UserProfile.objects.filter(user=user).first().role
-        if user_role == 2 or user_role == 4 or user_role == 0 or user_role == 3:
+        self.object = self.get_object()
+        profile = UserProfile.objects.filter(user=user).first()
+        if profile.role == 0:
+            return True
+        if profile.role == 2 and profile.faculty == self.object.user.faculty:
+            return True
+        if profile.role == 3 and profile.faculty == self.object.user.faculty:
+            return True
+        if profile.role == 4 and profile == self.object.user:
             return True
         return False
 
@@ -449,7 +468,9 @@ class ContributionDetailView(DetailView):
                 suspicious_user.update(
                     attempt=total_attempt, last_attempt=update_time)
             else:
-                Suspicious.objects.get_or_create(user=instance_user)
+                client_ip = get_client_ip(request)
+                client_mac = get_mac()
+                Suspicious.objects.get_or_create(user=instance_user, ip=client_ip, mac=client_mac)
             messages.add_message(self.request, messages.ERROR,
                                  "You are not allowed. Your account is being tracked for suspicious activity !"
                                  )
@@ -502,7 +523,9 @@ def contribution_delete(request):
                     suspicious_user.update(
                         attempt=total_attempt, last_attempt=update_time)
                 else:
-                    Suspicious.objects.get_or_create(user=instance_user)
+                    client_ip = get_client_ip(request)
+                    client_mac = get_mac()
+                    Suspicious.objects.get_or_create(user=instance_user, ip=client_ip, mac=client_mac)
                 messages.add_message(request, messages.ERROR,
                                     "You are not allowed. Your account is being tracked for suspicious activity !"
                                     )
@@ -549,7 +572,9 @@ def mark_as_selected(request, slug):
                 suspicious_user.update(
                     attempt=total_attempt, last_attempt=update_time)
             else:
-                Suspicious.objects.get_or_create(user=instance_user)
+                client_ip = get_client_ip(request)
+                client_mac = get_mac()
+                Suspicious.objects.get_or_create(user=instance_user, ip=client_ip, mac=client_mac)
             messages.add_message(request, messages.ERROR,
                                 "You are not allowed. Your account is being tracked for suspicious activity !"
                                 )
@@ -586,7 +611,9 @@ def mark_as_unselected(request, slug):
                 suspicious_user.update(
                     attempt=total_attempt, last_attempt=update_time)
             else:
-                Suspicious.objects.get_or_create(user=instance_user)
+                client_ip = get_client_ip(request)
+                client_mac = get_mac()
+                Suspicious.objects.get_or_create(user=instance_user, ip=client_ip, mac=client_mac)
             messages.add_message(request, messages.ERROR,
                                     "You are not allowed. Your account is being tracked for suspicious activity !"
                                     )
@@ -637,7 +664,9 @@ def comment_create(request, slug):
                 suspicious_user.update(
                     attempt=total_attempt, last_attempt=update_time)
             else:
-                Suspicious.objects.get_or_create(user=instance_user)
+                client_ip = get_client_ip(request)
+                client_mac = get_mac()
+                Suspicious.objects.get_or_create(user=instance_user, ip=client_ip, mac=client_mac)
             messages.add_message(request, messages.ERROR,
                                     "You are not allowed. Your account is being tracked for suspicious activity !"
                                     )
@@ -690,7 +719,9 @@ class CommentListView(ListView):
                 suspicious_user.update(
                     attempt=total_attempt, last_attempt=update_time)
             else:
-                Suspicious.objects.get_or_create(user=instance_user)
+                client_ip = get_client_ip(request)
+                client_mac = get_mac()
+                Suspicious.objects.get_or_create(user=instance_user, ip=client_ip, mac=client_mac)
             messages.add_message(self.request, messages.ERROR,
                                  "You are not allowed. Your account is being tracked for suspicious activity !"
                                  )
@@ -735,7 +766,9 @@ class SelectedContributionListView(ListView):
                 suspicious_user.update(
                     attempt=total_attempt, last_attempt=update_time)
             else:
-                Suspicious.objects.get_or_create(user=instance_user)
+                client_ip = get_client_ip(request)
+                client_mac = get_mac()
+                Suspicious.objects.get_or_create(user=instance_user, ip=client_ip, mac=client_mac)
             messages.add_message(self.request, messages.ERROR,
                                  "You are not allowed. Your account is being tracked for suspicious activity !"
                                  )

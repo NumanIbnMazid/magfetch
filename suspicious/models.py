@@ -8,6 +8,8 @@ class Suspicious(models.Model):
     attempt         = models.PositiveSmallIntegerField(default=1, verbose_name=('attempt'))
     first_attempt   = models.DateTimeField(auto_now_add=True, verbose_name=('first attempt'))
     last_attempt    = models.DateTimeField(auto_now=True, verbose_name=('last attempt'))
+    ip = models.CharField(max_length=150, verbose_name='ip address', blank=True, null=True)
+    mac = models.CharField(max_length=150, verbose_name='mac address', blank=True, null=True)
 
     def __str__(self):
         return self.user.username

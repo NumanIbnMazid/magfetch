@@ -18,6 +18,8 @@ from django.urls import reverse
 from django.contrib import messages
 from django import forms
 import datetime
+from accounts.utils import get_client_ip
+from uuid import getnode as get_mac
 
 # ------------------------- Schedule/Date CreateView ---------------------------
 @method_decorator(login_required, name='dispatch')
@@ -126,7 +128,9 @@ class DateCreateView(CreateView):
                 update_time                 = datetime.datetime.now()
                 suspicious_user_filter.update(attempt=total_attempt, last_attempt=update_time)
             else:
-                Suspicious.objects.get_or_create(user=instance_user)
+                client_ip = get_client_ip(request)
+                client_mac = get_mac()
+                Suspicious.objects.get_or_create(user=instance_user, ip=client_ip, mac=client_mac)
             messages.add_message(self.request, messages.ERROR,
                 "You are not allowed. Your account is being tracked for suspicious activity !"
             )
@@ -261,7 +265,9 @@ class DateUpdateView(UpdateView):
                 update_time                 = datetime.datetime.now()
                 suspicious_user_filter.update(attempt=total_attempt, last_attempt=update_time)
             else:
-                Suspicious.objects.get_or_create(user=instance_user)
+                client_ip = get_client_ip(request)
+                client_mac = get_mac()
+                Suspicious.objects.get_or_create(user=instance_user, ip=client_ip, mac=client_mac)
             messages.add_message(self.request, messages.ERROR,
                 "You are not allowed. Your account is being tracked for suspicious activity !"
             )

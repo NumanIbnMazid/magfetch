@@ -108,3 +108,5 @@
     - attempt           (PositiveSmallIntegerField)
     - first_attempt     (DateTimeField)
     - last_attempt      (DateTimeField)
+    - ip                (CharField)
+    - mac               (CharField)
