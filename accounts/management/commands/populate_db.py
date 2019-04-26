@@ -56,7 +56,7 @@ class Command(BaseCommand):
         # ------------------- Faculty Specific User -------------------
         # IT Department
         if not User.objects.filter(username__iexact='MC_IT').exists():
-            u_mc_it = User(username='MC_IT', email='mc_it@test.com')
+            u_mc_it = User(username='MC_IT', email='magfetch.mc.it@gmail.com')
             u_mc_it.set_password("error54321")
             u_mc_it.save()
 
@@ -73,7 +73,7 @@ class Command(BaseCommand):
 
         # CSE Department
         if not User.objects.filter(username__iexact='MC_CSE').exists():
-            u_mc_cse = User(username='MC_CSE', email='mc_cse@test.com')
+            u_mc_cse = User(username='MC_CSE', email='magfetch.mc.cse@gmail.com')
             u_mc_cse.set_password("error54321")
             u_mc_cse.save()
 
@@ -89,7 +89,7 @@ class Command(BaseCommand):
 
         # SWE Department
         if not User.objects.filter(username__iexact='MC_SWE').exists():
-            u_mc_swe = User(username='MC_SWE', email='mc_swe@test.com')
+            u_mc_swe = User(username='MC_SWE', email='magfetch.mc.swe@gmail.com')
             u_mc_swe.set_password("error54321")
             u_mc_swe.save()
 

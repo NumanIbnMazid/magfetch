@@ -1,0 +1,233 @@
+<div class="panel-group m-b" id="accordian_mm">
+    {% if is_MM %}
+    <!-- without comment mm -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordian_mm"
+                href="#uncommented_contributions_mm">
+                Contributions
+                <span class="c-text-primary font-700">(Without Comment)</span>
+                <span class="badge bg-dark c-text-info">{{ uncommented_contributions_mm.count }}</span>
+            </a>
+        </div>
+        <div id="uncommented_contributions_mm" class="panel-collapse collapse" style="height: 0px;">
+            <div class="panel-body text-sm">
+                {% include 'contribution/list-common.html' with dynamic_variable=uncommented_contributions_mm dynamic_datatable='dynamic_datatable_uncommented_contributions_mm' %}
+            </div>
+        </div>
+    </div>
+    <!-- without comment 14 days mm -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordian_mm"
+                href="#special_comments_mm">
+                Contributions
+                <span class="c-text-primary font-700">(Without Comment After 14 Days)</span>
+                <span class="badge bg-dark c-text-info">{{ special_comments_mm.count }}</span>
+            </a>
+        </div>
+        <div id="special_comments_mm" class="panel-collapse collapse">
+            <div class="panel-body text-sm">
+                {% include 'contribution/list-common.html' with dynamic_variable=special_comments_mm dynamic_datatable='dynamic_datatable_special_comments_mm' %}
+            </div>
+        </div>
+    </div>
+    <!-- Selected Contributions mm -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordian_mm"
+                href="#contributions_selected_mm">
+                Contributions
+                <span class="c-text-primary font-700">(Selected)</span>
+                <span class="badge bg-dark c-text-info">{{ contributions_selected_mm.count }}</span>
+            </a>
+        </div>
+        <div id="contributions_selected_mm" class="panel-collapse collapse">
+            <div class="panel-body text-sm">
+                {% include 'contribution/list-common.html' with dynamic_variable=contributions_selected_mm dynamic_datatable='dynamic_datatable_contributions_selected_mm' %}
+            </div>
+        </div>
+    </div>
+    <!-- Contributions DOC mm -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordian_mm"
+                href="#contributions_doc_mm">
+                Contributions
+                <span class="c-text-primary font-700">(Documents)</span>
+                <span class="badge bg-dark c-text-info">{{ contributions_doc_mm.count }}</span>
+            </a>
+        </div>
+        <div id="contributions_doc_mm" class="panel-collapse collapse">
+            <div class="panel-body text-sm">
+                {% include 'contribution/list-common.html' with dynamic_variable=contributions_doc_mm dynamic_datatable='dynamic_datatable_contributions_doc_mm' %}
+            </div>
+        </div>
+    </div>
+    <!-- Contributions IMG mm -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordian_mm"
+                href="#contributions_img_mm">
+                Contributions
+                <span class="c-text-primary font-700">(Images)</span>
+                <span class="badge bg-dark c-text-info">{{ contributions_img_mm.count }}</span>
+            </a>
+        </div>
+        <div id="contributions_img_mm" class="panel-collapse collapse">
+            <div class="panel-body text-sm">
+                {% include 'contribution/list-common.html' with dynamic_variable=contributions_img_mm dynamic_datatable='dynamic_datatable_contributions_img_mm' %}
+            </div>
+        </div>
+    </div>
+    <!-- Contributions by year -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordian_mm"
+                href="#contributions_by_year">
+                Contributions
+                <span class="c-text-primary font-700">({{input_value}})</span>
+                <span class="badge bg-dark c-text-info">{{ contributions_by_year.count }}</span>
+            </a>
+        </div>
+        <div id="contributions_by_year" class="panel-collapse collapse">
+            <div class="panel-body text-sm">
+                {% include 'contribution/list-common.html' with dynamic_variable=contributions_by_year dynamic_datatable='dynamic_datatable_contributions_by_year' %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if is_MC or is_FG %}
+    <!-- selected contribution faculty -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordian_mm"
+                href="#contributions_selected">
+                Contributions
+                <span class="c-text-primary font-700">(Selected)</span>
+                <span class="badge bg-dark c-text-info">{{ contributions_selected.count }}</span>
+            </a>
+        </div>
+        <div id="contributions_selected" class="panel-collapse collapse" style="height: 0px;">
+            <div class="panel-body text-sm">
+                {% include 'contribution/list-common.html' with dynamic_variable=contributions_selected dynamic_datatable='dynamic_datatable_contributions_selected' %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if is_MC %}
+    <!-- without comment faculty -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordian_mm"
+                href="#uncommented_contributions">
+                Contributions
+                <span class="c-text-primary font-700">(Without Comment)</span>
+                <span class="badge bg-dark c-text-info">{{ uncommented_contributions.count }}</span>
+            </a>
+        </div>
+        <div id="uncommented_contributions" class="panel-collapse collapse" style="height: 0px;">
+            <div class="panel-body text-sm">
+                {% include 'contribution/list-common.html' with dynamic_variable=uncommented_contributions dynamic_datatable='dynamic_datatable_uncommented_contributions' %}
+            </div>
+        </div>
+    </div>
+    <!-- documents contributions faculty -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordian_mm"
+                href="#contributions_doc">
+                Contributions
+                <span class="c-text-primary font-700">(Documents)</span>
+                <span class="badge bg-dark c-text-info">{{ contributions_doc.count }}</span>
+            </a>
+        </div>
+        <div id="contributions_doc" class="panel-collapse collapse">
+            <div class="panel-body text-sm">
+                {% include 'contribution/list-common.html' with dynamic_variable=contributions_doc dynamic_datatable='dynamic_datatable_contributions_doc' %}
+            </div>
+        </div>
+    </div>
+    <!-- images contributions faculty -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordian_mm"
+                href="#contributions_img">
+                Contributions
+                <span class="c-text-primary font-700">(Images)</span>
+                <span class="badge bg-dark c-text-info">{{ contributions_img.count }}</span>
+            </a>
+        </div>
+        <div id="contributions_img" class="panel-collapse collapse">
+            <div class="panel-body text-sm">
+                {% include 'contribution/list-common.html' with dynamic_variable=contributions_img dynamic_datatable='dynamic_datatable_contributions_img' %}
+            </div>
+        </div>
+    </div>
+    <!-- contributions by year faculty -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordian_mm"
+                href="#contributions_by_year_faculty">
+                Contributions
+                <span class="c-text-primary font-700">({{input_value}})</span>
+                <span class="badge bg-dark c-text-info">{{ contributions_by_year.count }}</span>
+            </a>
+        </div>
+        <div id="contributions_by_year_faculty" class="panel-collapse collapse">
+            <div class="panel-body text-sm">
+                {% include 'contribution/list-common.html' with dynamic_variable=contributions_by_year_faculty dynamic_datatable='dynamic_datatable_contributions_by_year_faculty' %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+    $('#uncommented_contributions_mm').on('shown.bs.collapse', function () {
+        $($.fn.dataTable.tables(true)).DataTable()
+            .columns.adjust();
+    });
+    $('#special_comments_mm').on('shown.bs.collapse', function () {
+        $($.fn.dataTable.tables(true)).DataTable()
+            .columns.adjust();
+    });
+    $('#contributions_selected_mm').on('shown.bs.collapse', function () {
+        $($.fn.dataTable.tables(true)).DataTable()
+            .columns.adjust();
+    });
+    $('#contributions_doc_mm').on('shown.bs.collapse', function () {
+        $($.fn.dataTable.tables(true)).DataTable()
+            .columns.adjust();
+    });
+    $('#contributions_img_mm').on('shown.bs.collapse', function () {
+        $($.fn.dataTable.tables(true)).DataTable()
+            .columns.adjust();
+    });
+    $('#contributions_by_year').on('shown.bs.collapse', function () {
+        $($.fn.dataTable.tables(true)).DataTable()
+            .columns.adjust();
+    });
+    $('#contributions_selected').on('shown.bs.collapse', function () {
+        $($.fn.dataTable.tables(true)).DataTable()
+            .columns.adjust();
+    });
+    $('#uncommented_contributions').on('shown.bs.collapse', function () {
+        $($.fn.dataTable.tables(true)).DataTable()
+            .columns.adjust();
+    });
+    $('#contributions_doc').on('shown.bs.collapse', function () {
+        $($.fn.dataTable.tables(true)).DataTable()
+            .columns.adjust();
+    });
+    $('#contributions_img').on('shown.bs.collapse', function () {
+        $($.fn.dataTable.tables(true)).DataTable()
+            .columns.adjust();
+    });
+    $('#contributions_by_year_faculty').on('shown.bs.collapse', function () {
+        $($.fn.dataTable.tables(true)).DataTable()
+            .columns.adjust();
+    });
+</script>

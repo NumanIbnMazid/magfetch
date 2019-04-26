@@ -3,6 +3,9 @@
         {% if IT_contributions.count == 0 and CSE_contributions.count == 0 and SWE_contributions.count == 0 and EEE_contributions.count == 0 %}
         <span class="badge badge-warning pull-right c-text-warning">No Data Found !!!</span>
         {% endif %}
+        {% if not contributors_by_year.count == 0 %}
+        <span class="badge badge-dark pull-right c-text-dark">{{contributors_by_year.count}}</span>
+        {% endif %}
     </header>
     <div class="text-center wrapper bg-light lt">
         <!-- <div class="sparkline inline" data-type="pie" data-height="165" data-slice-colors="['#77c587','#41586e','#f2f2f2']">45000,23200,15000</div> -->

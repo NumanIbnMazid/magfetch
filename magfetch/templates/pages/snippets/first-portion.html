@@ -1,9 +1,5 @@
 <div class="row m-md">
   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 text-center">
-    {% if is_MC or is_FG %}
-    {% include 'pages/snippets/chunks/contributions_catwise_by_faculty.html' %}
-    {% endif %}
-
     {% if is_MM %}
     <form action="{% url 'statistics_search' %}" method="POST">
       <div class="input-group">

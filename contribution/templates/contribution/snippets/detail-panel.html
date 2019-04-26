@@ -1,5 +1,14 @@
+{% load static %}
 <section class="panel panel-default">
     <div class="list-group no-radius alt">
+        {% if not is_ST %}
+        <p class="list-group-item" href="#">
+            <span class="thumb-sm avatar">
+                <img src="{% static 'images/raw/avatar/avatar.jpg' %}">
+            </span>
+            {{object.user.get_smallname}}
+        </p>
+        {% endif %}
         <p class="list-group-item" href="#">
             <span class="badge bg-info">{{object.title}}</span>
             Title

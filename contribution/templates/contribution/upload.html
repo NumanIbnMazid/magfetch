@@ -7,14 +7,37 @@ Upload Contribution
 
 {% block content %}
 
-
 <!-- Dropzone CSS -->
 <link rel="stylesheet" href="{% static 'vendor/dropzone/dropzone.css' %}" type="text/css" />
+
+<!-- Instruction CSS -->
+<link rel="stylesheet" href="{% static 'css/custom-animation.css' %}" type="text/css" />
 
 <div class="container">
 
     <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+            <!-- animation instruction -->
+            <div class=fakeMenu>
+                <div class="fakeButtons fakeClose"></div>
+                <div class="fakeButtons fakeMinimize"></div>
+                <div class="fakeButtons fakeZoom"></div>
+            </div>
+            <div class="fakeScreen">
+                <p id="animation_p" class="line1">Enter contribution Title.<span
+                        id="animation-span" class="cursor1">_</span></p>
+                <p id="animation_p" class="line2">Choose a Valid file.<span
+                        id="animation-span" class="cursor2">_</span></p>
+                <p id="animation_p" class="line3">Choose Category.<span
+                        id="animation-span" class="cursor3">_</span>
+                </p>
+                <p id="animation_p" class="line4">Check terms & conditions<span
+                        id="animation-span" class="cursor4">_</span></p>
+                <p id="animation_p" class="line5">><span class="cursor5">_</span></p>
+            </div>
+            <!-- animation instruction -->
+        </div>
+        <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
             <section class="panel panel-default">
                 <header class="panel-heading font-bold text-center">Upload Contribution</header>
                 <div class="panel-body">
@@ -29,7 +52,9 @@ Upload Contribution
                                 <input type="checkbox" name="terms" value="check" id="agree"
                                     onclick="clickCheck(event)">
                                 I have read and agree to the
-                                <a href="#">Terms and Conditions</a>
+                                <a href="#" data-toggle="modal" data-target="#myModal">
+                                    Terms and Conditions
+                                </a>
                                 <br>
                                 <p id="message" class="text-center m-t-sm"></p>
                             </label>
@@ -38,18 +63,39 @@ Upload Contribution
                         <div id="submit">
                             <!-- dropzone attribute button id="submit-button" -->
                             <button type="submit" id="submit-button"
-                                class="btn btn-sm btn-primary pull-left">Upload</button>
+                                class="btn btn-sm btn-primary pull-left btn-raised ripple-effect">Upload</button>
                         </div>
                     </form>
                 </div>
             </section>
         </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-            <h1>Upload Instruction</h1>
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+            <!-- animation instruction -->
+            <div class=fakeMenu>
+                <div class="fakeButtons fakeClose"></div>
+                <div class="fakeButtons fakeMinimize"></div>
+                <div class="fakeButtons fakeZoom"></div>
+            </div>
+            <div class="fakeScreen">
+                <p id="animation_p" class="line1">File Formats Supported:<span
+                        id="animation-span" class="cursor1">_</span></p>
+                <p id="animation_p" class="line2">[.doc][.docx][.jpg]<span
+                        id="animation-span" class="cursor2">_</span></p>
+                <p id="animation_p" class="line3">[.jpeg][.png][.svg]<span
+                        id="animation-span" class="cursor3">_</span>
+                </p>
+                <p id="animation_p" class="line4">&nbsp;&nbsp;&ldquo;Maximum File Size:2.5MB&rdquo;<span
+                        id="animation-span" class="cursor4">_</span></p>
+                <p id="animation_p" class="line5">><span class="cursor5">_</span></p>
+            </div>
+            <!-- animation instruction -->
         </div>
     </div>
-
 </div>
+
+
+{% include 'contribution/snippets/modals.html' %}
+
 <!-- Dropzone JS -->
 <script src="{% static 'vendor/dropzone/dropzone.js' %}"></script>
 

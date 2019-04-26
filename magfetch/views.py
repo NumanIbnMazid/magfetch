@@ -47,8 +47,17 @@ class HomeView(TemplateView):
                     'CSE_contributors': contributors.filter(faculty__code__iexact='CSE'),
                     'SWE_contributors': contributors.filter(faculty__code__iexact='SWE'),
                     'EEE_contributors': contributors.filter(faculty__code__iexact='EEE'),
+                    # MM Report
+                    'contributions_selected_mm': contributions.selected().contributions_this_year(),
+                    'uncommented_contributions_mm': contributions.uncommented().contributions_this_year(),
+                    'special_comments_mm': contributions.filter(user_contribution_file__is_special=True).contributions_by_year(today.year),
+                    'contributions_doc_mm': contributions.contributions_doc().contributions_this_year(),
+                    'contributions_img_mm': contributions.contributions_img().contributions_this_year(),
                     # Extra
-                    'input_value':today.year
+                    'input_value':today.year,
+                    'contributions_by_year': contributions.contributions_by_year(today.year),
+                    'contributions_by_year_faculty': contributions.contributions_by_year(today.year).contributions_by_faculty(request.user.profile),
+                    'contributors_by_year': contributors
                 }
                 return render(request, "pages/home.html", context=context)
             # ------- Student Landing Page View -------
@@ -110,8 +119,17 @@ def statistics_search(request):
                 'CSE_contributors': contributors.filter(faculty__code__iexact='CSE'),
                 'SWE_contributors': contributors.filter(faculty__code__iexact='SWE'),
                 'EEE_contributors': contributors.filter(faculty__code__iexact='EEE'),
+                # MM Report
+                'contributions_selected_mm': contributions.selected().contributions_by_year(request_year),
+                'uncommented_contributions_mm': contributions.uncommented().contributions_by_year(request_year),
+                'special_comments_mm': contributions.filter(user_contribution_file__is_special=True).contributions_by_year(request_year),
+                'contributions_doc_mm': contributions.contributions_doc().contributions_by_year(request_year),
+                'contributions_img_mm': contributions.contributions_img().contributions_by_year(request_year),
                 # Extra
-                'input_value':request_year
+                'input_value':request_year,
+                'contributions_by_year': contributions.contributions_by_year(request_year),
+                'contributions_by_year_faculty': contributions.contributions_by_year(request_year).contributions_by_faculty(request.user.profile),
+                'contributors_by_year': contributors
             }
             return render(request, "pages/home.html", context=context)
         # ------- Student Landing Page View -------

@@ -7,7 +7,8 @@ Home Page
 
 {% block content %}
 
-{{test}}
+<!-- YearPicker CSS -->
+<link rel="stylesheet" href="{% static 'vendor/yearpicker/yearpicker.css' %}" type="text/css" />
 
 {% include 'pages/snippets/first-portion.html' %}
 
@@ -15,15 +16,22 @@ Home Page
 
 <div class="row">
     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-    </div>
-    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
         <!-- {% if not get_announcement == None %} -->
         {% include 'pages/snippets/chunks/announcement.html' %}
         <!-- {% endif %} -->
     </div>
+    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+        {% include 'pages/snippets/chunks/contributions_report.html' %}
+    </div>
+
 </div>
 
+<!-- YearPicker JS -->
+<script src="{% static 'vendor/yearpicker/yearpicker.js' %}"></script>
+<script src="{% static 'vendor/yearpicker/yearpicker-config.js' %}"></script>
+
 {% block extra_js %}
+<!-- Charts JS -->
 <script src="{% static 'js/charts/easypiechart/jquery.easy-pie-chart.js' %}"></script>
 <script src="{% static 'js/charts/sparkline/jquery.sparkline.min.js' %}"></script>
 <script src="{% static 'js/charts/flot/jquery.flot.min.js' %}"></script>

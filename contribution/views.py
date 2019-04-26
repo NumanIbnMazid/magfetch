@@ -705,7 +705,8 @@ class SelectedContributionListView(ListView):
     template_name = 'contribution/selected_list.html'
 
     def get_queryset(self, *args, **kwargs):
-        query = Contribution.objects.all().selected().latest()
+        today = datetime.datetime.now()
+        query = Contribution.objects.all().selected().contributions_by_year(today.year).latest()
         return query
 
     def get_context_data(self, **kwargs):

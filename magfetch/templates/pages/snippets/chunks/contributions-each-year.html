@@ -1,12 +1,10 @@
-{% load static %}
-
-<!-- YearPicker CSS -->
-<link rel="stylesheet" href="{% static 'vendor/yearpicker/yearpicker.css' %}" type="text/css" />
-
 <section class="panel panel-default">
     <header class="panel-heading font-bold">Contribtions ({{input_value}})
         {% if IT_contributions.count == 0 and CSE_contributions.count == 0 and SWE_contributions.count == 0 and EEE_contributions.count == 0 %}
         <span class="badge badge-warning pull-right c-text-warning">No Data Found !!!</span>
+        {% endif %}
+        {% if not contributions_by_year.count == 0 %}
+        <span class="badge badge-dark pull-right c-text-dark">{{contributions_by_year.count}}</span>
         {% endif %}
     </header>
     <div class="text-center wrapper bg-light lt">
@@ -39,7 +37,3 @@
         </li>
     </ul>
 </section>
-
-<!-- YearPicker JS -->
-<script src="{% static 'vendor/yearpicker/yearpicker.js' %}"></script>
-<script src="{% static 'vendor/yearpicker/yearpicker-config.js' %}"></script>
