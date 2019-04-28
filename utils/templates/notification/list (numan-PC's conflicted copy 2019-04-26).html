@@ -25,13 +25,17 @@ All Notifications
             <div class="panel-body">
                 <div class="row">
                     <a href="{% url 'utils:notification_detail' slug=object.slug %}">
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <strong
-                                class="h6 text-dark {% if object.has_read == False %}font-bold c-text-primary{% endif %}">
-                                {{ object.subject }}
-                            </strong>
-                        </div>
+                    <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12">
+                        <strong class="h6 text-dark {% if object.has_read == False %}font-bold c-text-primary{% endif %}">
+                            {{ object.subject }}
+                        </strong>
+                    </div>
                     </a>
+                    <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 col-12">
+                        <a href="#" class="btn btn-danger btn-xs">
+                            <i class="fa fa-trash-o text-darger"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -55,10 +59,12 @@ All Notifications
         <section class="panel panel-default">
             <header class="panel-heading font-bold text-center">Action</header>
             <div class="panel-body text-center">
-                <!-- Button to Open the Modal -->
-                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal">
-                    Mark All As Read
-                </button>
+                <a href="#" class="btn btn-xs btn-info">
+                    Mark All as Read
+                </a>
+                <a href="#" class="btn btn-xs btn-danger">
+                    Remove All
+                </a>
             </div>
         </section>
     </div>
@@ -66,30 +72,5 @@ All Notifications
 </div>
 
 
-<!-- The Modal -->
-<div class="modal" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Please Confirm</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                Are you sure you want to mark all notifications as read?
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
-                <a href="{% url 'utils:mark_all_as_read' %}" class="btn btn-success">Yes</a>
-            </div>
-
-        </div>
-    </div>
-</div>
 
 {% endblock %}

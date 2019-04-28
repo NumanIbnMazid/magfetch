@@ -4,7 +4,7 @@
     <form action="{% url 'statistics_search' %}" method="POST">
       <div class="input-group">
         {% csrf_token %}
-        <input type="text" name="contribution_search" class="form-control yearpicker text-center" value="{{input_value}}" required>
+        <input type="number" name="contribution_search" class="form-control yearpicker text-center" value="{{input_value}}" required>
         <span class="input-group-btn">
           <button class="btn btn-sm btn-primary pull-right btn-raised ripple-effect" type="submit">
             Search By Year

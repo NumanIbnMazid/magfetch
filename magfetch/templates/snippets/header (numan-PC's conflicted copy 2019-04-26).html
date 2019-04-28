@@ -11,16 +11,14 @@
         </a>
         <a href="{% url 'home' %}" class="navbar-brand">
             <img src="{% static 'images/icon/icon.png' %}" class="m-r-sm">
-            <span class="logo_text" id="logo-text">magFetch</span>
+            magFetch
         </a>
         <a class="btn btn-link visible-xs" data-toggle="dropdown" data-target=".nav-user">
             <i class="fa fa-cog"></i>
         </a>
     </div>
-
-    <!-- CountDown -->
-    {% include 'snippets/chunks/countdown.html' %}
-    <!-- /CountDown -->
+    
+    {% include 'snippets/chunks/header-left.html' %}
 
     <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user">
         {% if notifications.count >= 1 %}

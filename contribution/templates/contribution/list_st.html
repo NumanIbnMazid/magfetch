@@ -60,8 +60,8 @@
                         <td>
                             <div>
                                 <!-- ------------- CHANGE PORTION FOR PRODUCTION MODE ------------ -->
-                                <input type="checkbox" class="check-box m-t-sm" data-url="http://magfetch.pythonanywhere.com{{object.file.url}}">
-                                <!-- <input type="checkbox" class="check-box m-t-sm" data-url="http://127.0.0.1:8000{{object.file.url}}"> -->
+                                <input type="checkbox" class="check-box m-t-sm" data-url="https://magfetch.pythonanywhere.com{{object.file.url}}">
+                                <!-- <input type="checkbox" class="check-box m-t-sm" data-url="https://127.0.0.1:8000{{object.file.url}}"> -->
                             </div>
                         </td>
                         <td>{{ forloop.counter }}</td>
@@ -70,7 +70,7 @@
                         <td>{{object.category.get_file_type}}</td>
                         <!-- <td>
                             {% if object.category.category_for == 0 %}
-                            <iframe class="doc" src="https://docs.google.com/gview?url=http://magfetch.pythonanywhere.com{{object.file.url}}&embedded=true"
+                            <iframe class="doc" src="https://docs.google.com/gview?url=https://magfetch.pythonanywhere.com{{object.file.url}}&embedded=true"
                                 width="270" height="60"></iframe>
                             <iframe class="doc" src="#" width="270" height="60"></iframe>
                             {% endif %}
@@ -93,12 +93,12 @@
                                 <span class="c-text-dark">View</span>
                             </a>
                             <!-- <a class="btn btn-xs btn-raised ripple-effect btn-default"
-                                href="http://127.0.0.1:8000{{object.file.url}}" download>
+                                href="https://127.0.0.1:8000{{object.file.url}}" download>
                                 <span class="c-text-dark">Download</span>
                             </a> -->
                             <!-- ------------- CHANGE PORTION FOR PRODUCTION MODE ------------ -->
                             <a class="btn btn-xs btn-raised ripple-effect btn-default"
-                                href="http://magfetch.pythonanywhere.com{{object.file.url}}" download>
+                                href="https://magfetch.pythonanywhere.com{{object.file.url}}" download>
                                 <span class="c-text-dark">Download</span>
                             </a>
 
@@ -161,7 +161,7 @@
 
         if (category == 0){
             $('#file').html("<iframe class='doc' id='iframe' \
-            src='https://docs.google.com/gview?url=http://magfetch.pythonanywhere.com"+file_url+"&embedded=true'\
+            src='https://docs.google.com/gview?url=https://magfetch.pythonanywhere.com"+file_url+"&embedded=true'\
                 width='270' height='60'></iframe>");
         }
         else if (category == 1){

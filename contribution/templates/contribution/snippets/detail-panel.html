@@ -9,8 +9,14 @@
             {{object.user.get_smallname}}
         </p>
         {% endif %}
+        {% if is_MM %}
         <p class="list-group-item" href="#">
-            <span class="badge bg-info">{{object.title}}</span>
+            <span class="badge bg-info">{{object.user.faculty}}</span>
+            Faculty
+        </p>
+        {% endif %}
+        <p class="list-group-item" href="#">
+            <span class="badge bg-light">{{object.title}}</span>
             Title
         </p>
         <p class="list-group-item" href="#">

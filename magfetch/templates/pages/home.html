@@ -10,7 +10,16 @@ Home Page
 <!-- YearPicker CSS -->
 <link rel="stylesheet" href="{% static 'vendor/yearpicker/yearpicker.css' %}" type="text/css" />
 
+
 {% include 'pages/snippets/first-portion.html' %}
+
+{% if error == True %}
+
+<div class="alert alert-warning text-center font-bold font-20" role="alert">
+    Sorry, nothing found !!!
+</div>
+
+{% else %}
 
 {% include 'pages/snippets/second-portion.html' %}
 
@@ -39,5 +48,7 @@ Home Page
 <script src="{% static 'js/charts/flot/jquery.flot.resize.js' %}"></script>
 <script src="{% static 'js/charts/flot/jquery.flot.grow.js' %}"></script>
 {% endblock %}
+
+{% endif %}
 
 {% endblock %}

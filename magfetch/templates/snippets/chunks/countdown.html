@@ -1,6 +1,7 @@
 {% if not get_schedule == None and get_schedule.status == 0 %}
 {% if get_schedule.closure_date >= get_datetime %}
 <input type="hidden" id="closure_date" value="{{ get_schedule.closure_date|date:'D, d M Y H:i:s'}}">
+<span><small class="text-primary">Remaining</small> <strong class="text-info">(Closure Date)</strong></span>
 <p id="demo" class="m-sm"
     style="background-image: -moz-linear-gradient(top,#b8b0af 0%,#f2ecea 100%);
             background-image: -webkit-linear-gradient(top,#b8b0af 0%,#f2ecea 100%);
@@ -10,10 +11,11 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             position:relative;font-size:1.1em;font-family: 'Yantramanav', sans-serif;font-weight:900;text-align: center;">
-</p><span><small class="text-primary">Remaining</small> <strong class="text-info">(Closure Date)</strong></span>
+</p>
 {% endif %}
 {% if get_datetime > get_schedule.closure_date and get_schedule.final_closure_date >= get_datetime %}
 <input type="hidden" id="closure_date" value="{{ get_schedule.final_closure_date|date:'D, d M Y H:i:s'}}">
+<span><small class="text-primary">Remaining</small> <strong class="text-info">(Final Closure Date)</strong></span>
 <p id="demo" class="m-sm"
     style="background-image: -moz-linear-gradient(top,#b8b0af 0%,#f2ecea 100%);
             background-image: -webkit-linear-gradient(top,#b8b0af 0%,#f2ecea 100%);
@@ -23,7 +25,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             position:relative;font-size:1.1em;font-family: 'Yantramanav', sans-serif;font-weight:900;text-align: center;">
-</p><span><small class="text-primary">Remaining</small> <strong class="text-info">(Final Closure Date)</strong></span>
+</p>
 {% endif %}
 {% endif %}
 

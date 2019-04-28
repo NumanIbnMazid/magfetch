@@ -333,7 +333,7 @@ class ContributionUploadView(CreateView):
                 return HttpResponseRedirect(reverse('home'))
             if today > date.final_closure_date and submitted == True:
                 messages.add_message(self.request, messages.ERROR,
-                                     "Contribution submitting date has been expired! You are not allowed."
+                                     "Contribution updating date has been expired! You are not allowed."
                                      )
                 return HttpResponseRedirect(reverse('home'))
         else:

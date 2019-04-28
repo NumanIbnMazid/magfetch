@@ -5,7 +5,9 @@ from django.shortcuts import render
 from accounts.models import UserProfile
 from contribution.models import Contribution, Comment
 from django.db.models import Q
+from django.contrib import messages
 import datetime
+import re
 
 # @method_decorator(login_required, name='dispatch')
 # class HomeView(TemplateView):
@@ -94,43 +96,56 @@ def statistics_search(request):
             request_year = today.year
             if request.method == 'POST':
                 request_year = request.POST.get('contribution_search')
-            contributions = Contribution.objects.all().latest()
-            contributors = UserProfile.objects.filter(~Q(user_contribution=None)).exclude(~Q(user_contribution__created_at__year=request_year))
-            context = {
-                'contributions': contributions,
-                'contributions_this_year': contributions.contributions_this_year(),
-                'contributions_selected': contributions.selected().contributions_by_faculty(request.user.profile).contributions_by_year(request_year),
-                'uncommented_contributions': contributions.uncommented().contributions_by_faculty(request.user.profile).contributions_by_year(request_year),
-                'contributions_doc': contributions.contributions_doc().contributions_by_faculty(request.user.profile).contributions_by_year(request_year),
-                'contributions_img': contributions.contributions_img().contributions_by_faculty(request.user.profile).contributions_by_year(request_year),
-                'special_comments': contributions.filter(user_contribution_file__is_special=True).contributions_by_year(request_year),
-                # All Contributions By Faculty
-                'IT_contributions_all': contributions.filter(user__faculty__code__iexact='IT'),
-                'CSE_contributions_all': contributions.filter(user__faculty__code__iexact='CSE'),
-                'SWE_contributions_all': contributions.filter(user__faculty__code__iexact='SWE'),
-                'EEE_contributions_all': contributions.filter(user__faculty__code__iexact='EEE'),
-                # All Contributions By Faculty within each year
-                'IT_contributions': contributions.filter(user__faculty__code__iexact='IT').contributions_by_year(request_year),
-                'CSE_contributions': contributions.filter(user__faculty__code__iexact='CSE').contributions_by_year(request_year),
-                'SWE_contributions': contributions.filter(user__faculty__code__iexact='SWE').contributions_by_year(request_year),
-                'EEE_contributions': contributions.filter(user__faculty__code__iexact='EEE').contributions_by_year(request_year),
-                # All Contributors By Faculty within each year
-                'IT_contributors': contributors.filter(faculty__code__iexact='IT'),
-                'CSE_contributors': contributors.filter(faculty__code__iexact='CSE'),
-                'SWE_contributors': contributors.filter(faculty__code__iexact='SWE'),
-                'EEE_contributors': contributors.filter(faculty__code__iexact='EEE'),
-                # MM Report
-                'contributions_selected_mm': contributions.selected().contributions_by_year(request_year),
-                'uncommented_contributions_mm': contributions.uncommented().contributions_by_year(request_year),
-                'special_comments_mm': contributions.filter(user_contribution_file__is_special=True).contributions_by_year(request_year),
-                'contributions_doc_mm': contributions.contributions_doc().contributions_by_year(request_year),
-                'contributions_img_mm': contributions.contributions_img().contributions_by_year(request_year),
-                # Extra
-                'input_value':request_year,
-                'contributions_by_year': contributions.contributions_by_year(request_year),
-                'contributions_by_year_faculty': contributions.contributions_by_year(request_year).contributions_by_faculty(request.user.profile),
-                'contributors_by_year': contributors
-            }
+                if not request_year == None:
+                    allowed_chars = re.match(r'^[0-9]+$', request_year)
+                    length = len(request_year)
+                    if not allowed_chars or length >= 5:
+                        messages.add_message(request, messages.WARNING,
+                             "Please enter valid year!!!")
+                        context = {
+                            'error': True,
+                            'input_value':today.year
+                        }
+                        return render(request, "pages/home.html", context=context)
+                    else:
+                        contributions = Contribution.objects.all().latest()
+                        contributors = UserProfile.objects.filter(~Q(user_contribution=None)).exclude(~Q(user_contribution__created_at__year=request_year))
+                        context = {
+                            'contributions': contributions,
+                            'contributions_this_year': contributions.contributions_this_year(),
+                            'contributions_selected': contributions.selected().contributions_by_faculty(request.user.profile).contributions_by_year(request_year),
+                            'uncommented_contributions': contributions.uncommented().contributions_by_faculty(request.user.profile).contributions_by_year(request_year),
+                            'contributions_doc': contributions.contributions_doc().contributions_by_faculty(request.user.profile).contributions_by_year(request_year),
+                            'contributions_img': contributions.contributions_img().contributions_by_faculty(request.user.profile).contributions_by_year(request_year),
+                            'special_comments': contributions.filter(user_contribution_file__is_special=True).contributions_by_year(request_year),
+                            # All Contributions By Faculty
+                            'IT_contributions_all': contributions.filter(user__faculty__code__iexact='IT'),
+                            'CSE_contributions_all': contributions.filter(user__faculty__code__iexact='CSE'),
+                            'SWE_contributions_all': contributions.filter(user__faculty__code__iexact='SWE'),
+                            'EEE_contributions_all': contributions.filter(user__faculty__code__iexact='EEE'),
+                            # All Contributions By Faculty within each year
+                            'IT_contributions': contributions.filter(user__faculty__code__iexact='IT').contributions_by_year(request_year),
+                            'CSE_contributions': contributions.filter(user__faculty__code__iexact='CSE').contributions_by_year(request_year),
+                            'SWE_contributions': contributions.filter(user__faculty__code__iexact='SWE').contributions_by_year(request_year),
+                            'EEE_contributions': contributions.filter(user__faculty__code__iexact='EEE').contributions_by_year(request_year),
+                            # All Contributors By Faculty within each year
+                            'IT_contributors': contributors.filter(faculty__code__iexact='IT'),
+                            'CSE_contributors': contributors.filter(faculty__code__iexact='CSE'),
+                            'SWE_contributors': contributors.filter(faculty__code__iexact='SWE'),
+                            'EEE_contributors': contributors.filter(faculty__code__iexact='EEE'),
+                            # MM Report
+                            'contributions_selected_mm': contributions.selected().contributions_by_year(request_year),
+                            'uncommented_contributions_mm': contributions.uncommented().contributions_by_year(request_year),
+                            'special_comments_mm': contributions.filter(user_contribution_file__is_special=True).contributions_by_year(request_year),
+                            'contributions_doc_mm': contributions.contributions_doc().contributions_by_year(request_year),
+                            'contributions_img_mm': contributions.contributions_img().contributions_by_year(request_year),
+                            # Extra
+                            'input_value':request_year,
+                            'contributions_by_year': contributions.contributions_by_year(request_year),
+                            'contributions_by_year_faculty': contributions.contributions_by_year(request_year).contributions_by_faculty(request.user.profile),
+                            'contributors_by_year': contributors,
+                            'error': False
+                        }
             return render(request, "pages/home.html", context=context)
         # ------- Student Landing Page View -------
         if profile.role == 4:

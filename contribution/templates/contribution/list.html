@@ -40,7 +40,7 @@ All Contributions [{{faculty}}]
             <table id="datatable" class="table table-bordered row-border b-t b-light" style="width:100%">
                 <thead class="text-dark">
                     <tr class="text-center">
-                        <th width="2%">
+                        <th width="3%">
                             <span id="check-all">
                                 <i class="fa fa-square" id="dflt"></i>
                                 <i class="fa fa-check-square hide" id="chkd"></i>
@@ -48,15 +48,16 @@ All Contributions [{{faculty}}]
                             </span>
                         </th>
                         <th width="2%">#</th>
-                        <th width="9%">Contributor</th>
-                        <th width="15%">Title</th>
-                        <th width="7%">Type</th>
-                        <th width="10%">Category</th>
+                        <th width="5%">User</th>
+                        <th width="10%">Title</th>
+                        <th width="2%">Type</th>
+                        <th width="5%">Category</th>
                         <th width="10%">Comment</th>
-                        <th width="15%">Selection</th>
-                        <th width="30%">
+                        <th width="20%">Selection</th>
+                        <th width="33%">
                             Actions
                         </th>
+                        <th width="10%">Uploaded</th>
                     </tr>
                 </thead>
                 <tbody class="text-center">
@@ -65,19 +66,26 @@ All Contributions [{{faculty}}]
                         <td>
                             <div>
                                 <!-- ------------- CHANGE PORTION FOR PRODUCTION MODE ------------ -->
-                                <input type="checkbox" class="check-box m-t-sm" data-url="http://magfetch.pythonanywhere.com{{object.file.url}}">
-                                <!-- <input type="checkbox" class="check-box" data-url="http://127.0.0.1:8000{{object.file.url}}"> -->
+                                <input type="checkbox" class="check-box m-t-sm" data-url="https://magfetch.pythonanywhere.com{{object.file.url}}">
+                                <!-- <input type="checkbox" class="check-box" data-url="https://127.0.0.1:8000{{object.file.url}}"> -->
                             </div>
                         </td>
                         <td>{{ forloop.counter }}</td>
                         <td>
-                            <span class="thumb-sm avatar pull-left">
+                            <!-- <span class="thumb-sm avatar pull-left">
                                 <img src="{% static 'images/raw/avatar/avatar.jpg' %}">
-                            </span>
-                            {{object.user.get_smallname}}
+                            </span> -->
+                            <span class="c-text-primary">{{object.user.get_smallname}}</span>
                         </td>
                         <td>{{object.title|truncatechars:15}}</td>
-                        <td>{{object.category.get_file_type}}</td>
+                        <td>
+                            {% if object.category.get_file_type == "DOCUMENT" %}
+                            Doc
+                            {% endif %}
+                            {% if object.category.get_file_type == "IMAGE" %}
+                            Img
+                            {% endif %}
+                        </td>
                         <td>{{object.category|truncatechars:20}}</td>
                         <td>
                             {% if object.is_commented == True %}
@@ -112,12 +120,12 @@ All Contributions [{{faculty}}]
                                 <span class="c-text-dark">View</span>
                             </a>
                             <!-- <a class="btn btn-xs btn-raised ripple-effect btn-default"
-                                href="http://127.0.0.1:8000{{object.file.url}}" download>
+                                href="https://127.0.0.1:8000{{object.file.url}}" download>
                                 <span class="c-text-dark">Download</span>
                             </a> -->
                             <!-- ------------- CHANGE PORTION FOR PRODUCTION MODE ------------ -->
                             <a class="btn btn-xs btn-raised ripple-effect btn-default"
-                                href="http://magfetch.pythonanywhere.com{{object.file.url}}" download>
+                                href="https://magfetch.pythonanywhere.com{{object.file.url}}" download>
                                 <span class="c-text-dark">Download</span>
                             </a>
 
@@ -136,6 +144,11 @@ All Contributions [{{faculty}}]
                                 <span class="c-text-dark">Comment</span>
                             </a>
                             {% endfor %}
+                        </td>
+                        <td>
+                            <small class="text-muted">
+                                <span class="c-text-dark">{{ object.created_at|timesince }}</span> ago
+                            </small>
                         </td>
                     </tr>
                     {% endfor %}

@@ -15,8 +15,8 @@ Selected Contributions
     <div class="hide" id="download_all_div" style="display:none">
         {% for contribution in file_urls %}
         <!-- ------------- CHANGE PORTION FOR PRODUCTION MODE ------------ -->
-        <input type="checkbox" class="download-all-check-box" data-url="http://magfetch.pythonanywhere.com{{contribution.file.url}}" checked>
-        <!-- <input type="checkbox" class="download-all-check-box" data-url="http://127.0.0.1:8000{{contribution.file.url}}" checked> -->
+        <input type="checkbox" class="download-all-check-box" data-url="https://magfetch.pythonanywhere.com{{contribution.file.url}}" checked>
+        <!-- <input type="checkbox" class="download-all-check-box" data-url="https://127.0.0.1:8000{{contribution.file.url}}" checked> -->
         {% endfor %}
     </div>
     <div class="" id="download_all_btn_div">
@@ -82,8 +82,8 @@ Selected Contributions
                         <td>
                             <div>
                                 <!-- ------------- CHANGE PORTION FOR PRODUCTION MODE ------------ -->
-                                <input type="checkbox" class="check-box m-t-sm" data-url="http://magfetch.pythonanywhere.com{{object.file.url}}">
-                                <!-- <input type="checkbox" class="check-box" data-url="http://127.0.0.1:8000{{object.file.url}}"> -->
+                                <input type="checkbox" class="check-box m-t-sm" data-url="https://magfetch.pythonanywhere.com{{object.file.url}}">
+                                <!-- <input type="checkbox" class="check-box" data-url="https://127.0.0.1:8000{{object.file.url}}"> -->
                             </div>
                         </td>
                         <td>{{ forloop.counter }}</td>
@@ -104,11 +104,11 @@ Selected Contributions
                             </a>
                             <!-- ------------- CHANGE PORTION FOR PRODUCTION MODE ------------ -->
                             <a class="btn btn-xs btn-raised ripple-effect btn-default"
-                                href="http://magfetch.pythonanywhere.com{{object.file.url}}" download>
+                                href="https://magfetch.pythonanywhere.com{{object.file.url}}" download>
                                 <span class="c-text-dark">Download</span>
                             </a>
                             <!-- <a class="btn btn-xs btn-raised ripple-effect btn-default"
-                                href="http://127.0.0.1:8000{{object.file.url}}" download>
+                                href="https://127.0.0.1:8000{{object.file.url}}" download>
                                 <span class="c-text-dark">Download</span>
                             </a> -->
                         </td>
