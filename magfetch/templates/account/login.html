@@ -1,17 +1,182 @@
 {% extends "account/base.html" %}
-
 {% block head_title %}{% block page_title %}
-Sign in
+	Sign in
 {% endblock %}{% endblock %}
-
 {% block content %}
-<form method="POST" action="{% url 'account_login' %}" class="">
-  {% csrf_token %}
-  {% include 'pages/account-form.html' %}
-  <a href="{% url 'account_reset_password' %}" class="pull-right m-t-xs"><small>Forgot password?</small></a>
-  <button type="submit" class="btn btn-primary">Sign in</button>
-  <div class="line line-dashed"></div>
-  <!-- <p class="text-muted text-center"><small>Don't have an account?</small></p> -->
-  <!-- <a href="{{ signup_url }}" class="btn btn-default btn-block">Create an account</a> -->
-</form>
+	<style type="text/css" media="screen">
+		/* modal customization */
+		.modal-backdrop {
+		 	z-index: 1040 !important;
+			display: none;
+		}
+		.modal-dialog {
+			margin: 2px auto;
+			z-index: 1100 !important;
+		}
+	</style>
+
+	<div class="text-center m-md">
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+		Click to See Demo Credentials
+		</button>
+	</div>
+	<form method="POST" action="{% url 'account_login' %}" class="">
+		{% csrf_token %}
+		{% include 'pages/account-form.html' %}
+		<a href="{% url 'account_reset_password' %}" class="pull-right m-t-xs"><small>Forgot password?</small></a>
+		<button type="submit" class="btn btn-primary">Sign in</button>
+		<div class="line line-dashed"></div>
+		<!-- <p class="text-muted text-center"><small>Don't have an account?</small></p> -->
+		<!-- <a href="{{ signup_url }}" class="btn btn-default btn-block">Create an account</a> -->
+	</form>
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title text-center" id="exampleModalLabel">
+						magFetch Demo User's Credentials
+					</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="table-responsive">
+						<table class="table">
+							<table class="table table-bordered text-center">
+								<thead>
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Role</th>
+										<th scope="col">Department</th>
+										<th scope="col">Username</th>
+										<th scope="col">Email</th>
+										<th scope="col">Password</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr class="text-muted">
+										<th scope="row">1</th>
+										<td>Marketing Manager</td>
+										<td>-</td>
+										<td>MM</td>
+										<td>mm@test.com</td>
+										<td>error54321</td>
+									</tr>
+									<tr>
+										<th scope="row">2</th>
+										<td>Administrator</td>
+										<td>-</td>
+										<td>AD</td>
+										<td>ad@test.com</td>
+										<td>error54321</td>
+									</tr>
+									<tr class="text-primary">
+										<th scope="row">1</th>
+										<td>Marketing Coordinator</td>
+										<td>Information & Technology</td>
+										<td>MC_IT</td>
+										<td>magfetch.mc.it@gmail.com</td>
+										<td>error54321</td>
+									</tr>
+									<tr class="text-primary">
+										<th scope="row">1</th>
+										<td>Faculty Guest</td>
+										<td>Information & Technology</td>
+										<td>FG_IT</td>
+										<td>fg_it@test.com</td>
+										<td>error54321</td>
+									</tr>
+									<tr class="text-primary">
+										<th scope="row">1</th>
+										<td>Student</td>
+										<td>Information & Technology</td>
+										<td>ST_IT</td>
+										<td>st_it@test.com</td>
+										<td>error54321</td>
+									</tr>
+									<tr class="text-secondary">
+										<th scope="row">1</th>
+										<td>Marketing Coordinator</td>
+										<td>Computer Science & Engineering</td>
+										<td>MC_CSE</td>
+										<td>magfetch.mc.cse@gmail.com</td>
+										<td>error54321</td>
+									</tr>
+									<tr class="text-secondary">
+										<th scope="row">1</th>
+										<td>Faculty Guest</td>
+										<td>Computer Science & Engineering</td>
+										<td>FG_CSE</td>
+										<td>fg_cse@test.com</td>
+										<td>error54321</td>
+									</tr>
+									<tr class="text-secondary">
+										<th scope="row">1</th>
+										<td>Student</td>
+										<td>Computer Science & Engineering</td>
+										<td>ST_CSE</td>
+										<td>st_cse@test.com</td>
+										<td>error54321</td>
+									</tr>
+									<tr class="text-info">
+										<th scope="row">1</th>
+										<td>Marketing Coordinator</td>
+										<td>Software Engineering</td>
+										<td>MC_SWE</td>
+										<td>magfetch.mc.swe@gmail.com</td>
+										<td>error54321</td>
+									</tr>
+									<tr class="text-info">
+										<th scope="row">1</th>
+										<td>Faculty Guest</td>
+										<td>Software Engineering</td>
+										<td>FG_SWE</td>
+										<td>fg_swe@test.com</td>
+										<td>error54321</td>
+									</tr>
+									<tr class="text-info">
+										<th scope="row">1</th>
+										<td>Student</td>
+										<td>Software Engineering</td>
+										<td>ST_SWE</td>
+										<td>st_swe@test.com</td>
+										<td>error54321</td>
+									</tr>
+									<tr class="text-warning">
+										<th scope="row">1</th>
+										<td>Marketing Coordinator</td>
+										<td>Electrical & Electronics Engineering</td>
+										<td>MC_EEE</td>
+										<td>magfetch.mc.eee@gmail.com</td>
+										<td>error54321</td>
+									</tr>
+									<tr class="text-warning">
+										<th scope="row">1</th>
+										<td>Faculty Guest</td>
+										<td>Electrical & Electronics Engineering</td>
+										<td>FG_EEE</td>
+										<td>fg_eee@test.com</td>
+										<td>error54321</td>
+									</tr>
+									<tr class="text-warning">
+										<th scope="row">1</th>
+										<td>Student</td>
+										<td>Electrical & Electronics Engineering</td>
+										<td>ST_EEE</td>
+										<td>st_eee@test.com</td>
+										<td>error54321</td>
+									</tr>
+								</tbody>
+							</table>
+						</table>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">OK, Got it</button>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
