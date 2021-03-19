@@ -9,7 +9,7 @@ django-cool-pagination==0.3.0
 django-cors-headers==2.5.0
 django-heroku==0.3.1
 django-widget-tweaks==1.4.3
-djangorestframework==3.9.2
+djangorestframework==3.11.2
 gunicorn==19.9.0
 idna==2.8
 mysqlclient==1.4.2.post1
